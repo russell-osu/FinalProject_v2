@@ -16,7 +16,7 @@ class Space
 protected:
 	int row;
 	int col;
-	Creature* creat;
+	shared_ptr<Creature> creat;
 	char spcTyp;
 
 	//for stone, wood, and ore (resources)
@@ -41,15 +41,16 @@ public:
 	void genResources();
 	void dispRscItmVect();
 	void setDifficulty();
-	virtual void gatherRsc(Hero* hero);
+	virtual void gatherRsc(shared_ptr<Creature>hero);
 	void removeRsc(int itmToRmv);
+	void genCreature();
 	virtual string describe() = 0;
 	void setRow(int row);
 	int getRow();
 	void setCol(int col);
 	int getCol();
-	void setCreat(Creature* creat);
-	Creature* getCreat();
+	void setCreat(shared_ptr<Creature> creat);
+	shared_ptr<Creature> getCreat();
 	void setSpcTyp(char spcTyp);
 	char getSpcTyp();
 	void setDiffLvl(int diffLvl);

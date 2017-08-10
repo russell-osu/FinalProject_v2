@@ -14,7 +14,7 @@ Hero::Hero()
 	defDie = std::make_shared<Die>(10);
 	numAttDie = 2;
 	numDefDie = 2;
-	armor = 0;
+	armor = 10;
 	strength = 25;
 	startingStrength = 25;
 	name = "Hero";

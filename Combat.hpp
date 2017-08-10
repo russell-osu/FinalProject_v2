@@ -17,7 +17,7 @@ private:
 	shared_ptr<Creature> creat2;
 
 public:
-	void engage();
+	shared_ptr<Creature> engage(shared_ptr<Creature>, shared_ptr<Creature>);
 	void chooseCreatures();
 	void runTrials();
 	void changeStrength();

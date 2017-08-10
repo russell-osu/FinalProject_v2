@@ -5,6 +5,7 @@
 #include "Map.hpp"
 #include "Space.hpp"
 #include "defConst.hpp"
+#include "Combat.hpp"
 
 
 class Hero;
@@ -16,13 +17,13 @@ private:
 	Space* spcArr[SPC_ROWS][SPC_COLS];
 	Space* village;
 	Space* currSpc;
-	Hero* hero;
+	shared_ptr<Creature>hero;
 	int numMoves;
 	int maxMoves;
 
 
 public:
-	Game(int maxMoves, Hero* hero);
+	Game(int maxMoves, shared_ptr<Creature>hero);
 	void gameLogic();
 	void engageCombat();
 	bool chkWinCond();

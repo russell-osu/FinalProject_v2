@@ -13,7 +13,7 @@ using std::endl;
 using std::string;
 
 
-Game::Game(int maxMoves, Hero* hero)
+Game::Game(int maxMoves, shared_ptr<Creature>hero)
 {
 	//set all elements in spcArr to nullptr
 	for (int row=0; row<SPC_ROWS; row++)
@@ -118,15 +118,16 @@ void Game::gameLogic()
 			moveHero();
 			system("CLS"); //clear screen
 			map.dispMap();
+			
+			//generate creature for recently entered space as long as it's
+			//not a village
+			if (currSpc->getSpcTyp() != 'V')
+			{
+				currSpc->genCreature();
+			}
 
-			////output diff lvl for testing
-			//cout << "Diff Lvl: " << currSpc->getDiffLvl() << endl;
 
-			////output currSpc resources for testing
-			//currSpc->dispRscItmVect();
 
-			////output hero bag capacity for testing
-			//hero->chkInventory();
 
 		}
 
@@ -146,6 +147,29 @@ void Game::gameLogic()
 		{
 			currSpc->gatherRsc(hero);
 			cout << endl;
+		}
+
+		else if (menuChoice == "Fight creature")
+		{
+			//instantiate combat class
+			Combat combat;
+			//send hero and current spaces creature to combat
+			shared_ptr<Creature> winner = combat.engage(hero, currSpc->getCreat());
+
+			//if hero wins, set curr spac creature to nullptr
+			if(winner->getName() == "Hero")
+			{
+				currSpc->setCreat(nullptr);
+			}
+			else //if hero loses, game is over
+			{
+				menuChoice = "End game";
+				cout << "The hero has succumbed to the creature." << endl;
+				cout << "**************GAME OVER****************" << endl
+					<< endl;
+			}
+
+
 		}
 
 

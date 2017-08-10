@@ -28,16 +28,21 @@ using std::make_shared;
 
 
 //handles main logic for a round of combat
-void Combat::engage()
+//returns winning combatant
+shared_ptr<Creature> Combat::engage(shared_ptr<Creature> hero, 
+	shared_ptr<Creature> mob)
 {
+	this->creat1 = hero;
+	this->creat2 = mob;
+	
 	bool fightFinished = false;
 	int round = 1; //initialize round counter
 
-	//prompt user to choose Creature 1 and Creature 2
-	chooseCreatures();
+	////prompt user to choose Creature 1 and Creature 2
+	//chooseCreatures();
 
-	//prompt user to change creatures' strengths
-	changeStrength();
+	////prompt user to change creatures' strengths
+	//changeStrength();
 
 	//for differentiating b/w creatues of the same type
 	string attCreatID = "";
@@ -46,19 +51,20 @@ void Combat::engage()
 	//randomly determine first attacker
 	shared_ptr<Creature> attacker;
 	shared_ptr<Creature> defender;
+
 	if(getRandIntInRange(1,2) == 1)
 	{
 		attacker = creat1;
-		attCreatID = "Creature 1";
+		//attCreatID = "Creature 1";
 		defender = creat2;
-		defCreatID = "Creature 2";
+		//defCreatID = "Creature 2";
 	}
 	else
 	{
 		attacker = creat2;
-		attCreatID = "Creature 2";
+		//attCreatID = "Creature 2";
 		defender = creat1;
-		defCreatID = "Creature 1";
+		//defCreatID = "Creature 1";
 	}
 
 
@@ -75,17 +81,17 @@ void Combat::engage()
 		int defStrength = defender->defend(attString);
 
 		//output attacker's info
-		cout << attCreatID << "->" << attacker->getAttText() << endl << endl;
+		cout << /*attCreatID << "->" <<*/ attacker->getAttText() << endl << endl;
 		
 		//output defender's info
-		cout << defCreatID << "->" << defender->getDefText() << endl << endl;
+		cout << /*defCreatID << "->" <<*/ defender->getDefText() << endl << endl;
 
 
 		//determine if fight is finished by checking defender's strength
 		if(defStrength <= 0)
 		{
 			//output victory message
-			cout << attCreatID << "->" << attacker->getName() << 
+			cout << /*attCreatID << "->" <<*/ attacker->getName() << 
 				" wins!!!" << endl << endl;
 			fightFinished = true;
 		}
@@ -97,30 +103,33 @@ void Combat::engage()
 			attacker = defender;
 			defender = temp;
 
-			//swap creature 1 and 2 ID from attacker to defender
-			//and vice versa
-			if(attCreatID == "Creature 1")
-			{
-				attCreatID = "Creature 2";
-			}
-			else //attack creature is creature 2
-			{
-				attCreatID = "Creature 1";
-			}
+			////swap creature 1 and 2 ID from attacker to defender
+			////and vice versa
+			//if(attCreatID == "Creature 1")
+			//{
+			//	attCreatID = "Creature 2";
+			//}
+			//else //attack creature is creature 2
+			//{
+			//	attCreatID = "Creature 1";
+			//}
 
-			if (defCreatID == "Creature 1")
-			{
-				defCreatID = "Creature 2";
-			}
-			else //defense creature is creature 2
-			{
-				defCreatID = "Creature 1";
-			}
+			//if (defCreatID == "Creature 1")
+			//{
+			//	defCreatID = "Creature 2";
+			//}
+			//else //defense creature is creature 2
+			//{
+			//	defCreatID = "Creature 1";
+			//}
 		}
 
 		round++; //increment round
 
 	} while (!fightFinished);
+
+	//returns winner of fight
+	return attacker;
 }
 
 

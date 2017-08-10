@@ -30,7 +30,8 @@ int main()
 	setSeed();
 
 	//testing game logic menu
-	Hero* hero = new Hero(VILLAGE_ROW, VILLAGE_COL, 35, 3, 3, 50);
+	shared_ptr<Creature>hero = 
+		std::make_shared<Hero>(VILLAGE_ROW, VILLAGE_COL, 35, 3, 3, 50);
 	Game game(100, hero);
 	game.gameLogic();
 

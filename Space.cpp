@@ -6,12 +6,18 @@
 #include "Ore.hpp"
 #include <iostream>
 #include "Hero.hpp"
+#include "Vampire.hpp"
+#include "BlueMen.hpp"
+#include "Medusa.hpp"
+#include "HarryPotter.hpp"
+#include "Barbarian.hpp"
 
 using std::cout;
 using std::endl;
 
 Space::Space()
 {
+	creat = nullptr;
 }
 
 
@@ -79,7 +85,7 @@ void Space::setDifficulty()
 	}
 }
 
-void Space::gatherRsc(Hero * hero)
+void Space::gatherRsc(shared_ptr<Creature>hero)
 {
 	
 	//create resource menu list
@@ -172,6 +178,43 @@ void Space::removeRsc(int itmToRmv)
 
 
 
+//randomly generate creature and set its stats based on space diff lvl
+void Space::genCreature()
+{
+	int creatTyp = getRandIntInRange(1, 5);
+
+	switch(creatTyp)
+	{
+	case 1: //Vampire
+		creat = std::make_shared<Vampire>();
+		break;
+	case 2: //BlueMen
+		creat = std::make_shared<BlueMen>();
+		break;
+	case 3: //Harry Potter
+		creat = std::make_shared<HarryPotter>();
+		break;
+	case 4: //Barbarian
+		creat = std::make_shared<Barbarian>();
+		break;
+	case 5: //Medusa
+		creat = std::make_shared<Medusa>();
+		break;
+	}
+
+	//set strength
+	int strength = creat->getStrength();
+	creat->setStrength(strength*diffLvl);
+	//set num att Die
+	int numAttDie = creat->getNumAttDie();
+	creat->setNumAttDie(numAttDie*diffLvl);
+	//set num def Die
+	int numDefDie = creat->getNumDefDie();
+	creat->setNumDefDie(numDefDie*diffLvl);
+}
+
+
+
 void Space::setRow(int row)
 { 
 	this->row = row;
@@ -192,12 +235,12 @@ int Space::getCol()
 	return col;
 }
 
-void Space::setCreat(Creature* creat)
+void Space::setCreat(shared_ptr<Creature> creat)
 {
 	this->creat = creat;
 }
 
-Creature* Space::getCreat()
+shared_ptr<Creature> Space::getCreat()
 {
 	return creat;
 }
