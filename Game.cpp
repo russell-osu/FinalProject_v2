@@ -13,7 +13,7 @@ using std::endl;
 using std::string;
 
 
-Game::Game(int maxMoves, Creature* hero)
+Game::Game(int maxMoves, Hero* hero)
 {
 	//set all elements in spcArr to nullptr
 	for (int row=0; row<SPC_ROWS; row++)
@@ -88,6 +88,7 @@ void Game::gameLogic()
 		vector<string> menuItems;
 		menuItems.push_back("Move hero");
 		menuItems.push_back("Check inventory");
+		menuItems.push_back("Display map");
 		if (isVillage)//if curr spc is a village
 		{
 			menuItems.push_back("Build shelter");
@@ -107,15 +108,47 @@ void Game::gameLogic()
 		//prompt for and store user choice
 		cout << "What would you like to do?" << endl;
 		menuChoice = menuRtnStr(menuItems, false);
+		cout << endl;
 
 
-		//menuChoice control flow
+		//menuChoice flow control
 		if (menuChoice == "Move hero")
 		{
+
 			moveHero();
+			system("CLS"); //clear screen
 			map.dispMap();
-			cout << "Diff Lvl: " << currSpc->getDiffLvl() << endl;
+
+			////output diff lvl for testing
+			//cout << "Diff Lvl: " << currSpc->getDiffLvl() << endl;
+
+			////output currSpc resources for testing
+			//currSpc->dispRscItmVect();
+
+			////output hero bag capacity for testing
+			//hero->chkInventory();
+
 		}
+
+		else if (menuChoice == "Check inventory")
+		{
+			hero->chkInventory();
+			cout << endl;
+		}
+
+		else if (menuChoice == "Display map")
+		{
+			system("CLS"); //clear screen
+			map.dispMap();
+		}
+
+		else if (menuChoice == "Gather resources")
+		{
+			currSpc->gatherRsc(hero);
+			cout << endl;
+		}
+
+
 
 	} while (menuChoice != "End game");
 }
@@ -128,18 +161,19 @@ void Game::moveHero()
 	int col = currSpc->getCol();
 	
 	//set moved flag to false
-	bool moved = false;
+	bool offMap = true;
 
 	//prompt user for direction
-	string menuItems[] = { "North","South","East","West" };
-	int menuChoice = menu(menuItems, 4, false);
+	cout << "Which way would you like to move?" << endl;
+	string menuItems[] = { "North","South","East","West","Don't move"};
+	int menuChoice = menu(menuItems, 5, false);
 
 	switch(menuChoice)
 	{
 	case 1: //North
 		if (row > 0)//to prevent hero from going off of the board
 		{
-			moved = true; 
+			offMap = false; 
 
 			//update hero on map
 			map.updateMapHero(row - 1, col, row, col);
@@ -168,7 +202,7 @@ void Game::moveHero()
 	case 2: //South
 		if (row < 6)//to prevent hero from going off of the board
 		{
-			moved = true;
+			offMap = false;
 
 			//update hero on map
 			map.updateMapHero(row + 1, col, row, col);
@@ -196,7 +230,7 @@ void Game::moveHero()
 	case 3: //East
 		if (col < 6)//to prevent hero from going off of the board
 		{
-			moved = true;
+			offMap = false;
 
 			//update hero on map
 			map.updateMapHero(row, col+1, row, col);
@@ -225,7 +259,7 @@ void Game::moveHero()
 	case 4: //West
 		if (col > 0)//to prevent hero from going off of the board
 		{
-			moved = true;
+			offMap = false;
 
 			//update hero on map
 			map.updateMapHero(row, col - 1, row, col);
@@ -250,9 +284,13 @@ void Game::moveHero()
 		}
 		break; //case 4 break
 
+	case 5: //Don't move
+		offMap = false;
+
+
 	}//end move choice switch
 
-	if(!moved) //if hero tries to walk past edge of space array
+	if(offMap) //if hero tries to walk past edge of space array
 	{
 		cout << "You can't walk off of the edge of the known world!" 
 			<< endl << endl;

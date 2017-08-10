@@ -15,6 +15,9 @@ Forest::Forest(int row, int col)
 	//set level of difficulty
 	setDifficulty();
 
+	//generate resources
+	genResources();
+
 	//map pointers
 	north = nullptr;
 	south = nullptr;

@@ -7,6 +7,7 @@
 #include "Item.hpp"
 
 
+class Hero;
 using std::shared_ptr;
 using std::vector;
 
@@ -36,9 +37,12 @@ protected:
 public:
 	Space();
 
+	
 	void genResources();
+	void dispRscItmVect();
 	void setDifficulty();
-	virtual int gatherRsc();
+	virtual void gatherRsc(Hero* hero);
+	void removeRsc(int itmToRmv);
 	virtual string describe() = 0;
 	void setRow(int row);
 	int getRow();

@@ -4,7 +4,11 @@
 #include "Stone.hpp"
 #include "Wood.hpp"
 #include "Ore.hpp"
+#include <iostream>
+#include "Hero.hpp"
 
+using std::cout;
+using std::endl;
 
 Space::Space()
 {
@@ -21,26 +25,152 @@ void Space::genResources()
 
 	if (this->getSpcTyp() == 'P') //if plains, gen stone
 	{
-		shared_ptr<Item> tmpItm = std::make_shared<Stone>();
-		rscItmVect.push_back(tmpItm);
+		for (int i = 0; i < numRsc; i++)
+		{
+			shared_ptr<Item> tmpItm = std::make_shared<Stone>();
+			rscItmVect.push_back(tmpItm);
+		}
 	}
 	if (this->getSpcTyp() == 'F') //if forest, gen wood
 	{
-		shared_ptr<Item> tmpItm = std::make_shared<Wood>();
-		rscItmVect.push_back(tmpItm);
+		for (int i = 0; i < numRsc; i++)
+		{
+			shared_ptr<Item> tmpItm = std::make_shared<Wood>();
+			rscItmVect.push_back(tmpItm);
+		}
 	}
 	if (this->getSpcTyp() == 'H') //if hills, gen ore
 	{
-		shared_ptr<Item> tmpItm = std::make_shared<Ore>();
-		rscItmVect.push_back(tmpItm);
+		for (int i = 0; i < numRsc; i++)
+		{
+			shared_ptr<Item> tmpItm = std::make_shared<Ore>();
+			rscItmVect.push_back(tmpItm);
+		}
 	}
 
 }
 
-int Space::gatherRsc()
+void Space::dispRscItmVect()
 {
-	return 0; //just for testing
+	for(unsigned int i = 0; i < rscItmVect.size(); i++)
+	{
+		cout << rscItmVect[i]->getName() << endl;
+	}
 }
+
+//difficulty level of space is equal to the greater of the number of rows
+//or the num of cols removed from the starting village
+void Space::setDifficulty()
+{
+	int rowDepth = abs(VILLAGE_ROW - row);
+	int colDepth = abs(VILLAGE_COL - col);
+
+	if (rowDepth>colDepth)
+	{
+		diffLvl = rowDepth;
+	}
+	else if (colDepth>rowDepth)
+	{
+		diffLvl = colDepth;
+	}
+	else
+	{
+		diffLvl = rowDepth;
+	}
+}
+
+void Space::gatherRsc(Hero * hero)
+{
+	
+	//create resource menu list
+	vector<string> rscMenu;
+	
+	//add items to bag
+	if(rscItmVect.empty())
+	{
+		cout << "There are no more resources to gather." << endl;
+	}
+	else
+	{
+		int menuChoice;
+		do
+		{
+			//create a string vector of resource items for later use in rsc menu
+			for (unsigned int i = 0; i < rscItmVect.size(); i++)
+			{
+				string rsc = rscItmVect[i]->getName();
+				rscMenu.push_back(rsc);
+			}
+
+
+			//print out menu of resource choices and prompt user
+			cout << "Choose the resource you'd like to add:"
+				<< endl;
+			menuChoice = menuExit(rscMenu, false);
+
+
+			//if user didn't choose to exit
+			if (menuChoice != 0)
+			{
+				//point temp variable to item to add to bag
+				shared_ptr<Item> itemToGet = rscItmVect[menuChoice - 1];
+
+
+				//add item to hero's bag
+				bool added = hero->addToBag(itemToGet);
+
+				if (added) //bag had capacity
+				{
+					cout << "Item added to bag: " << itemToGet->getName() << endl;
+					removeRsc(menuChoice - 1);
+				}
+				else //bag lacked capacity
+				{
+					cout << "Your bag is full. Can't add resource." << endl;
+				}
+
+				//clear resource menu list, set size to 0 and rewrite
+				rscMenu.clear();
+				//setting a cleared vector's size to 0: 
+				//https://stackoverflow.com/questions/6882799/does-clearing-a-vector-affect-its-capacity
+				vector<string>(rscMenu).swap(rscMenu);
+			}
+
+		} while (menuChoice != 0);
+	}
+}
+
+
+//takes element number of item to remove from vector as a parameter
+void Space::removeRsc(int itmToRmv)
+{
+	//set element to nullptr
+	rscItmVect[itmToRmv] = nullptr;
+	
+
+
+	//rewrite rsc vector to remove null element and rewrite rsc menu
+
+	//create tmp rsc vector to hold remaining items
+	vector<shared_ptr<Item>> tmpRscVect;
+	for (unsigned int i = 0; i < rscItmVect.size(); i++)
+	{
+		if (rscItmVect[i] != nullptr)
+		{
+			tmpRscVect.push_back(rscItmVect[i]);
+		}
+	}
+
+	//clear resource vector and add tmp vector itms to cleared rsc vector
+	rscItmVect.clear();
+	vector<shared_ptr<Item>>(rscItmVect).swap(rscItmVect);
+	for (unsigned int i = 0; i < tmpRscVect.size(); i++)
+	{
+		rscItmVect.push_back(tmpRscVect[i]);
+	}
+}
+
+
 
 void Space::setRow(int row)
 { 
@@ -139,23 +269,4 @@ Space::~Space()
 }
 
 
-//difficulty level of space is equal to the greater of the number of rows
-//or the num of cols removed from the starting village
-void Space::setDifficulty()
-{
-	int rowDepth = abs(VILLAGE_ROW - row);
-	int colDepth = abs(VILLAGE_COL - col);
 
-	if (rowDepth>colDepth)
-	{
-		diffLvl = rowDepth;
-	}
-	else if(colDepth>rowDepth)
-	{
-		diffLvl = colDepth;
-	}
-	else
-	{
-		diffLvl = rowDepth;
-	}
-}

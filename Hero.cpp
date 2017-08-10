@@ -1,6 +1,8 @@
 #include "Hero.hpp"
+#include<iostream>
 
-
+using std::cout;
+using std::endl;
 
 
 //default constructor with default coord of (3,3) and 25 str
@@ -19,7 +21,8 @@ Hero::Hero()
 }
 
 //constructor that takes coord parameters
-Hero::Hero(int row, int col, int strength, int numAttDie, int numDefDie)
+Hero::Hero(int row, int col, int strength, int numAttDie, int numDefDie,
+	int bagCapacity) : bag(bagCapacity)
 {
 	this->row = row;
 	this->col = col;
@@ -37,6 +40,22 @@ Hero::Hero(int row, int col, int strength, int numAttDie, int numDefDie)
 void Hero::refresh()
 {
 	strength = startingStrength;
+}
+
+void Hero::chkInventory()
+{
+	//display bag capactiy and display contents
+	cout << "Bag capacity: " << bag.getCapacity() << endl;
+	cout << "Bag weight: " << bag.getCurrWght() << endl;
+	cout << endl;
+	bag.dispContents();
+}
+
+//tries item to bag (returns true if completed and false if not)
+bool Hero::addToBag(shared_ptr<Item> item)
+{
+	bool addedToBag = bag.addItm(item);
+	return addedToBag;
 }
 
 Hero::~Hero()

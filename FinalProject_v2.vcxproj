@@ -116,6 +116,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\CS_162_git\InputValidation\cs162_utilities.cpp" />
+    <ClCompile Include="Bag.cpp" />
     <ClCompile Include="Barbarian.cpp" />
     <ClCompile Include="BlueMen.cpp" />
     <ClCompile Include="Combat.cpp" />
@@ -140,6 +141,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\CS_162_git\InputValidation\cs162_utilities.hpp" />
+    <ClInclude Include="Bag.hpp" />
     <ClInclude Include="Barbarian.hpp" />
     <ClInclude Include="BlueMen.hpp" />
     <ClInclude Include="Combat.hpp" />

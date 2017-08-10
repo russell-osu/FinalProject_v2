@@ -7,6 +7,8 @@
 #include "defConst.hpp"
 
 
+class Hero;
+
 class Game
 {
 private:
@@ -14,13 +16,13 @@ private:
 	Space* spcArr[SPC_ROWS][SPC_COLS];
 	Space* village;
 	Space* currSpc;
-	Creature* hero;
+	Hero* hero;
 	int numMoves;
 	int maxMoves;
 
 
 public:
-	Game(int maxMoves, Creature* hero);
+	Game(int maxMoves, Hero* hero);
 	void gameLogic();
 	void engageCombat();
 	bool chkWinCond();

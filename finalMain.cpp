@@ -30,8 +30,8 @@ int main()
 	setSeed();
 
 	//testing game logic menu
-	Creature* hero = new Hero(VILLAGE_ROW, VILLAGE_COL, 35, 3, 3);
-	Game game(100,hero);
+	Hero* hero = new Hero(VILLAGE_ROW, VILLAGE_COL, 35, 3, 3, 50);
+	Game game(100, hero);
 	game.gameLogic();
 
 
