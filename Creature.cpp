@@ -139,6 +139,22 @@ void Creature::generateDefText(int prelimStrength, string special)
 }
 
 
+void Creature::chkInventory()
+{
+	//display bag capactiy and display contents
+	cout << "Bag capacity: " << bag.getCapacity() << endl;
+	cout << "Bag weight: " << bag.getCurrWght() << endl;
+	cout << endl;
+	bag.dispContents();
+}
+
+//tries item to bag (returns true if completed and false if not)
+bool Creature::addToBag(shared_ptr<Item> item)
+{
+	bool addedToBag = bag.addItm(item);
+	return addedToBag;
+}
+
 void Creature::setNumAttDie(int numAttDie)
 {
 	this->numAttDie = numAttDie;
@@ -269,6 +285,11 @@ int Creature::getCol()
 Creature::Creature()
 {
 	
+}
+
+//initializes bag with a specified capacity
+Creature::Creature(int bagCapacity) : bag(bagCapacity)
+{
 }
 
 

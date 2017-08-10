@@ -6,6 +6,7 @@
 #include <string>
 #include <sstream>
 #include <memory>
+#include "Bag.hpp"
 
 using std::string;
 using std::stringstream;
@@ -24,6 +25,8 @@ protected:
 	string name;
 	stringstream attText;
 	stringstream defText;
+	Bag bag;
+	int startingStrength;
 
 	int row;
 	int col;
@@ -33,6 +36,10 @@ public:
 	virtual int defend(string attString);
 	void generateAttText(string special = "");
 	void generateDefText(int prelimStrength, string special = "");
+	void chkInventory();
+	bool addToBag(shared_ptr<Item> item);
+
+
 	//getters and setters
 	void setNumAttDie(int numAttDie);
 	int getNumAttDie();
@@ -61,6 +68,7 @@ public:
 	virtual void refresh() = 0;
 
 	Creature();
+	Creature(int bagCapacity);
 	virtual ~Creature() = 0;
 };
 
