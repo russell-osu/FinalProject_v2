@@ -1,9 +1,40 @@
 #include "Space.hpp"
-#include "Game.hpp"
+#include "defConst.hpp"
+#include "cs162_utilities.hpp"
+#include "Stone.hpp"
+#include "Wood.hpp"
+#include "Ore.hpp"
 
 
 Space::Space()
 {
+}
+
+
+//generates a random number of natural resources, based on diff lvl of space
+//and then adds those resources to the rsc items vector
+void Space::genResources()
+{
+	
+	//determine num of resources, based on difficulty level
+	int numRsc = diffLvl * getRandIntInRange(1, 3);
+
+	if (this->getSpcTyp() == 'P') //if plains, gen stone
+	{
+		shared_ptr<Item> tmpItm = std::make_shared<Stone>();
+		rscItmVect.push_back(tmpItm);
+	}
+	if (this->getSpcTyp() == 'F') //if forest, gen wood
+	{
+		shared_ptr<Item> tmpItm = std::make_shared<Wood>();
+		rscItmVect.push_back(tmpItm);
+	}
+	if (this->getSpcTyp() == 'H') //if hills, gen ore
+	{
+		shared_ptr<Item> tmpItm = std::make_shared<Ore>();
+		rscItmVect.push_back(tmpItm);
+	}
+
 }
 
 int Space::gatherRsc()

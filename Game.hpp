@@ -4,11 +4,8 @@
 #define MOON_GAME_HPP
 #include "Map.hpp"
 #include "Space.hpp"
+#include "defConst.hpp"
 
-#define SPC_ROWS 7
-#define SPC_COLS 7
-#define VILLAGE_ROW 3
-#define VILLAGE_COL 3
 
 class Game
 {

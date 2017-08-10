@@ -129,11 +129,14 @@
     <ClCompile Include="Hills.cpp" />
     <ClCompile Include="Map.cpp" />
     <ClCompile Include="Medusa.cpp" />
+    <ClCompile Include="Ore.cpp" />
     <ClCompile Include="Plains.cpp" />
-    <ClCompile Include="Resource.cpp" />
+    <ClCompile Include="Item.cpp" />
     <ClCompile Include="Space.cpp" />
+    <ClCompile Include="Stone.cpp" />
     <ClCompile Include="Vampire.cpp" />
     <ClCompile Include="Village.cpp" />
+    <ClCompile Include="Wood.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\CS_162_git\InputValidation\cs162_utilities.hpp" />
@@ -141,6 +144,7 @@
     <ClInclude Include="BlueMen.hpp" />
     <ClInclude Include="Combat.hpp" />
     <ClInclude Include="Creature.hpp" />
+    <ClInclude Include="defConst.hpp" />
     <ClInclude Include="Die.hpp" />
     <ClInclude Include="Forest.hpp" />
     <ClInclude Include="Game.hpp" />
@@ -149,11 +153,14 @@
     <ClInclude Include="Hills.hpp" />
     <ClInclude Include="Map.hpp" />
     <ClInclude Include="Medusa.hpp" />
+    <ClInclude Include="Ore.hpp" />
     <ClInclude Include="Plains.hpp" />
-    <ClInclude Include="Resource.hpp" />
+    <ClInclude Include="Item.hpp" />
     <ClInclude Include="Space.hpp" />
+    <ClInclude Include="Stone.hpp" />
     <ClInclude Include="Vampire.hpp" />
     <ClInclude Include="Village.hpp" />
+    <ClInclude Include="Wood.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -4,7 +4,7 @@
 #define MOON_SPACE_HPP
 #include "Creature.hpp"
 #include <vector>
-#include "Resource.hpp"
+#include "Item.hpp"
 
 
 using std::shared_ptr;
@@ -17,10 +17,14 @@ protected:
 	int col;
 	Creature* creat;
 	char spcTyp;
-	vector<shared_ptr<Resource>> rscVect;
-	int rscAmt;
+
+	//for stone, wood, and ore (resources)
+	vector<shared_ptr<Item>> rscItmVect;
+	//for all other items
+	vector<shared_ptr<Item>> miscItmVect;
+
 	int diffLvl;
-	vector<string> itmContainer;
+
 
 	//map pointers
 	Space* north;
@@ -32,6 +36,7 @@ protected:
 public:
 	Space();
 
+	void genResources();
 	void setDifficulty();
 	virtual int gatherRsc();
 	virtual string describe() = 0;
