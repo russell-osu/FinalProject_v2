@@ -24,8 +24,9 @@ Game::Game(int maxMoves, shared_ptr<Creature>hero)
 		}
 	}
 
+
 	//instantiate village and point given space array cell to village
-	village = new Village(VILLAGE_ROW,VILLAGE_COL);
+	village = new Village(VILLAGE_ROW,VILLAGE_COL, 7,7,7);
 	spcArr[VILLAGE_ROW][VILLAGE_COL] = village;
 
 	//instantiate hero and place in village
@@ -293,12 +294,28 @@ void Game::moveHero()
 
 	//prompt user for direction
 	cout << "Which way would you like to move?" << endl;
-	string menuItems[] = { "North","South","East","West","Don't move"};
-	int menuChoice = menu(menuItems, 5, false);
+	//string menuItems[] = { "North","South","East","West","Don't move"};
+	//int menuChoice = menu(menuItems, 5, false);
+	string usrIn = "";
+	cout << "w) north" << endl << "s) south" << endl << "d) east" 
+		<< endl << "a) west" << endl << endl << "x) don't move"<< endl << endl;
+	getline(std::cin, usrIn);
+	cout << endl;
+	//validate usr input
+	while (!(usrIn=="w"|| usrIn == "s" || usrIn == "d" || usrIn == "a" 
+			|| usrIn == "x"))
+	{
+		cout << "Try again. Enter <w>, <s>, <d>, <a>, or <x>." << endl << endl;
+		getline(std::cin, usrIn);
+		cout << endl;
+	}
+	char menuChoice = usrIn[0]; //convert usrIn to char for switch
+
+
 
 	switch(menuChoice)
 	{
-	case 1: //North
+	case 'w': //North
 		if (row > 0)//to prevent hero from going off of the board
 		{
 			offMap = false; 
@@ -330,7 +347,7 @@ void Game::moveHero()
 		break; //case 1 break
 
 
-	case 2: //South
+	case 's': //South
 		if (row < 6)//to prevent hero from going off of the board
 		{
 			offMap = false;
@@ -360,7 +377,7 @@ void Game::moveHero()
 		}
 		break; //case 2 break
 
-	case 3: //East
+	case 'd': //East
 		if (col < 6)//to prevent hero from going off of the board
 		{
 			offMap = false;
@@ -391,7 +408,7 @@ void Game::moveHero()
 		break; //case 3 break
 
 
-	case 4: //West
+	case 'a': //West
 		if (col > 0)//to prevent hero from going off of the board
 		{
 			offMap = false;
@@ -421,7 +438,7 @@ void Game::moveHero()
 		}
 		break; //case 4 break
 
-	case 5: //Don't move
+	case 'x': //Don't move
 		offMap = false;
 
 

@@ -22,6 +22,7 @@ private:
 	int maxMoves;
 
 
+
 public:
 	Game(int maxMoves, shared_ptr<Creature>hero);
 	void gameLogic();

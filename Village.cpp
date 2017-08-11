@@ -11,7 +11,7 @@ Village::Village()
 {
 }
 
-Village::Village(int row, int col)
+Village::Village(int row, int col, int stone, int wood, int ore)
 {
 	spcTyp = 'V';
 	creat = nullptr;
@@ -21,6 +21,11 @@ Village::Village(int row, int col)
 	stoneCnt = 0;
 	woodCnt = 0;
 	oreCnt = 0;
+
+	//resources needed to build shelter
+	this->stoneNeed = stone;
+	this->woodNeed = wood;
+	this->oreNeed = ore;
 
 	//map pointers
 	north = nullptr;
@@ -99,11 +104,11 @@ void Village::dispSheltRsc()
 	cout << "Current Shelter Resources" << endl;
 	cout << "*************************" << endl;
 	cout << "Stone: " << stoneCnt << " (" <<
-		SHELTER_STONE - stoneCnt << " more needed)" << endl;
+		stoneNeed - stoneCnt << " needed)" << endl;
 	cout << "Wood: " << woodCnt << " (" <<
-		SHELTER_WOOD - woodCnt << " more needed)" << endl;
+		woodNeed - woodCnt << " needed)" << endl;
 	cout << "Ore: " << oreCnt << " (" <<
-		SHELTER_ORE - oreCnt << " more needed)" << endl << endl;
+		oreNeed - oreCnt << " needed)" << endl << endl;
 
 }
 

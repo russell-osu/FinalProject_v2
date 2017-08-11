@@ -10,9 +10,12 @@ private:
 	int stoneCnt;
 	int woodCnt;
 	int oreCnt;
+	int stoneNeed;
+	int woodNeed;
+	int oreNeed;
 public:
 	Village();
-	Village(int row, int col);
+	Village(int row, int col, int stone, int wood, int ore);
 	virtual string describe();
 	bool buildShelter(shared_ptr<Creature>hero);
 	void dispSheltRsc();
