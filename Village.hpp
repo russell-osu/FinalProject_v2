@@ -11,6 +11,7 @@ public:
 	Village(int row, int col);
 	virtual int gatherRsc();
 	virtual string describe();
+	virtual bool buildShelter();
 	~Village();
 };
 

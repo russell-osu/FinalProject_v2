@@ -34,3 +34,19 @@ string Village::describe()
 Village::~Village()
 {
 }
+
+//add items to village's rscItmVect to build shelter
+bool Village::buildShelter()
+{
+	//count the resources types in the rsc vect to determine amt needed
+	int stoneCnt = 0;
+	int woodCnt = 0;
+	int oreCnt = 0;
+
+
+
+
+
+
+	return false;
+}

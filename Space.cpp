@@ -147,6 +147,11 @@ void Space::gatherRsc(shared_ptr<Creature>hero)
 	}
 }
 
+bool Space::buildShelter()
+{
+	return false;
+}
+
 
 //takes element number of item to remove from vector as a parameter
 void Space::removeRsc(int itmToRmv)

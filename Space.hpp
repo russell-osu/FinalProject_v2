@@ -44,6 +44,7 @@ public:
 	void dispRscItmVect();
 	void setDifficulty();
 	virtual void gatherRsc(shared_ptr<Creature>hero);
+	virtual bool buildShelter();
 	void removeRsc(int itmToRmv);
 	void genCreature();
 	void incrementNumVisits();

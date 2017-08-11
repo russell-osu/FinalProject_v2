@@ -18,7 +18,7 @@ private:
 	Space* village;
 	Space* currSpc;
 	shared_ptr<Creature>hero;
-	int numMoves;
+	int movesRmn;
 	int maxMoves;
 
 
@@ -27,10 +27,14 @@ public:
 	void gameLogic();
 	void engageCombat();
 	bool chkWinCond();
-	void updNumMoves(int newMoves);
+	void updMovesRmn(int newMoves);
 	void moveHero();
 	void newSpcInit(int row, int col);
 	void newSpcConnect(Space* tmpSpc);
+	void setMovesRmn(int movesRmn);
+	int getMovesRmn();
+	void setMaxMoves(int maxMoves);
+	int getMaxMoves();
 
 	~Game();
 };

@@ -43,7 +43,7 @@ Game::Game(int maxMoves, shared_ptr<Creature>hero)
 	this->maxMoves = maxMoves;
 
 	//initialize number of moves to 0
-	this->numMoves = 0;
+	this->movesRmn = maxMoves;
 }
 
 void Game::gameLogic()
@@ -84,9 +84,9 @@ void Game::gameLogic()
 		}
 
 
-
 		//var for curr spc creature
 		shared_ptr<Creature> currCreat = currSpc->getCreat();
+
 
 		//output initial creature message
 		if(hasCreature)
@@ -143,6 +143,7 @@ void Game::gameLogic()
 		cout << "What would you like to do?" << endl;
 		menuChoice = menuRtnStr(menuItems, false);
 		cout << endl;
+
 
 
 		//menuChoice flow control
@@ -220,10 +221,21 @@ void Game::gameLogic()
 				cout << "**************GAME OVER****************" << endl
 					<< endl;
 			}
-
-
 		}
 
+		else if (menuChoice == "Build shelter")
+		{
+			bool built = village->buildShelter();
+
+			if(built)
+			{
+				cout << "You finished the shelter and saved the village!" 
+					<< endl;
+				cout << "*****************YOU WON!!!********************"
+					<< endl << endl;
+			}
+
+		}
 
 
 	} while (menuChoice != "End game");
