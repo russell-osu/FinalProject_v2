@@ -94,7 +94,9 @@ void Game::gameLogic()
 
 
 
-		//output initial creature message (which includes hints about diff lvl)
+		//*****output message (which includes hints about diff lvl)*****
+		cout << "Moves remaining: " << movesRmn << endl << endl;
+
 		if(hasCreature)
 
 		{
@@ -158,17 +160,31 @@ void Game::gameLogic()
 
 
 		//***********USER CHOICE***************
-		cout << "What would you like to do?" << endl;
-		menuChoice = menuRtnStr(menuItems, false);
-		cout << endl;
 
+		//check moves remaining
+		if (movesRmn <= 0)
+		{
+			cout << "YOU HAVE RUN OUT OF TIME!!!" << endl;
+			cout << "**********GAME OVER********" << endl << endl;
+			menuChoice = "End game";
+		}
+
+		else
+		{
+			cout << "What would you like to do?" << endl;
+			menuChoice = menuRtnStr(menuItems, false);
+			cout << endl;
+		}
 
 
 		//*****************MENU CHOICE FLOW CONTROL******************
 
+		bool sufficientMoves = false;
+
 		//***MOVE HERO***
-		if (menuChoice == "Move hero")
+		if (menuChoice == "Move hero" && movesRmn > 0)
 		{
+			sufficientMoves = true; //enough moves left for this action
 			//clear screen and display map
 			system("CLS"); 
 			map.dispMap();
@@ -194,7 +210,7 @@ void Game::gameLogic()
 				currSpc->genCreature();
 			}
 
-			cout << "Num visits this space: " << currSpc->getNumVisits() << endl;
+			//cout << "Num visits this space: " << currSpc->getNumVisits() << endl;
 		}
 
 
@@ -202,6 +218,7 @@ void Game::gameLogic()
 		//***CHECK INVENTORY***
 		else if (menuChoice == "Check inventory")
 		{
+			sufficientMoves = true;//enough moves left for this action
 			hero->chkInventory();
 			cout << endl;
 		}
@@ -211,20 +228,24 @@ void Game::gameLogic()
 		//***DISPLAY MAP***
 		else if (menuChoice == "Display map")
 		{
+			sufficientMoves = true;
 			system("CLS"); //clear screen
 			map.dispMap();
 		}
 
 
 		//***GATHER RESOURCES***
-		else if (menuChoice == "Gather resources")
+		else if (menuChoice == "Gather resources" && movesRmn > 1)
 		{
+			sufficientMoves = true;//enough moves left for this action
 			//if there's no creature gathering is permitted
 
 			if (currCreat == nullptr) 
 			{
 				currSpc->gatherRsc(hero);
 				cout << endl;
+				//gathering resources requires three moves
+				updMovesRmn(2);
 			}
 			else //if a creature is around, you'll have to fight it for rscs
 			{
@@ -235,12 +256,16 @@ void Game::gameLogic()
 
 
 		//***FIGHT CREATURE***
-		else if (menuChoice == "Fight creature")
+		else if (menuChoice == "Fight creature" && movesRmn > 2)
 		{
+			sufficientMoves = true;//enough moves left for this action
 			//instantiate combat class
 			Combat combat;
 			//send hero and current spaces creature to combat
 			shared_ptr<Creature> winner = combat.engage(hero, currCreat);
+
+			//fighting requires four moves
+			updMovesRmn(3);
 
 			//if hero wins, set curr spac creature to nullptr
 			if(winner->getName() == "Hero")
@@ -258,10 +283,13 @@ void Game::gameLogic()
 
 
 		//***BUILD SHELTER***
-		else if (menuChoice == "Build shelter")
+		else if (menuChoice == "Build shelter" && movesRmn > 2)
 		{
-
+			sufficientMoves = true;//enough moves left for this action
 			bool built = static_cast<Village*>(village)->buildShelter(hero);
+
+			//building shelter requires 2 moves
+			updMovesRmn(2);
 
 			if(built)
 			{
@@ -273,12 +301,23 @@ void Game::gameLogic()
 
 		}
 
+		//if hero does not have sufficient moves for action chosen
+		if(sufficientMoves == false && menuChoice!="End game")
+		{
+			cout << "You don't have sufficient moves left for that action."
+				<< endl << endl;
+		}
 
 	} while (menuChoice != "End game"); 
 
 	//********************end play loop**************************
 }
 
+
+void Game::updMovesRmn(int newMoves)
+{
+	movesRmn -= newMoves;
+}
 
 void Game::moveHero()
 {
@@ -319,7 +358,8 @@ void Game::moveHero()
 		if (row > 0)//to prevent hero from going off of the board
 		{
 			offMap = false; 
-
+			//moving hero requires one move
+			updMovesRmn(1);
 			//update hero on map
 			map.updateMapHero(row - 1, col, row, col);
 
@@ -351,7 +391,8 @@ void Game::moveHero()
 		if (row < 6)//to prevent hero from going off of the board
 		{
 			offMap = false;
-
+			//moving hero requires one move
+			updMovesRmn(1);
 			//update hero on map
 			map.updateMapHero(row + 1, col, row, col);
 
@@ -381,7 +422,8 @@ void Game::moveHero()
 		if (col < 6)//to prevent hero from going off of the board
 		{
 			offMap = false;
-
+			//moving hero requires one move
+			updMovesRmn(1);
 			//update hero on map
 			map.updateMapHero(row, col+1, row, col);
 
@@ -412,7 +454,8 @@ void Game::moveHero()
 		if (col > 0)//to prevent hero from going off of the board
 		{
 			offMap = false;
-
+			//moving hero requires one move
+			updMovesRmn(1);
 			//update hero on map
 			map.updateMapHero(row, col - 1, row, col);
 

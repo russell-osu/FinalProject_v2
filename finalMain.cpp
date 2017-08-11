@@ -19,7 +19,7 @@ int main()
 	//testing game logic menu
 	shared_ptr<Creature>hero = 
 		std::make_shared<Hero>(VILLAGE_ROW, VILLAGE_COL, 1000, 3, 3, 150);
-	Game game(100, hero);
+	Game game(15, hero);
 	game.gameLogic();
 
 
