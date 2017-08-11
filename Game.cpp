@@ -186,14 +186,14 @@ void Game::gameLogic()
 		{
 			sufficientMoves = true; //enough moves left for this action
 			//clear screen and display map
-			system("CLS"); 
+			system(CLEAR_SCREEN); 
 			map.dispMap();
 
 			//move hero
 			moveHero();
 
 			//clear screen and display map
-			system("CLS"); 
+			system(CLEAR_SCREEN); 
 			map.dispMap();
 			
 			//generate creature for recently entered space as long as it's
@@ -229,7 +229,7 @@ void Game::gameLogic()
 		else if (menuChoice == "Display map")
 		{
 			sufficientMoves = true;
-			system("CLS"); //clear screen
+			system(CLEAR_SCREEN); //clear screen
 			map.dispMap();
 		}
 

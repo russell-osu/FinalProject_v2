@@ -3,6 +3,9 @@
 #ifndef MOON_DEFCONST_HPP
 #define MOON_DEFCONST_HPP
 
+#define MAP_BORDER '@'
+#define HERO_BORDER '*'
+
 #define SPC_ROWS 7
 #define SPC_COLS 7
 #define VILLAGE_ROW 3
@@ -13,5 +16,7 @@
 #define SHELTER_WOOD 10
 //num ore needed for victory
 #define SHELTER_ORE 10
+
+#define CLEAR_SCREEN "CLS"
 
 #endif
