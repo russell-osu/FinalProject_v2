@@ -13,25 +13,12 @@ using std::string;
 
 int main()
 {
-	////testing the map
-	//Map map;
-
-	//map.updateMapSpc(3, 3, 'V');
-	//map.dispMap();
-	//cout << endl;
-	//map.updateMapHero(3, 3);
-	//map.dispMap();
-	//cout << endl;
-	//map.updateMapHero(3, 4, 3, 3);
-	//map.dispMap();
-	//cout << endl;
-
-	//set seed
+	//set seed for RNG
 	setSeed();
 
 	//testing game logic menu
 	shared_ptr<Creature>hero = 
-		std::make_shared<Hero>(VILLAGE_ROW, VILLAGE_COL, 35, 3, 3, 50);
+		std::make_shared<Hero>(VILLAGE_ROW, VILLAGE_COL, 1000, 3, 3, 150);
 	Game game(100, hero);
 	game.gameLogic();
 

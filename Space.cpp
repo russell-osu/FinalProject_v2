@@ -306,6 +306,11 @@ int Space::getNumVisits()
 	return numVisits;
 }
 
+vector<shared_ptr<Item>> Space::getRscItmVect()
+{
+	return rscItmVect;
+}
+
 void Space::setNorth(Space* north)
 {
 	this->north = north;

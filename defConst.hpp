@@ -7,8 +7,11 @@
 #define SPC_COLS 7
 #define VILLAGE_ROW 3
 #define VILLAGE_COL 3
+//num stones needed for victory
 #define SHELTER_STONE 10
+//num wood needed for victory
 #define SHELTER_WOOD 10
+//num ore needed for victory
 #define SHELTER_ORE 10
 
 #endif

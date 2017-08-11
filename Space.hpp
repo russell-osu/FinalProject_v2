@@ -63,6 +63,7 @@ public:
 	string getName();
 	void setNumVisits(int numVisits);
 	int getNumVisits();
+	vector<shared_ptr<Item>> getRscItmVect();
 
 	//map pointer getters and setters
 	void setNorth(Space* north);

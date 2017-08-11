@@ -46,6 +46,8 @@ Game::Game(int maxMoves, shared_ptr<Creature>hero)
 	this->movesRmn = maxMoves;
 }
 
+
+//handles primary game logic and play loop
 void Game::gameLogic()
 {
 	//welcome message
@@ -54,41 +56,44 @@ void Game::gameLogic()
 	map.dispMap();
 	cout << endl;
 
-	//booleans for setting the type of space curr occupied
-	bool isVillage;
-	bool hasCreature;
-
+	//for the game menu selection
 	string menuChoice = "";
 
-	//main play loop
+
+
+	//*********************MAIN PLAY LOOP***********************
 	do
 	{
+		//var for curr spc creature
+		shared_ptr<Creature> currCreat = currSpc->getCreat();
+
+		//booleans for setting the type of space curr occupied
+		bool isVillage = false;
+		bool hasCreature = false;
+		bool hasResources = false;
+
 		//checks if current space is a village
 		if (currSpc->getSpcTyp() == 'V')
 		{
 			isVillage = true;
 		}
-		else
-		{
-			isVillage = false;
-		}
 
 		//checks if current space has a creature
-		if (currSpc->getCreat() == nullptr)
-		{
-			hasCreature = false;
-		}
-		else
+		if (currCreat != nullptr)
 		{
 			hasCreature = true;
 		}
 
+		//checks if current space has resources
+		vector<shared_ptr<Item>> rscVect = currSpc->getRscItmVect();
+		if (!rscVect.empty())
+		{
+			hasResources = true;
+		}
 
-		//var for curr spc creature
-		shared_ptr<Creature> currCreat = currSpc->getCreat();
 
 
-		//output initial creature message
+		//output initial creature message (which includes hints about diff lvl)
 		if(hasCreature)
 
 		{
@@ -118,20 +123,31 @@ void Game::gameLogic()
 
 
 
-		//action menu items
+		//***************action menu items*************************
 		vector<string> menuItems;
 		menuItems.push_back("Move hero");
-		menuItems.push_back("Check inventory");
-		menuItems.push_back("Remove item from inventory");
 		menuItems.push_back("Display map");
+		menuItems.push_back("Check inventory");
+
+
+		//*************add other items based on conditions***************
+
 		if (isVillage)//if curr spc is a village
 		{
 			menuItems.push_back("Build shelter");
 		}
+
+		
 		else //if it's plains, forest, or hills
 		{
-			menuItems.push_back("Gather resources");
 
+			//if there are resources present, show gather rsc option
+			if (hasResources)
+			{
+				menuItems.push_back("Gather resources");
+			}
+
+			//if a creature is present, show fight creature option
 			if (hasCreature)
 			{
 				menuItems.push_back("Fight creature");
@@ -140,18 +156,27 @@ void Game::gameLogic()
 		menuItems.push_back("End game");
 
 
-		//prompt for and store user choice
+		//***********USER CHOICE***************
 		cout << "What would you like to do?" << endl;
 		menuChoice = menuRtnStr(menuItems, false);
 		cout << endl;
 
 
 
-		//menuChoice flow control
+		//*****************MENU CHOICE FLOW CONTROL******************
+
+		//***MOVE HERO***
 		if (menuChoice == "Move hero")
 		{
+			//clear screen and display map
+			system("CLS"); 
+			map.dispMap();
+
+			//move hero
 			moveHero();
-			system("CLS"); //clear screen
+
+			//clear screen and display map
+			system("CLS"); 
 			map.dispMap();
 			
 			//generate creature for recently entered space as long as it's
@@ -169,23 +194,20 @@ void Game::gameLogic()
 			}
 
 			cout << "Num visits this space: " << currSpc->getNumVisits() << endl;
-
 		}
 
 
+
+		//***CHECK INVENTORY***
 		else if (menuChoice == "Check inventory")
 		{
 			hero->chkInventory();
 			cout << endl;
 		}
 
-		else if (menuChoice == "Remove item from inventory")
-		{
-			hero->rmvFromBag();
-		}
 
 
-
+		//***DISPLAY MAP***
 		else if (menuChoice == "Display map")
 		{
 			system("CLS"); //clear screen
@@ -193,9 +215,11 @@ void Game::gameLogic()
 		}
 
 
+		//***GATHER RESOURCES***
 		else if (menuChoice == "Gather resources")
 		{
-			//if there's no creature, gathering is permitted
+			//if there's no creature gathering is permitted
+
 			if (currCreat == nullptr) 
 			{
 				currSpc->gatherRsc(hero);
@@ -208,12 +232,14 @@ void Game::gameLogic()
 			}
 		}
 
+
+		//***FIGHT CREATURE***
 		else if (menuChoice == "Fight creature")
 		{
 			//instantiate combat class
 			Combat combat;
 			//send hero and current spaces creature to combat
-			shared_ptr<Creature> winner = combat.engage(hero, currSpc->getCreat());
+			shared_ptr<Creature> winner = combat.engage(hero, currCreat);
 
 			//if hero wins, set curr spac creature to nullptr
 			if(winner->getName() == "Hero")
@@ -229,6 +255,8 @@ void Game::gameLogic()
 			}
 		}
 
+
+		//***BUILD SHELTER***
 		else if (menuChoice == "Build shelter")
 		{
 
@@ -245,7 +273,9 @@ void Game::gameLogic()
 		}
 
 
-	} while (menuChoice != "End game");
+	} while (menuChoice != "End game"); 
+
+	//********************end play loop**************************
 }
 
 

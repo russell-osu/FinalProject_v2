@@ -1,5 +1,6 @@
 #include "Village.hpp"
 #include <iostream>
+#include "defConst.hpp"
 
 using std::cout;
 using std::endl;
@@ -46,6 +47,7 @@ Village::~Village()
 
 
 //add items to village's rscItmVect to build shelter
+//returns true if shelter is completed
 bool Village::buildShelter(shared_ptr<Creature>hero)
 {
 	//display current shelter resources
@@ -78,12 +80,21 @@ bool Village::buildShelter(shared_ptr<Creature>hero)
 
 	}
 
-
 	dispSheltRsc();
 
-		return false;
+	//check win conditions
+	if(stoneCnt >= 10 && woodCnt >= 10 && oreCnt >= 10)
+	{	
+		//enough resources collected to build shelter
+		return true;
+	}
+
+	//not enough resources collected, yet
+	return false;
 
 	}
+
+
 
 
 //count and display current resources provided to shelter
@@ -91,9 +102,12 @@ void Village::dispSheltRsc()
 {
 	cout << "Current Shelter Resources" << endl;
 	cout << "*************************" << endl;
-	cout << "Stone: " << stoneCnt << endl;
-	cout << "Wood: " << woodCnt << endl;
-	cout << "Ore: " << oreCnt << endl << endl;
+	cout << "Stone: " << stoneCnt << " (" <<
+		SHELTER_STONE - stoneCnt << " more needed)" << endl;
+	cout << "Wood: " << woodCnt << " (" <<
+		SHELTER_WOOD - woodCnt << " more needed)" << endl;
+	cout << "Ore: " << oreCnt << " (" <<
+		SHELTER_ORE - oreCnt << " more needed)" << endl << endl;
 
 }
 
