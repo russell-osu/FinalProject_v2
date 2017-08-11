@@ -26,10 +26,6 @@ Plains::Plains(int row, int col)
 	west = nullptr;
 }
 
-int Plains::gatherRsc()
-{
-	return 1; //just for testing
-}
 
 
 string Plains::describe()

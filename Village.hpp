@@ -13,7 +13,6 @@ private:
 public:
 	Village();
 	Village(int row, int col);
-	virtual int gatherRsc();
 	virtual string describe();
 	bool buildShelter(shared_ptr<Creature>hero);
 	void dispSheltRsc();

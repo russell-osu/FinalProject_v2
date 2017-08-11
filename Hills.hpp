@@ -9,7 +9,6 @@ class Hills :
 public:
 	Hills();
 	Hills(int row, int col);
-	virtual int gatherRsc();
 	virtual string describe();
 	~Hills();
 };

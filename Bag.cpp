@@ -120,6 +120,9 @@ void Bag::rmvVectItm(vector<shared_ptr<Item>>& vect, int itmToRmv)
 	}
 
 	//clear resource vector and add tmp vector itms to cleared rsc vector
+	//setting a cleared vector's size to 0: 
+	//https://stackoverflow.com/questions/6882799/
+	//does-clearing-a-vector-affect-its-capacity
 	vect.clear();
 	vector<shared_ptr<Item>>(vect).swap(vect);
 	for (unsigned int i = 0; i < tmpRscVect.size(); i++)
@@ -138,6 +141,7 @@ void Bag::dispContents()
 	{
 		cout << "slot " << i+1<<") "<<bagVect[i]->getName() << endl;
 	}
+	cout << endl;
 }
 
 void Bag::setCapacity(int capacity)

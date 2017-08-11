@@ -27,10 +27,6 @@ Hills::Hills(int row, int col)
 	west = nullptr;
 }
 
-int Hills::gatherRsc()
-{
-	return 1; //just for testing
-}
 
 
 string Hills::describe()

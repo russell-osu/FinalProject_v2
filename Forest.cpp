@@ -26,10 +26,6 @@ Forest::Forest(int row, int col)
 	west = nullptr;
 }
 
-int Forest::gatherRsc()
-{
-	return 1; //just for testing
-}
 
 
 string Forest::describe()

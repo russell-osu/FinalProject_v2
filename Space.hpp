@@ -43,8 +43,7 @@ public:
 	void genResources();
 	void dispRscItmVect();
 	void setDifficulty();
-	virtual void gatherRsc(shared_ptr<Creature>hero);
-	//virtual bool buildShelter();
+	bool gatherRsc(shared_ptr<Creature>hero);
 	void rmvVectItm(vector<shared_ptr<Item>>&, int itmToRmv);
 	void genCreature();
 	void incrementNumVisits();

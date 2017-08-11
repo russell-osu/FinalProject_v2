@@ -29,10 +29,6 @@ Village::Village(int row, int col)
 	west = nullptr;
 }
 
-int Village::gatherRsc()
-{
-	return 1; //just for testing
-}
 
 
 string Village::describe()

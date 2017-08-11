@@ -86,72 +86,84 @@ void Space::setDifficulty()
 	}
 }
 
-void Space::gatherRsc(shared_ptr<Creature>hero)
+//gather rsc from rscItmVect, returns true if rsc gathered
+bool Space::gatherRsc(shared_ptr<Creature>hero)
 {
-	
-	//create resource menu list
-	vector<string> rscMenu;
+	//bool for flagging whether rsc was gathered
+	bool rscGathered = false;
 	
 	//add items to bag
 	if(rscItmVect.empty())
 	{
 		cout << "There are no more resources to gather." << endl;
+		return rscGathered;
 	}
-	else
+
+	//create a string vector of resource items for later use in menu
+	vector<string> rscMenu;
+	for (unsigned int i = 0; i < rscItmVect.size(); i++)
 	{
-		int menuChoice;
-		do
+		string rsc = rscItmVect[i]->getName();
+		rscMenu.push_back(rsc);
+	}
+
+	//print out menu of resource choices and prompt user
+	cout << "Choose the resource you'd like to add:"
+		<< endl;
+	int menuChoice = menuExit(rscMenu, false);
+
+
+	//gathering loop (allows user to gather multiple rsc)
+	while (menuChoice != 0)
+	{
+		cout << "RscItmVect Size: " << rscItmVect.size() << endl;
+
+		//point temp variable to item to add to bag
+		shared_ptr<Item> itemToGet = rscItmVect[menuChoice - 1];
+
+
+		//add item to hero's bag
+		bool added = hero->addToBag(itemToGet);
+
+		if (added) //bag had capacity
 		{
-			//create a string vector of resource items for later use in rsc menu
+			cout << "Item added to bag: " << itemToGet->getName() 
+			<< endl;
+			//remove the resource from the rscItmVect
+			rmvVectItm(rscItmVect, menuChoice - 1);
+			rscGathered = true;
+		}
+		else //bag lacked capacity
+		{
+			cout << "Your bag is full. Can't add resource." << endl;
+		}
+
+		cout << "RscItmVect Size: " << rscItmVect.size() << endl;
+
+
+		if (rscItmVect.size() > 0) //if items remain to gather
+		{
+			//recreate string vector of resource items for later use in menu
+			vector<string> rscMenu;
 			for (unsigned int i = 0; i < rscItmVect.size(); i++)
 			{
 				string rsc = rscItmVect[i]->getName();
 				rscMenu.push_back(rsc);
 			}
 
-
 			//print out menu of resource choices and prompt user
 			cout << "Choose the resource you'd like to add:"
 				<< endl;
 			menuChoice = menuExit(rscMenu, false);
-
-
-			//if user didn't choose to exit
-			if (menuChoice != 0)
-			{
-				//point temp variable to item to add to bag
-				shared_ptr<Item> itemToGet = rscItmVect[menuChoice - 1];
-
-
-				//add item to hero's bag
-				bool added = hero->addToBag(itemToGet);
-
-				if (added) //bag had capacity
-				{
-					cout << "Item added to bag: " << itemToGet->getName() << endl;
-					//remove the resource from the rscItmVect
-					rmvVectItm(rscItmVect, menuChoice - 1);
-				}
-				else //bag lacked capacity
-				{
-					cout << "Your bag is full. Can't add resource." << endl;
-				}
-
-				//clear resource menu list, set size to 0 and rewrite
-				rscMenu.clear();
-				//setting a cleared vector's size to 0: 
-				//https://stackoverflow.com/questions/6882799/does-clearing-a-vector-affect-its-capacity
-				vector<string>(rscMenu).swap(rscMenu);
-			}
-
-		} while (menuChoice != 0);
-	}
+		}
+		else //menu choice = 0, end loop
+		{
+			menuChoice = 0;
+		}
+	} 
+	
+	return rscGathered;
 }
-
-//bool Space::buildShelter()
-//{
-//	return false;
-//}
 
 
 
@@ -178,6 +190,9 @@ void Space::rmvVectItm(vector<shared_ptr<Item>>& vect, int itmToRmv)
 	}
 
 	//clear resource vector and add tmp vector itms to cleared rsc vector
+	//setting a cleared vector's size to 0: 
+	//https://stackoverflow.com/questions/6882799/
+	//does-clearing-a-vector-affect-its-capacity
 	vect.clear();
 	vector<shared_ptr<Item>>(vect).swap(vect);
 	for (unsigned int i = 0; i < tmpRscVect.size(); i++)

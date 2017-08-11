@@ -11,7 +11,6 @@ class Plains :
 public:
 	Plains();
 	Plains(int row, int col);
-	virtual int gatherRsc();
 	virtual string describe();
 	~Plains();
 };

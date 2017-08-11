@@ -10,7 +10,6 @@ class Forest :
 public:
 	Forest();
 	Forest(int row, int col);
-	virtual int gatherRsc();
 	virtual string describe();
 	~Forest();
 };
