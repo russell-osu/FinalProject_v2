@@ -1,5 +1,6 @@
 #include "Bag.hpp"
 #include <iostream>
+#include "cs162_utilities.hpp"
 
 using std::cout;
 using std::endl;
@@ -42,6 +43,92 @@ bool Bag::addItm(shared_ptr<Item>item)
 }
 
 
+//removes item from bag and returns item
+shared_ptr<Item> Bag::rmvItm()
+{
+	//create bag item menu list
+	vector<string> bagMenu;
+	for (unsigned int i = 0; i < bagVect.size(); i++)
+	{
+		string rsc = bagVect[i]->getName();
+		bagMenu.push_back(rsc);
+	}
+
+
+	//**********remove item from bag***************
+
+	//if bag is empty, return nullptr
+	if (bagVect.empty())
+	{
+		cout << "The bag is empty." << endl;
+		return nullptr;
+	}
+
+	int menuChoice;
+	
+
+	//print out menu of resource choices and prompt user
+	cout << "Choose the item you'd like to remove:"
+		<< endl;
+	menuChoice = menuExit(bagMenu, false);
+
+
+	//if user exits menu, return nullptr
+	if (menuChoice == 0) 
+	{
+		return nullptr;
+	}
+			
+
+	//point temp variable to item to add to bag
+	shared_ptr<Item> itemToRmv = bagVect[menuChoice - 1];
+
+
+	//remove the rsc from the bag vector and rewrite vector
+	rmvVectItm(bagVect, menuChoice - 1);
+
+	//output message upon completion
+	cout << "Item removed from bag: " << itemToRmv->getName() << endl
+		<<endl;
+
+	////display contents of bag
+	//dispContents();
+
+	return itemToRmv;
+}
+
+
+//removes item by rewriting vector without removed item
+//takes element number of item to remove from vector as a parameter
+void Bag::rmvVectItm(vector<shared_ptr<Item>>& vect, int itmToRmv)
+{
+	//set element to nullptr
+	vect[itmToRmv] = nullptr;
+
+
+
+	//rewrite rsc vector to remove null element and rewrite rsc menu
+
+	//create tmp rsc vector to hold remaining items
+	vector<shared_ptr<Item>> tmpRscVect;
+	for (unsigned int i = 0; i < vect.size(); i++)
+	{
+		if (vect[i] != nullptr)
+		{
+			tmpRscVect.push_back(vect[i]);
+		}
+	}
+
+	//clear resource vector and add tmp vector itms to cleared rsc vector
+	vect.clear();
+	vector<shared_ptr<Item>>(vect).swap(vect);
+	for (unsigned int i = 0; i < tmpRscVect.size(); i++)
+	{
+		vect.push_back(tmpRscVect[i]);
+	}
+}
+
+
 void Bag::dispContents()
 {
 	cout << "Bag Contents" << endl;
@@ -77,6 +164,7 @@ vector<shared_ptr<Item>> Bag::getBagVect()
 {
 	return bagVect;
 }
+
 
 Bag::~Bag()
 {

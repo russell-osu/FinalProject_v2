@@ -38,6 +38,7 @@ public:
 	void generateDefText(int prelimStrength, string special = "");
 	void chkInventory();
 	bool addToBag(shared_ptr<Item> item);
+	shared_ptr<Item> rmvFromBag();
 
 
 	//getters and setters

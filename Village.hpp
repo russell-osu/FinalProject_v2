@@ -6,12 +6,18 @@
 class Village :
 	public Space
 {
+private:
+	int stoneCnt;
+	int woodCnt;
+	int oreCnt;
 public:
 	Village();
 	Village(int row, int col);
 	virtual int gatherRsc();
 	virtual string describe();
-	virtual bool buildShelter();
+	bool buildShelter(shared_ptr<Creature>hero);
+	void dispSheltRsc();
+	//void cntSheltRsc();
 	~Village();
 };
 

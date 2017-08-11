@@ -21,7 +21,8 @@ public:
 	Bag(int capacity);
 
 	bool addItm(shared_ptr<Item> item);
-	Item* rmvItm(int itemNum);
+	shared_ptr<Item> rmvItm();
+	void rmvVectItm(vector<shared_ptr<Item>>&, int itmToRmv);
 	void examItm();
 	void dispContents();
 	void setCapacity(int capacity);
@@ -29,6 +30,7 @@ public:
 	void setCurrWght(int currWght);
 	int getCurrWght();
 	vector<shared_ptr<Item>> getBagVect();
+
 
 	~Bag();
 };

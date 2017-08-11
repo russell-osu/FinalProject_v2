@@ -155,6 +155,16 @@ bool Creature::addToBag(shared_ptr<Item> item)
 	return addedToBag;
 }
 
+
+//removes item from bag and returns item
+//returns nullptr if nothing removed
+shared_ptr<Item> Creature::rmvFromBag()
+{
+	return bag.rmvItm();
+}
+
+
+
 void Creature::setNumAttDie(int numAttDie)
 {
 	this->numAttDie = numAttDie;

@@ -122,6 +122,7 @@ void Game::gameLogic()
 		vector<string> menuItems;
 		menuItems.push_back("Move hero");
 		menuItems.push_back("Check inventory");
+		menuItems.push_back("Remove item from inventory");
 		menuItems.push_back("Display map");
 		if (isVillage)//if curr spc is a village
 		{
@@ -178,6 +179,11 @@ void Game::gameLogic()
 			cout << endl;
 		}
 
+		else if (menuChoice == "Remove item from inventory")
+		{
+			hero->rmvFromBag();
+		}
+
 
 
 		else if (menuChoice == "Display map")
@@ -225,7 +231,8 @@ void Game::gameLogic()
 
 		else if (menuChoice == "Build shelter")
 		{
-			bool built = village->buildShelter();
+
+			bool built = static_cast<Village*>(village)->buildShelter(hero);
 
 			if(built)
 			{

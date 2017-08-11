@@ -129,7 +129,8 @@ void Space::gatherRsc(shared_ptr<Creature>hero)
 				if (added) //bag had capacity
 				{
 					cout << "Item added to bag: " << itemToGet->getName() << endl;
-					removeRsc(menuChoice - 1);
+					//remove the resource from the rscItmVect
+					rmvVectItm(rscItmVect, menuChoice - 1);
 				}
 				else //bag lacked capacity
 				{
@@ -147,17 +148,20 @@ void Space::gatherRsc(shared_ptr<Creature>hero)
 	}
 }
 
-bool Space::buildShelter()
-{
-	return false;
-}
+//bool Space::buildShelter()
+//{
+//	return false;
+//}
 
 
+
+
+//removes item by rewriting vector without removed item
 //takes element number of item to remove from vector as a parameter
-void Space::removeRsc(int itmToRmv)
+void Space::rmvVectItm(vector<shared_ptr<Item>>& vect, int itmToRmv)
 {
 	//set element to nullptr
-	rscItmVect[itmToRmv] = nullptr;
+	vect[itmToRmv] = nullptr;
 	
 
 
@@ -165,22 +169,24 @@ void Space::removeRsc(int itmToRmv)
 
 	//create tmp rsc vector to hold remaining items
 	vector<shared_ptr<Item>> tmpRscVect;
-	for (unsigned int i = 0; i < rscItmVect.size(); i++)
+	for (unsigned int i = 0; i < vect.size(); i++)
 	{
-		if (rscItmVect[i] != nullptr)
+		if (vect[i] != nullptr)
 		{
-			tmpRscVect.push_back(rscItmVect[i]);
+			tmpRscVect.push_back(vect[i]);
 		}
 	}
 
 	//clear resource vector and add tmp vector itms to cleared rsc vector
-	rscItmVect.clear();
-	vector<shared_ptr<Item>>(rscItmVect).swap(rscItmVect);
+	vect.clear();
+	vector<shared_ptr<Item>>(vect).swap(vect);
 	for (unsigned int i = 0; i < tmpRscVect.size(); i++)
 	{
-		rscItmVect.push_back(tmpRscVect[i]);
+		vect.push_back(tmpRscVect[i]);
 	}
 }
+
+
 
 
 
