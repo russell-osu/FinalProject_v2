@@ -8,6 +8,7 @@ Forest::Forest()
 Forest::Forest(int row, int col)
 {
 	spcTyp = 'F';
+	name = "forest";
 	creat = nullptr;
 	this->row = row;
 	this->col = col;

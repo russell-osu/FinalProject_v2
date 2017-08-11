@@ -18,6 +18,7 @@ using std::endl;
 Space::Space()
 {
 	creat = nullptr;
+	numVisits = 0;
 }
 
 
@@ -185,6 +186,9 @@ void Space::genCreature()
 
 	switch(creatTyp)
 	{
+	case 0: //No creature
+		creat = nullptr;
+		break;
 	case 1: //Vampire
 		creat = std::make_shared<Vampire>();
 		break;
@@ -213,6 +217,10 @@ void Space::genCreature()
 	creat->setNumDefDie(numDefDie*diffLvl);
 }
 
+void Space::incrementNumVisits()
+{
+	numVisits++;
+}
 
 
 void Space::setRow(int row)
@@ -264,6 +272,27 @@ void Space::setDiffLvl(int diffLvl)
 int Space::getDiffLvl()
 {
 	return diffLvl;
+}
+
+void Space::setName(string name)
+{
+	this->name = name;
+}
+
+string Space::getName()
+{
+	return name;
+}
+
+
+void Space::setNumVisits(int numVisits)
+{
+	this->numVisits = numVisits;
+}
+
+int Space::getNumVisits()
+{
+	return numVisits;
 }
 
 void Space::setNorth(Space* north)

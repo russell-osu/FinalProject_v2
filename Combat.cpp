@@ -19,6 +19,7 @@ times each creature won.
 #include "BlueMen.hpp"
 #include "Medusa.hpp"
 #include "HarryPotter.hpp"
+#include "Hero.hpp"
 
 using std::cout;
 using std::endl;
@@ -38,11 +39,6 @@ shared_ptr<Creature> Combat::engage(shared_ptr<Creature> hero,
 	bool fightFinished = false;
 	int round = 1; //initialize round counter
 
-	////prompt user to choose Creature 1 and Creature 2
-	//chooseCreatures();
-
-	////prompt user to change creatures' strengths
-	//changeStrength();
 
 	//for differentiating b/w creatues of the same type
 	string attCreatID = "";
@@ -55,16 +51,12 @@ shared_ptr<Creature> Combat::engage(shared_ptr<Creature> hero,
 	if(getRandIntInRange(1,2) == 1)
 	{
 		attacker = creat1;
-		//attCreatID = "Creature 1";
 		defender = creat2;
-		//defCreatID = "Creature 2";
 	}
 	else
 	{
 		attacker = creat2;
-		//attCreatID = "Creature 2";
 		defender = creat1;
-		//defCreatID = "Creature 1";
 	}
 
 
@@ -81,18 +73,17 @@ shared_ptr<Creature> Combat::engage(shared_ptr<Creature> hero,
 		int defStrength = defender->defend(attString);
 
 		//output attacker's info
-		cout << /*attCreatID << "->" <<*/ attacker->getAttText() << endl << endl;
+		cout << attacker->getAttText() << endl << endl;
 		
 		//output defender's info
-		cout << /*defCreatID << "->" <<*/ defender->getDefText() << endl << endl;
+		cout << defender->getDefText() << endl << endl;
 
 
 		//determine if fight is finished by checking defender's strength
 		if(defStrength <= 0)
 		{
 			//output victory message
-			cout << /*attCreatID << "->" <<*/ attacker->getName() << 
-				" wins!!!" << endl << endl;
+			cout << attacker->getName() << " wins!!!" << endl << endl;
 			fightFinished = true;
 		}
 
@@ -102,26 +93,6 @@ shared_ptr<Creature> Combat::engage(shared_ptr<Creature> hero,
 			shared_ptr<Creature> temp = attacker;
 			attacker = defender;
 			defender = temp;
-
-			////swap creature 1 and 2 ID from attacker to defender
-			////and vice versa
-			//if(attCreatID == "Creature 1")
-			//{
-			//	attCreatID = "Creature 2";
-			//}
-			//else //attack creature is creature 2
-			//{
-			//	attCreatID = "Creature 1";
-			//}
-
-			//if (defCreatID == "Creature 1")
-			//{
-			//	defCreatID = "Creature 2";
-			//}
-			//else //defense creature is creature 2
-			//{
-			//	defCreatID = "Creature 1";
-			//}
 		}
 
 		round++; //increment round
@@ -137,15 +108,16 @@ shared_ptr<Creature> Combat::engage(shared_ptr<Creature> hero,
 //allows user to choose the two creatues that will fight
 void Combat::chooseCreatures()
 {
-	string creatMenu[5] = { "Vampire",
+	string creatMenu[] = { "Vampire",
 							"Barbarian",
 							"Blue Men",
 							"Medusa",
-							"Harry Potter" };
+							"Harry Potter",
+							"Hero"};
 
 	//prompt user to choose first creature
 	cout << "Choose Creature 1: " << endl;
-	int creat1Choice = menu(creatMenu, 5, false);
+	int creat1Choice = menu(creatMenu, 6, false);
 	cout << endl;
 
 	//initialize creat1
@@ -161,12 +133,14 @@ void Combat::chooseCreatures()
 			break;
 		case 5: creat1 = make_shared<HarryPotter>();
 			break;
+		case 6: creat1 = make_shared<Hero>();
+			break;
 	}
 
 
 	//prompt user to choose second creature
 	cout << "Choose Creature 2: " << endl;
-	int creat2Choice = menu(creatMenu, 5, false);
+	int creat2Choice = menu(creatMenu, 6, false);
 	cout << endl;
 
 	//initialize creat2
@@ -181,6 +155,8 @@ void Combat::chooseCreatures()
 		case 4: creat2 = make_shared<Medusa>();
 			break;
 		case 5: creat2 = make_shared<HarryPotter>();
+			break;
+		case 6: creat2 = make_shared<Hero>();
 			break;
 	}
 }

@@ -18,6 +18,8 @@ protected:
 	int col;
 	shared_ptr<Creature> creat;
 	char spcTyp;
+	string name;
+	int numVisits;
 
 	//for stone, wood, and ore (resources)
 	vector<shared_ptr<Item>> rscItmVect;
@@ -44,6 +46,7 @@ public:
 	virtual void gatherRsc(shared_ptr<Creature>hero);
 	void removeRsc(int itmToRmv);
 	void genCreature();
+	void incrementNumVisits();
 	virtual string describe() = 0;
 	void setRow(int row);
 	int getRow();
@@ -55,6 +58,10 @@ public:
 	char getSpcTyp();
 	void setDiffLvl(int diffLvl);
 	int getDiffLvl();
+	void setName(string name);
+	string getName();
+	void setNumVisits(int numVisits);
+	int getNumVisits();
 
 	//map pointer getters and setters
 	void setNorth(Space* north);

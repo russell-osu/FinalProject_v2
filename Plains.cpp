@@ -8,6 +8,7 @@ Plains::Plains()
 Plains::Plains(int row, int col)
 {
 	spcTyp = 'P';
+	name = "plains";
 	creat = nullptr;
 	this->row = row;
 	this->col = col;

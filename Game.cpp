@@ -83,6 +83,38 @@ void Game::gameLogic()
 			hasCreature = true;
 		}
 
+		//var for curr spc creature
+		shared_ptr<Creature> currCreat = currSpc->getCreat();
+
+		//output initial creature message
+		if(hasCreature)
+
+		{
+			cout << endl;
+			cout << "You see " << currCreat->getName() << " eyeing you "
+				"suspiciously from the edge of the " << currSpc->getName() <<
+				"." << endl;
+
+			int diffLvl = currSpc->getDiffLvl();
+			switch(diffLvl)
+			{
+			case 1:
+				cout << "You're close to the village. This creature may not"
+					" pose much of a challenge." << endl << endl;
+				break;
+			case 2:
+				cout << "You're a little far from home. It may be tough if you"
+					" choose to fight." << endl << endl;
+				break;
+			case 3:
+				cout << "You're at the edge of the known world. This creature"
+					" might just eat your lunch." << endl << endl;
+				break;
+
+			}
+		}
+
+
 
 		//action menu items
 		vector<string> menuItems;
@@ -114,22 +146,28 @@ void Game::gameLogic()
 		//menuChoice flow control
 		if (menuChoice == "Move hero")
 		{
-
 			moveHero();
 			system("CLS"); //clear screen
 			map.dispMap();
 			
 			//generate creature for recently entered space as long as it's
-			//not a village
+			//not a village, it doesn't already have a creature, and the 
+			//number of total visits is less than 3;
+			//if (currSpc->getSpcTyp() != 'V' && currCreat == nullptr 
+			//	&& currSpc->getNumVisits() < 3)
+			//{
+			//	currSpc->genCreature();
+			//}
+
 			if (currSpc->getSpcTyp() != 'V')
 			{
 				currSpc->genCreature();
 			}
 
-
-
+			//cout << "Num visits this space: " << currSpc->getNumVisits() << endl;
 
 		}
+
 
 		else if (menuChoice == "Check inventory")
 		{
@@ -137,16 +175,28 @@ void Game::gameLogic()
 			cout << endl;
 		}
 
+
+
 		else if (menuChoice == "Display map")
 		{
 			system("CLS"); //clear screen
 			map.dispMap();
 		}
 
+
 		else if (menuChoice == "Gather resources")
 		{
-			currSpc->gatherRsc(hero);
-			cout << endl;
+			//if there's no creature, gathering is permitted
+			if (currCreat == nullptr) 
+			{
+				currSpc->gatherRsc(hero);
+				cout << endl;
+			}
+			else //if a creature is around, you'll have to fight it for rscs
+			{
+				cout << "If you want to gather resources, you'll have to"
+					" fight the creature, first." << endl;
+			}
 		}
 
 		else if (menuChoice == "Fight creature")
@@ -318,7 +368,13 @@ void Game::moveHero()
 	{
 		cout << "You can't walk off of the edge of the known world!" 
 			<< endl << endl;
+		cout << "(press <enter> to continue)" << endl;
+		std::cin.get();
 	}
+	//else //increment number of visits to new currSpc
+	//{
+	//	currSpc->incrementNumVisits();
+	//}
 }
 
 
