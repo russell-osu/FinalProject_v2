@@ -83,6 +83,8 @@ void Game::gameLogic()
 			hasCreature = true;
 		}
 
+
+
 		//var for curr spc creature
 		shared_ptr<Creature> currCreat = currSpc->getCreat();
 
@@ -164,7 +166,7 @@ void Game::gameLogic()
 				currSpc->genCreature();
 			}
 
-			//cout << "Num visits this space: " << currSpc->getNumVisits() << endl;
+			cout << "Num visits this space: " << currSpc->getNumVisits() << endl;
 
 		}
 
@@ -234,6 +236,9 @@ void Game::moveHero()
 	int row = currSpc->getRow();
 	int col = currSpc->getCol();
 	
+	//set currSpc to a temp pointer
+	Space* tmpPrvSpc = currSpc;
+
 	//set moved flag to false
 	bool offMap = true;
 
@@ -263,6 +268,9 @@ void Game::moveHero()
 				newSpcInit(row - 1, col);
 				//update curr space
 				currSpc = spcArr[row - 1][col];
+				//set previous space North ptr to currSpc
+				tmpPrvSpc->setNorth(spcArr[row - 1][col]);
+
 			}
 			else //space already instantiated
 			{
@@ -292,6 +300,8 @@ void Game::moveHero()
 				newSpcInit(row + 1, col);
 				//update curr space
 				currSpc = spcArr[row + 1][col];
+				//set previous space South ptr to currSpc
+				tmpPrvSpc->setSouth(spcArr[row + 1][col]);
 			}
 			else //space already instantiated
 			{
@@ -320,6 +330,8 @@ void Game::moveHero()
 				newSpcInit(row, col+1);
 				//update curr space
 				currSpc = spcArr[row][col+1];
+				//set previous space East ptr to currSpc
+				tmpPrvSpc->setEast(spcArr[row][col + 1]);
 			}
 			else //space already instantiated
 			{
@@ -349,6 +361,8 @@ void Game::moveHero()
 				newSpcInit(row, col - 1);
 				//update curr space
 				currSpc = spcArr[row][col - 1];
+				//set previous space West ptr to currSpc
+				tmpPrvSpc->setWest(spcArr[row][col - 1]);
 			}
 			else //space already instantiated
 			{
@@ -371,11 +385,16 @@ void Game::moveHero()
 		cout << "(press <enter> to continue)" << endl;
 		std::cin.get();
 	}
-	//else //increment number of visits to new currSpc
-	//{
-	//	currSpc->incrementNumVisits();
-	//}
+	else //increment number of visits to new currSpc
+	{
+		currSpc->incrementNumVisits();
+	}
+
+	tmpPrvSpc = nullptr;
 }
+
+
+
 
 
 //initializes a space with a randomly choice space subclass
