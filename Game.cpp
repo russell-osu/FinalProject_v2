@@ -93,39 +93,6 @@ void Game::gameLogic()
 		}
 
 
-
-		//*****output message (which includes hints about diff lvl)*****
-		cout << "Moves remaining: " << movesRmn << endl << endl;
-
-		if(hasCreature)
-
-		{
-			cout << endl;
-			cout << "You see " << currCreat->getName() << " eyeing you "
-				"suspiciously from the edge of the " << currSpc->getName() <<
-				"." << endl;
-
-			int diffLvl = currSpc->getDiffLvl();
-			switch(diffLvl)
-			{
-			case 1:
-				cout << "You're close to the village. This creature may not"
-					" pose much of a challenge." << endl << endl;
-				break;
-			case 2:
-				cout << "You're a little far from home. It may be tough if you"
-					" choose to fight." << endl << endl;
-				break;
-			case 3:
-				cout << "You're at the edge of the known world. This creature"
-					" might just eat your lunch." << endl << endl;
-				break;
-
-			}
-		}
-
-
-
 		//***************action menu items*************************
 		vector<string> menuItems;
 		menuItems.push_back("Move hero");
@@ -165,7 +132,7 @@ void Game::gameLogic()
 		if (movesRmn <= 0)
 		{
 			cout << "YOU HAVE RUN OUT OF TIME!!!" << endl;
-			cout << "**********GAME OVER********" << endl << endl;
+			cout << "*********GAME OVER*********" << endl << endl;
 			menuChoice = "End game";
 		}
 
@@ -192,25 +159,6 @@ void Game::gameLogic()
 			//move hero
 			moveHero();
 
-			//clear screen and display map
-			system(CLEAR_SCREEN); 
-			map.dispMap();
-			
-			//generate creature for recently entered space as long as it's
-			//not a village, it doesn't already have a creature, and the 
-			//number of total visits is less than 3;
-			//if (currSpc->getSpcTyp() != 'V' && currCreat == nullptr 
-			//	&& currSpc->getNumVisits() < 3)
-			//{
-			//	currSpc->genCreature();
-			//}
-
-			if (currSpc->getSpcTyp() != 'V')
-			{
-				currSpc->genCreature();
-			}
-
-			//cout << "Num visits this space: " << currSpc->getNumVisits() << endl;
 		}
 
 
@@ -276,7 +224,7 @@ void Game::gameLogic()
 			{
 				menuChoice = "End game";
 				cout << "The hero has succumbed to the creature." << endl;
-				cout << "**************GAME OVER****************" << endl
+				cout << "***************GAME OVER***************" << endl
 					<< endl;
 			}
 		}
@@ -314,196 +262,264 @@ void Game::gameLogic()
 }
 
 
+
+
+/*****************UPDATE REMAINING MOVES*********************/
 void Game::updMovesRmn(int newMoves)
 {
 	movesRmn -= newMoves;
 }
 
+
+
+/*********************MOVE HERO*************************/
+//moves hero until user chooses to exit move interface
 void Game::moveHero()
 {
-	//get coor of currSpc
-	int row = currSpc->getRow();
-	int col = currSpc->getCol();
-	
-	//set currSpc to a temp pointer
-	Space* tmpPrvSpc = currSpc;
 
-	//set moved flag to false
-	bool offMap = true;
-
-	//prompt user for direction
-	cout << "Which way would you like to move?" << endl;
-	//string menuItems[] = { "North","South","East","West","Don't move"};
-	//int menuChoice = menu(menuItems, 5, false);
+	//loop wsda menu options until user chooses to not move
 	string usrIn = "";
-	cout << "w) north" << endl << "s) south" << endl << "d) east" 
-		<< endl << "a) west" << endl << endl << "x) don't move"<< endl << endl;
-	getline(std::cin, usrIn);
-	cout << endl;
-	//validate usr input
-	while (!(usrIn=="w"|| usrIn == "s" || usrIn == "d" || usrIn == "a" 
-			|| usrIn == "x"))
+	do
 	{
-		cout << "Try again. Enter <w>, <s>, <d>, <a>, or <x>." << endl << endl;
+		//get coor of currSpc
+		int row = currSpc->getRow();
+		int col = currSpc->getCol();
+
+		//set currSpc to a temp pointer
+		Space* tmpPrvSpc = currSpc;
+
+		//set moved flag to false
+		bool offMap = true;
+
+		//prompt user for direction
+		cout << "Which way would you like to move?" << endl;
+		//string menuItems[] = { "North","South","East","West","Don't move"};
+		//int menuChoice = menu(menuItems, 5, false);
+
+		cout << "w) north" << endl << "s) south" << endl << "d) east"
+			<< endl << "a) west" << endl << endl << "x) don't move" << endl << endl;
 		getline(std::cin, usrIn);
 		cout << endl;
-	}
-	char menuChoice = usrIn[0]; //convert usrIn to char for switch
-
-
-
-	switch(menuChoice)
-	{
-	case 'w': //North
-		if (row > 0)//to prevent hero from going off of the board
+		//validate usr input
+		while (!(usrIn == "w" || usrIn == "s" || usrIn == "d" || usrIn == "a"
+			|| usrIn == "x"))
 		{
-			offMap = false; 
-			//moving hero requires one move
-			updMovesRmn(1);
-			//update hero on map
-			map.updateMapHero(row - 1, col, row, col);
-
-			//update hero coord
-			hero->setRow(row - 1);
-			hero->setCol(col);
-
-			//instantiate new spc if not instantiated and add spc type to map
-			if(currSpc->getNorth() == nullptr)//if curr spc not instatiated
-			{
-				//instantiate new space
-				newSpcInit(row - 1, col);
-				//update curr space
-				currSpc = spcArr[row - 1][col];
-				//set previous space North ptr to currSpc
-				tmpPrvSpc->setNorth(spcArr[row - 1][col]);
-
-			}
-			else //space already instantiated
-			{
-				//update curr space
-				currSpc = spcArr[row - 1][col];
-			}
+			cout << "Try again. Enter <w>, <s>, <d>, <a>, or <x>." << endl << endl;
+			getline(std::cin, usrIn);
+			cout << endl;
 		}
-		break; //case 1 break
+		char menuChoice = usrIn[0]; //convert usrIn to char for switch
 
-
-	case 's': //South
-		if (row < 6)//to prevent hero from going off of the board
+		//switch statment for processing user mvmt choice
+		switch (menuChoice)
 		{
+		case 'w': //North
+			if (row > 0)//to prevent hero from going off of the board
+			{
+				offMap = false;
+				//moving hero requires one move
+				updMovesRmn(1);
+				//update hero on map
+				map.updateMapHero(row - 1, col, row, col);
+
+				//update hero coord
+				hero->setRow(row - 1);
+				hero->setCol(col);
+
+				//instantiate new spc if not instantiated and add spc type to map
+				if (currSpc->getNorth() == nullptr)//if curr spc not instatiated
+				{
+					//instantiate new space
+					newSpcInit(row - 1, col);
+					//update curr space
+					currSpc = spcArr[row - 1][col];
+					//set previous space North ptr to currSpc
+					tmpPrvSpc->setNorth(spcArr[row - 1][col]);
+
+				}
+				else //space already instantiated
+				{
+					//update curr space
+					currSpc = spcArr[row - 1][col];
+				}
+			}
+			break; //case 1 break
+
+
+		case 's': //South
+			if (row < 6)//to prevent hero from going off of the board
+			{
+				offMap = false;
+				//moving hero requires one move
+				updMovesRmn(1);
+				//update hero on map
+				map.updateMapHero(row + 1, col, row, col);
+
+				//update hero coord
+				hero->setRow(row + 1);
+				hero->setCol(col);
+
+				//instantiate new spc if not instantiated and add spc type to map
+				if (currSpc->getSouth() == nullptr)//if curr spc not instatiated
+				{
+					//instantiate new space
+					newSpcInit(row + 1, col);
+					//update curr space
+					currSpc = spcArr[row + 1][col];
+					//set previous space South ptr to currSpc
+					tmpPrvSpc->setSouth(spcArr[row + 1][col]);
+				}
+				else //space already instantiated
+				{
+					//update curr space
+					currSpc = spcArr[row + 1][col];
+				}
+			}
+			break; //case 2 break
+
+		case 'd': //East
+			if (col < 6)//to prevent hero from going off of the board
+			{
+				offMap = false;
+				//moving hero requires one move
+				updMovesRmn(1);
+				//update hero on map
+				map.updateMapHero(row, col + 1, row, col);
+
+				//update hero coord
+				hero->setRow(row);
+				hero->setCol(col + 1);
+
+				//instantiate new spc if not instantiated and add spc type to map
+				if (currSpc->getEast() == nullptr)//if curr spc not instatiated
+				{
+					//instantiate new space
+					newSpcInit(row, col + 1);
+					//update curr space
+					currSpc = spcArr[row][col + 1];
+					//set previous space East ptr to currSpc
+					tmpPrvSpc->setEast(spcArr[row][col + 1]);
+				}
+				else //space already instantiated
+				{
+					//update curr space
+					currSpc = spcArr[row][col + 1];
+				}
+			}
+			break; //case 3 break
+
+
+		case 'a': //West
+			if (col > 0)//to prevent hero from going off of the board
+			{
+				offMap = false;
+				//moving hero requires one move
+				updMovesRmn(1);
+				//update hero on map
+				map.updateMapHero(row, col - 1, row, col);
+
+				//update hero coord
+				hero->setRow(row);
+				hero->setCol(col - 1);
+
+				//instantiate new spc if not instantiated and add spc type to map
+				if (currSpc->getWest() == nullptr)//if curr spc not instatiated
+				{
+					//instantiate new space
+					newSpcInit(row, col - 1);
+					//update curr space
+					currSpc = spcArr[row][col - 1];
+					//set previous space West ptr to currSpc
+					tmpPrvSpc->setWest(spcArr[row][col - 1]);
+				}
+				else //space already instantiated
+				{
+					//update curr space
+					currSpc = spcArr[row][col - 1];
+				}
+			}
+			break; //case 4 break
+
+		case 'x': //Don't move
 			offMap = false;
-			//moving hero requires one move
-			updMovesRmn(1);
-			//update hero on map
-			map.updateMapHero(row + 1, col, row, col);
+		}//end move choice switch
 
-			//update hero coord
-			hero->setRow(row + 1);
-			hero->setCol(col);
 
-			//instantiate new spc if not instantiated and add spc type to map
-			if (currSpc->getSouth() == nullptr)//if curr spc not instatiated
-			{
-				//instantiate new space
-				newSpcInit(row + 1, col);
-				//update curr space
-				currSpc = spcArr[row + 1][col];
-				//set previous space South ptr to currSpc
-				tmpPrvSpc->setSouth(spcArr[row + 1][col]);
-			}
-			else //space already instantiated
-			{
-				//update curr space
-				currSpc = spcArr[row + 1][col];
-			}
-		}
-		break; //case 2 break
 
-	case 'd': //East
-		if (col < 6)//to prevent hero from going off of the board
+		if (offMap) //if hero tries to walk past edge of space array
 		{
-			offMap = false;
-			//moving hero requires one move
-			updMovesRmn(1);
-			//update hero on map
-			map.updateMapHero(row, col+1, row, col);
-
-			//update hero coord
-			hero->setRow(row);
-			hero->setCol(col+1);
-
-			//instantiate new spc if not instantiated and add spc type to map
-			if (currSpc->getEast() == nullptr)//if curr spc not instatiated
-			{
-				//instantiate new space
-				newSpcInit(row, col+1);
-				//update curr space
-				currSpc = spcArr[row][col+1];
-				//set previous space East ptr to currSpc
-				tmpPrvSpc->setEast(spcArr[row][col + 1]);
-			}
-			else //space already instantiated
-			{
-				//update curr space
-				currSpc = spcArr[row][col+1];
-			}
+			cout << "You can't walk off of the edge of the known world!"
+				<< endl << endl;
+			cout << "(press <enter> to continue)" << endl;
+			std::cin.get();
 		}
-		break; //case 3 break
-
-
-	case 'a': //West
-		if (col > 0)//to prevent hero from going off of the board
+		
+		else //if hero moves
 		{
-			offMap = false;
-			//moving hero requires one move
-			updMovesRmn(1);
-			//update hero on map
-			map.updateMapHero(row, col - 1, row, col);
+			currSpc->incrementNumVisits();
 
-			//update hero coord
-			hero->setRow(row);
-			hero->setCol(col - 1);
+			//clear screen and display map
+			system(CLEAR_SCREEN);
+			map.dispMap();
 
-			//instantiate new spc if not instantiated and add spc type to map
-			if (currSpc->getWest() == nullptr)//if curr spc not instatiated
+			//generate new creature if currSpc not village
+
+			if (currSpc->getSpcTyp() != 'V')
 			{
-				//instantiate new space
-				newSpcInit(row, col - 1);
-				//update curr space
-				currSpc = spcArr[row][col - 1];
-				//set previous space West ptr to currSpc
-				tmpPrvSpc->setWest(spcArr[row][col - 1]);
+				currSpc->genCreature();
 			}
-			else //space already instantiated
-			{
-				//update curr space
-				currSpc = spcArr[row][col - 1];
-			}
+
+			//display new space message
+			dispNewSpcMsg();
 		}
-		break; //case 4 break
-
-	case 'x': //Don't move
-		offMap = false;
 
 
-	}//end move choice switch
+		tmpPrvSpc = nullptr; //set prv spc to nullptr
 
-	if(offMap) //if hero tries to walk past edge of space array
-	{
-		cout << "You can't walk off of the edge of the known world!" 
-			<< endl << endl;
-		cout << "(press <enter> to continue)" << endl;
-		std::cin.get();
-	}
-	else //increment number of visits to new currSpc
-	{
-		currSpc->incrementNumVisits();
-	}
-
-	tmpPrvSpc = nullptr;
+	}while (usrIn != "x" && movesRmn > 0); //end move loop
 }
 
 
 
+/*************************NEW SPACE MESSAGE*************************/
+//generates msg to disp when hero enters new space
+void Game::dispNewSpcMsg()
+{
+
+	//var for curr spc creature
+	shared_ptr<Creature> currCreat = currSpc->getCreat();
+
+	//*****output message (which includes hints about diff lvl)*****
+	cout << "Moves remaining: " << movesRmn << endl << endl;
+
+	
+	if (currCreat != nullptr) //if a creature is in the space
+	{
+		cout << endl;
+		cout << "You see " << currCreat->getName() << " eyeing you "
+			"suspiciously from the edge of the " << currSpc->getName() <<
+			"." << endl;
+
+		//output message predicated on space difficulty level
+		int diffLvl = currSpc->getDiffLvl();
+		switch (diffLvl)
+		{
+		case 1:
+			cout << "You're close to the village. This creature may not"
+				" pose much of a challenge." << endl << endl;
+			break;
+		case 2:
+			cout << "You're a little far from home. It may be tough if you"
+				" choose to fight." << endl << endl;
+			break;
+		case 3:
+			cout << "You're at the edge of the known world. This creature"
+				" might just eat your lunch." << endl << endl;
+			break;
+
+		}
+	}
+}
 
 
 //initializes a space with a randomly choice space subclass
