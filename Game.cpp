@@ -183,6 +183,7 @@ void Game::gameLogic()
 			sufficientMoves = true;
 			system(CLEAR_SCREEN); //clear screen
 			map.dispMap();
+			dispSpcMsg();
 		}
 
 
@@ -469,7 +470,13 @@ void Game::moveHero()
 			cout << "You can't walk off of the edge of the known world!"
 				<< endl << endl;
 			cout << "(press <enter> to continue)" << endl;
-			std::cin.get();
+
+			//pause until user presses enter, courtesy of
+			//https://stackoverflow.com/questions/257091/
+			//how-do-i-flush-the-cin-buffer
+			std::cin.ignore(INT_MAX,'\n');
+			
+
 		}
 		
 		else if (!offMap && menuChoice != 'x')//if hero moves
@@ -504,14 +511,14 @@ void Game::postMoveOp()
 		currSpc->genCreature();
 	}
 
-	//display new space message
-	dispNewSpcMsg();
+	//display space message
+	dispSpcMsg();
 }
 
 
-/*************************NEW SPACE MESSAGE*************************/
-//generates msg to disp when hero enters new space
-void Game::dispNewSpcMsg()
+/*************************SPACE MESSAGE*************************/
+//generates msg to disp for current space
+void Game::dispSpcMsg()
 {
 
 	//var for curr spc creature

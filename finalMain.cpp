@@ -24,7 +24,7 @@ int main()
 	int oreNeeded = 7;
 	shared_ptr<Creature>hero = 
 		std::make_shared<Hero>(VILLAGE_ROW, VILLAGE_COL, 1000, 3, 3, 150);
-	Game game(15, hero, stoneNeeded, woodNeeded, oreNeeded);
+	Game game(200, hero, stoneNeeded, woodNeeded, oreNeeded);
 	game.gameLogic();
 
 

@@ -32,7 +32,7 @@ public:
 	void updMovesRmn(int newMoves);
 	void moveHero();
 	void postMoveOp();
-	void dispNewSpcMsg();
+	void dispSpcMsg();
 	void newSpcInit(int row, int col);
 	void newSpcConnect(Space* tmpSpc);
 	void setMovesRmn(int movesRmn);
