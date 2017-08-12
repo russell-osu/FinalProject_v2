@@ -51,6 +51,8 @@ Village::~Village()
 //returns true if shelter is completed
 bool Village::buildShelter(shared_ptr<Creature>hero)
 {
+	bool itemAdded = false;
+
 	//display current shelter resources
 	dispSheltRsc();
 
@@ -60,6 +62,8 @@ bool Village::buildShelter(shared_ptr<Creature>hero)
 
 	while (buildItm != nullptr)
 	{
+		itemAdded = true;
+
 		//add item to shelter rsc vector
 		rscItmVect.push_back(buildItm);
 
@@ -81,7 +85,10 @@ bool Village::buildShelter(shared_ptr<Creature>hero)
 
 	}
 
-	dispSheltRsc();
+	if (itemAdded)
+	{
+		dispSheltRsc();
+	}
 
 	//check win conditions
 	if(stoneCnt >= 10 && woodCnt >= 10 && oreCnt >= 10)

@@ -60,7 +60,7 @@ shared_ptr<Item> Bag::rmvItm()
 	//if bag is empty, return nullptr
 	if (bagVect.empty())
 	{
-		cout << "The bag is empty." << endl;
+		cout << "Your bag is empty." << endl << endl;
 		return nullptr;
 	}
 
@@ -141,7 +141,15 @@ void Bag::dispContents()
 	{
 		cout << "slot " << i+1<<") "<<bagVect[i]->getName() << endl;
 	}
-	cout << endl;
+
+	if(bagVect.empty())
+	{
+		cout << "(empty)" << endl << endl;
+	}
+	else
+	{
+		cout << endl;
+	}
 }
 
 void Bag::setCapacity(int capacity)

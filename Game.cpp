@@ -15,7 +15,8 @@ using std::string;
 char prmptUsrMv();
 
 
-Game::Game(int maxMoves, shared_ptr<Creature>hero)
+Game::Game(int maxMoves, shared_ptr<Creature>hero, 
+	int stone, int wood, int ore)
 {
 	//set all elements in spcArr to nullptr
 	for (int row=0; row<SPC_ROWS; row++)
@@ -28,7 +29,8 @@ Game::Game(int maxMoves, shared_ptr<Creature>hero)
 
 
 	//instantiate village and point given space array cell to village
-	village = new Village(VILLAGE_ROW,VILLAGE_COL, 7,7,7);
+	//pass amt of stone, wood, and ore needed to build shelter
+	village = new Village(VILLAGE_ROW,VILLAGE_COL, stone, wood, ore);
 	spcArr[VILLAGE_ROW][VILLAGE_COL] = village;
 
 	//instantiate hero and place in village

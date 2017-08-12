@@ -111,6 +111,7 @@ bool Space::gatherRsc(shared_ptr<Creature>hero)
 	cout << "Choose the resource you'd like to add:"
 		<< endl;
 	int menuChoice = menuExit(rscMenu, false);
+	cout << endl;
 
 
 	//gathering loop (allows user to gather multiple rsc)
@@ -151,6 +152,7 @@ bool Space::gatherRsc(shared_ptr<Creature>hero)
 			cout << "Choose the resource you'd like to add:"
 				<< endl;
 			menuChoice = menuExit(rscMenu, false);
+			cout << endl;
 		}
 		else //menu choice = 0, end loop
 		{

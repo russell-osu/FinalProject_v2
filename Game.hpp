@@ -24,7 +24,8 @@ private:
 
 
 public:
-	Game(int maxMoves, shared_ptr<Creature>hero);
+	//parameters for amt of stone, wood and ore needed to win
+	Game(int maxMoves, shared_ptr<Creature>hero, int stone, int wood, int ore);
 	void gameLogic();
 	void engageCombat();
 	bool chkWinCond();

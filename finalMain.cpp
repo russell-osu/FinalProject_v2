@@ -17,9 +17,14 @@ int main()
 	setSeed();
 
 	//testing game logic menu
+
+	//variables for amount of stone, wood and ore needed to build shelter
+	int stoneNeeded = 7;
+	int woodNeeded = 7;
+	int oreNeeded = 7;
 	shared_ptr<Creature>hero = 
 		std::make_shared<Hero>(VILLAGE_ROW, VILLAGE_COL, 1000, 3, 3, 150);
-	Game game(15, hero);
+	Game game(15, hero, stoneNeeded, woodNeeded, oreNeeded);
 	game.gameLogic();
 
 
