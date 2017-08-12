@@ -12,6 +12,8 @@ using std::cout;
 using std::endl;
 using std::string;
 
+char prmptUsrMv();
+
 
 Game::Game(int maxMoves, shared_ptr<Creature>hero)
 {
@@ -264,6 +266,7 @@ void Game::gameLogic()
 
 
 
+
 /*****************UPDATE REMAINING MOVES*********************/
 void Game::updMovesRmn(int newMoves)
 {
@@ -272,13 +275,42 @@ void Game::updMovesRmn(int newMoves)
 
 
 
+/***********************PROMPT USER MOVE CHOICE**********************/
+//prompts for and returns usr mvmt choice
+char prmptUsrMv()
+{
+	string usrIn;
+	
+	//prompt user for direction
+	cout << "Which way would you like to move?" << endl;
+	//string menuItems[] = { "North","South","East","West","Don't move"};
+	//int menuChoice = menu(menuItems, 5, false);
+
+	cout << "w) north" << endl << "s) south" << endl << "d) east"
+		<< endl << "a) west" << endl << endl << "x) don't move" << endl << endl;
+	getline(std::cin, usrIn);
+	cout << endl;
+	//validate usr input
+	while (!(usrIn == "w" || usrIn == "s" || usrIn == "d" || usrIn == "a"
+		|| usrIn == "x"))
+	{
+		cout << "Try again. Enter <w>, <s>, <d>, <a>, or <x>." << endl << endl;
+		getline(std::cin, usrIn);
+		cout << endl;
+	}
+
+	return usrIn[0];
+}
+
+
+
 /*********************MOVE HERO*************************/
 //moves hero until user chooses to exit move interface
 void Game::moveHero()
 {
+	char menuChoice;
 
 	//loop wsda menu options until user chooses to not move
-	string usrIn = "";
 	do
 	{
 		//get coor of currSpc
@@ -291,24 +323,8 @@ void Game::moveHero()
 		//set moved flag to false
 		bool offMap = true;
 
-		//prompt user for direction
-		cout << "Which way would you like to move?" << endl;
-		//string menuItems[] = { "North","South","East","West","Don't move"};
-		//int menuChoice = menu(menuItems, 5, false);
-
-		cout << "w) north" << endl << "s) south" << endl << "d) east"
-			<< endl << "a) west" << endl << endl << "x) don't move" << endl << endl;
-		getline(std::cin, usrIn);
-		cout << endl;
-		//validate usr input
-		while (!(usrIn == "w" || usrIn == "s" || usrIn == "d" || usrIn == "a"
-			|| usrIn == "x"))
-		{
-			cout << "Try again. Enter <w>, <s>, <d>, <a>, or <x>." << endl << endl;
-			getline(std::cin, usrIn);
-			cout << endl;
-		}
-		char menuChoice = usrIn[0]; //convert usrIn to char for switch
+		//returns user mvmt choice
+		menuChoice = prmptUsrMv();
 
 		//switch statment for processing user mvmt choice
 		switch (menuChoice)
@@ -454,31 +470,41 @@ void Game::moveHero()
 			std::cin.get();
 		}
 		
-		else //if hero moves
+		else if (!offMap && menuChoice != 'x')//if hero moves
 		{
-			currSpc->incrementNumVisits();
-
-			//clear screen and display map
-			system(CLEAR_SCREEN);
-			map.dispMap();
-
-			//generate new creature if currSpc not village
-
-			if (currSpc->getSpcTyp() != 'V')
-			{
-				currSpc->genCreature();
-			}
-
-			//display new space message
-			dispNewSpcMsg();
+			//perform post-movement operations
+			postMoveOp();
 		}
 
 
 		tmpPrvSpc = nullptr; //set prv spc to nullptr
 
-	}while (usrIn != "x" && movesRmn > 0); //end move loop
+	}while (menuChoice != 'x' && movesRmn > 0); //end move loop
 }
 
+
+
+
+/*********************POST-MOVEMENT OPERATIONS*********************/
+//operations to perform after hero moves to a new space
+void Game::postMoveOp()
+{
+	currSpc->incrementNumVisits();
+
+	//clear screen and display map
+	system(CLEAR_SCREEN);
+	map.dispMap();
+
+	//generate new creature if currSpc not village
+
+	if (currSpc->getSpcTyp() != 'V')
+	{
+		currSpc->genCreature();
+	}
+
+	//display new space message
+	dispNewSpcMsg();
+}
 
 
 /*************************NEW SPACE MESSAGE*************************/
