@@ -635,6 +635,7 @@ void Game::newSpcConnect(Space* tmpSpc)
 }
 
 
+//deallocates pointers in space array
 Game::~Game()
 {
 	currSpc = nullptr;

@@ -116,11 +116,9 @@ bool Space::gatherRsc(shared_ptr<Creature>hero)
 	//gathering loop (allows user to gather multiple rsc)
 	while (menuChoice != 0)
 	{
-		cout << "RscItmVect Size: " << rscItmVect.size() << endl;
 
 		//point temp variable to item to add to bag
 		shared_ptr<Item> itemToGet = rscItmVect[menuChoice - 1];
-
 
 		//add item to hero's bag
 		bool added = hero->addToBag(itemToGet);
@@ -138,9 +136,7 @@ bool Space::gatherRsc(shared_ptr<Creature>hero)
 			cout << "Your bag is full. Can't add resource." << endl;
 		}
 
-		cout << "RscItmVect Size: " << rscItmVect.size() << endl;
-
-
+	
 		if (rscItmVect.size() > 0) //if items remain to gather
 		{
 			//recreate string vector of resource items for later use in menu
