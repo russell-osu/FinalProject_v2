@@ -23,9 +23,9 @@ Village::Village(int row, int col, int stone, int wood, int ore)
 	oreCnt = 0;
 
 	//resources needed to build shelter
-	this->stoneNeed = stone;
-	this->woodNeed = wood;
-	this->oreNeed = ore;
+	this->stoneWin = stone;
+	this->woodWin = wood;
+	this->oreWin = ore;
 
 	//map pointers
 	north = nullptr;
@@ -91,8 +91,11 @@ bool Village::buildShelter(shared_ptr<Creature>hero)
 	}
 
 	//check win conditions
-	if(stoneCnt >= 10 && woodCnt >= 10 && oreCnt >= 10)
+	if(stoneCnt >= stoneWin && woodCnt >= woodWin && oreCnt >= oreWin)
 	{	
+		cout << "YOU HAVE COLLECTED ALL THE RESOURCES NEEDED!!" << endl;
+		cout << "(press <enter> to continue)" << endl;
+		std::cin.ignore(INT_MAX, '\n');
 		//enough resources collected to build shelter
 		return true;
 	}
@@ -110,34 +113,49 @@ void Village::dispSheltRsc()
 {
 	cout << "Current Shelter Resources" << endl;
 	cout << "*************************" << endl;
-	cout << "Stone: " << stoneCnt << " (" <<
-		stoneNeed - stoneCnt << " needed)" << endl;
-	cout << "Wood: " << woodCnt << " (" <<
-		woodNeed - woodCnt << " needed)" << endl;
-	cout << "Ore: " << oreCnt << " (" <<
-		oreNeed - oreCnt << " needed)" << endl << endl;
+	cout << "Stone: " << stoneCnt << " of " <<
+		stoneWin << " added to shelter" << endl;
+
+	cout << "Wood: " << woodCnt << " of " <<
+		woodWin << " added to shelter" << endl;
+
+	cout << "Ore: " << oreCnt << " of " <<
+		oreWin << " added to shelter" << endl << endl;
 
 }
 
+void Village::setStoneCnt(int stone)
+{
+	stoneCnt = stone;
+}
 
-////count the resources types in the rsc vect to determine amt needed
-//void Village::cntSheltRsc()
-//{
-//	for (unsigned i = 0; i < rscItmVect.size(); i++)
-//	{
-//		char rscTyp = rscItmVect[0]->getType();
-//
-//		switch (rscTyp)
-//		{
-//		case 's': stoneCnt++;
-//			break;
-//		case 'w': woodCnt++;
-//			break;
-//		case 'o': oreCnt++;
-//			break;
-//		}
-//	}
-//}
+int Village::getStoneCnt()
+{
+	return stoneCnt;
+}
+
+void Village::setWoodCnt(int wood)
+{
+	woodCnt = wood;
+}
+
+int Village::getWoodCnt()
+{
+	return woodCnt;
+}
+
+void Village::setOreCnt(int ore)
+{
+	oreCnt = ore;
+}
+
+int Village::getOreCnt()
+{
+	return oreCnt;
+}
+
+
+
 
 
 

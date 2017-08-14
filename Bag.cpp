@@ -68,8 +68,7 @@ shared_ptr<Item> Bag::rmvItm()
 	
 
 	//print out menu of resource choices and prompt user
-	cout << "Choose the item you'd like to remove:"
-		<< endl;
+	cout << "(choose an item from the bag)" << endl;
 	menuChoice = menuExit(bagMenu, false);
 
 

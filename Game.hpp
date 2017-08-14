@@ -20,6 +20,9 @@ private:
 	shared_ptr<Creature>hero;
 	int movesRmn;
 	int maxMoves;
+	int stoneWin;
+	int woodWin;
+	int oreWin;
 
 
 

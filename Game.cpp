@@ -7,7 +7,8 @@
 #include "Plains.hpp"
 #include "Forest.hpp"
 #include "Hills.hpp"
- 
+#include "asciiArt.hpp"
+
 using std::cout;
 using std::endl;
 using std::string;
@@ -27,10 +28,14 @@ Game::Game(int maxMoves, shared_ptr<Creature>hero,
 		}
 	}
 
+	//set resources needed for win
+	stoneWin = stone;
+	woodWin = wood;
+	oreWin = ore;
 
 	//instantiate village and point given space array cell to village
 	//pass amt of stone, wood, and ore needed to build shelter
-	village = new Village(VILLAGE_ROW,VILLAGE_COL, stone, wood, ore);
+	village = new Village(VILLAGE_ROW,VILLAGE_COL, stoneWin, woodWin, oreWin);
 	spcArr[VILLAGE_ROW][VILLAGE_COL] = village;
 
 	//instantiate hero and place in village
@@ -55,10 +60,10 @@ Game::Game(int maxMoves, shared_ptr<Creature>hero,
 //handles primary game logic and play loop
 void Game::gameLogic()
 {
-	//welcome message
-	cout << "WELCOME TO RESOURCE QUEST!!" << endl;
-	cout << "***************************" << endl << endl;
+	//clear screen, display map and display village msg
+	system(CLEAR_SCREEN);
 	map.dispMap();
+	dispSpcMsg();
 	cout << endl;
 
 	//for the game menu selection
@@ -133,11 +138,21 @@ void Game::gameLogic()
 		//***********USER CHOICE***************
 
 		//check moves remaining
-		if (movesRmn <= 0)
+		if (movesRmn <= 0) //if player has run out of moves
 		{
-			cout << "YOU HAVE RUN OUT OF TIME!!!" << endl;
-			cout << "*********GAME OVER*********" << endl << endl;
+			//set end game condition
 			menuChoice = "End game";
+
+			cout << "You have run out of moves." << endl;
+			cout << "(press <enter> to continue)" << endl;
+			std::cin.ignore(INT_MAX, '\n');
+			//clear screen and output lose message
+			system(CLEAR_SCREEN);
+			asciiYouLose();
+			cout << "You have run out of moves. The village has succumbed\n"
+				"to the terrors of the night." << endl;
+			cout << "**********************GAME OVER***********************"
+				<< endl << endl;;
 		}
 
 		else
@@ -228,6 +243,12 @@ void Game::gameLogic()
 			else //if hero loses, game is over
 			{
 				menuChoice = "End game";
+				cout << "(press <enter> to continue)" << endl;
+				std::cin.ignore(INT_MAX, '\n');
+
+				//clear screen and output lose message
+				system(CLEAR_SCREEN);
+				asciiYouLose();
 				cout << "The hero has succumbed to the creature." << endl;
 				cout << "***************GAME OVER***************" << endl
 					<< endl;
@@ -246,19 +267,27 @@ void Game::gameLogic()
 
 			if(built)
 			{
+				//output ascii shelter and win message
+				asciiShelter();
+
 				cout << "You finished the shelter and saved the village!" 
 					<< endl;
 				cout << "*****************YOU WON!!!********************"
 					<< endl << endl;
+
+				//end game
+				menuChoice = "End game";
 			}
 
 		}
 
+
+		/******MOVE CHECKER******/
 		//if hero does not have sufficient moves for action chosen
 		if(sufficientMoves == false && menuChoice!="End game")
 		{
-			cout << "You don't have sufficient moves left for that action."
-				<< endl << endl;
+			cout << "You don't have enough moves left for that action."
+				<< endl << endl;;
 		}
 
 	} while (menuChoice != "End game"); 
@@ -286,11 +315,9 @@ char prmptUsrMv()
 	
 	//prompt user for direction
 	cout << "Which way would you like to move?" << endl;
-	//string menuItems[] = { "North","South","East","West","Don't move"};
-	//int menuChoice = menu(menuItems, 5, false);
 
 	cout << "w) north" << endl << "s) south" << endl << "d) east"
-		<< endl << "a) west" << endl << endl << "x) don't move" << endl << endl;
+		<< endl << "a) west" << endl << endl << "x) stay here" << endl << endl;
 	getline(std::cin, usrIn);
 	cout << endl;
 	//validate usr input
@@ -530,7 +557,6 @@ void Game::dispSpcMsg()
 	
 	if (currCreat != nullptr) //if a creature is in the space
 	{
-		cout << endl;
 		cout << "You see " << currCreat->getName() << " eyeing you "
 			"suspiciously from the edge of the " << currSpc->getName() <<
 			"." << endl;
@@ -553,6 +579,21 @@ void Game::dispSpcMsg()
 			break;
 
 		}
+	}
+
+	//if current space is a village
+	if (currSpc->getSpcTyp() == 'V')
+	{
+		cout << "Your village has recently been razed by fire. Gather\n"
+			"the following resources to build a shelter: " << endl << endl;
+
+		//cout << "Stones: " << stoneWin << " needed" << endl;
+		//cout << "Wood: " << woodWin << " needed" << endl;
+		//cout << "Stones: " << oreWin << " needed" << endl << endl;
+
+		static_cast<Village*>(village)->dispSheltRsc();
+
+
 	}
 }
 
@@ -644,6 +685,7 @@ void Game::newSpcConnect(Space* tmpSpc)
 }
 
 
+																		
 //deallocates pointers in space array
 Game::~Game()
 {
