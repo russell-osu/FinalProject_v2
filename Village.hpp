@@ -25,6 +25,10 @@ public:
 	int getWoodCnt();
 	void setOreCnt(int ore);
 	int getOreCnt();
+	int getStoneWin();
+	int getWoodWin();
+	int getOreWin();
+
 	~Village();
 };
 

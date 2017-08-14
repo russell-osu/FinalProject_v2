@@ -2,6 +2,9 @@
 
 #ifndef MOON_MAP_HPP
 #define MOON_MAP_HPP
+#include <memory>
+#include "Space.hpp"
+
 class Map
 {
 private:
@@ -10,9 +13,7 @@ public:
 	Map();
 	void updateMapSpc(int row, int col, char spcTyp);
 	void updateMapHero(int row, int col, int prvRow=0, int prvCol=0);
-	void dispMap(int defSides, int numDefDie, int attSides, int numAttDie, 
-		int strength, int stoneWin, int stoneCnt, int woodWin, int woodCnt,
-		int oreWin, int oreCnt);
+	void dispMap(std::shared_ptr<Creature>hero, Space* village);
 	~Map();
 };
 

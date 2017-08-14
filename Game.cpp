@@ -60,17 +60,10 @@ Game::Game(int maxMoves, shared_ptr<Creature>hero,
 //handles primary game logic and play loop
 void Game::gameLogic()
 {
-	//get current resource count from village to display on map
-	int stoneCnt = static_cast<Village*>(village)->getStoneCnt();
-	int woodCnt = static_cast<Village*>(village)->getWoodCnt();
-	int oreCnt = static_cast<Village*>(village)->getOreCnt();
-
 
 	//clear screen, display map and display village msg
 	system(CLEAR_SCREEN);
-	map.dispMap(hero->getDefDieSides(), hero->getNumDefDie(),
-		hero->getAttDieSides(), hero->getNumAttDie(), hero->getStrength(),
-		stoneWin, stoneCnt, woodWin, woodCnt, oreWin, oreCnt);
+	map.dispMap(hero, village);
 	dispSpcMsg();
 	cout << endl;
 
@@ -184,9 +177,7 @@ void Game::gameLogic()
 			sufficientMoves = true; //enough moves left for this action
 			//clear screen and display map
 			system(CLEAR_SCREEN); 
-			map.dispMap(hero->getDefDieSides(), hero->getNumDefDie(),
-				hero->getAttDieSides(), hero->getNumAttDie(), hero->getStrength(),
-				stoneWin, stoneCnt, woodWin, woodCnt, oreWin, oreCnt);
+			map.dispMap(hero, village);
 
 			//move hero
 			moveHero();
@@ -220,9 +211,7 @@ void Game::gameLogic()
 		{
 			sufficientMoves = true;//enough moves left for this action
 			system(CLEAR_SCREEN); //clear screen
-			map.dispMap(hero->getDefDieSides(), hero->getNumDefDie(),
-				hero->getAttDieSides(), hero->getNumAttDie(), hero->getStrength(),
-				stoneWin, stoneCnt, woodWin, woodCnt, oreWin, oreCnt);
+			map.dispMap(hero, village);
 			dispSpcMsg();
 		}
 
@@ -563,16 +552,9 @@ void Game::postMoveOp()
 	//increment number of visits to space
 	currSpc->incrementNumVisits();
 
-	//get current resource count from village to display on map
-	int stoneCnt = static_cast<Village*>(village)->getStoneCnt();
-	int woodCnt = static_cast<Village*>(village)->getWoodCnt();
-	int oreCnt = static_cast<Village*>(village)->getOreCnt();
-
 	//clear screen and display map
 	system(CLEAR_SCREEN);
-	map.dispMap(hero->getDefDieSides(), hero->getNumDefDie(),
-		hero->getAttDieSides(), hero->getNumAttDie(), hero->getStrength(),
-		stoneWin, stoneCnt, woodWin, woodCnt, oreWin, oreCnt);
+	map.dispMap(hero, village);
 
 	//generate new creature if currSpc not village
 

@@ -1,6 +1,7 @@
 #include "Map.hpp"
 #include <iostream>
 #include "defConst.hpp"
+#include "Village.hpp"
 
 using std::cout;
 using std::endl;
@@ -118,10 +119,22 @@ void Map::updateMapHero(int row, int col, int prvRow, int prvCol)
 }
 
 //display map, map key, and hero stats
-void Map::dispMap(int defSides, int numDefDie, int attSides, int numAttDie,
-	int strength, int stoneWin, int stoneCnt, int woodWin, int woodCnt,
-	int oreWin, int oreCnt)
+void Map::dispMap(std::shared_ptr<Creature>hero, Space* village)
 {
+	//get current resource info from village to display on map
+	int stoneCnt = static_cast<Village*>(village)->getStoneCnt();
+	int woodCnt = static_cast<Village*>(village)->getWoodCnt();
+	int oreCnt = static_cast<Village*>(village)->getOreCnt();
+	int stoneWin = static_cast<Village*>(village)->getStoneWin();
+	int woodWin = static_cast<Village*>(village)->getWoodWin();
+	int oreWin = static_cast<Village*>(village)->getOreWin();
+
+	int defSides = hero->getDefDieSides();
+	int numDefDie = hero->getNumDefDie();
+	int attSides = hero->getAttDieSides();
+	int numAttDie = hero->getNumAttDie();
+	int strength = hero->getStrength();
+
 	//print map
 	for (int row = 0; row<29; row++)
 	{

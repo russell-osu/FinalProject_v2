@@ -162,8 +162,18 @@ int Village::getOreCnt()
 }
 
 
+int Village::getStoneWin()
+{
+	return stoneWin;
+}
 
+int Village::getWoodWin()
+{
+	return woodWin;
+}
 
-
-
+int Village::getOreWin()
+{
+	return oreWin;
+}
 
