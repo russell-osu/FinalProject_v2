@@ -271,6 +271,18 @@ int Creature::getDefDieSides()
 }
 
 
+//returns true if bag is empty
+bool Creature::bagIsEmpty()
+{
+	if(bag.getBagVect().empty())
+	{
+		return true;
+	}
+
+	return false;
+}
+
+
 string Creature::getAttText()
 {
 	string strAttText = attText.str();

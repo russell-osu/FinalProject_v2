@@ -33,7 +33,9 @@ int main()
 		"terrors of the night. Visit Plains, to collect stone,\n"
 		"Forests, to collect wood, and Hills, to collect ore. When you have\n"
 		"collected resources, return to the village to add them to the\n"
-		"shelter. Venture out and return as often as needed." << endl << endl; 
+		"shelter. Venture out and return as often as needed. The further\n"
+		"a region is from the village, the more resources you'll find, but\n"
+		"the monsters will also be harder."<< endl << endl; 
 		
 	cout << "When the shelter is built, you've won the game! Don't\n"
 		"fall prey to monsters along the way. Also, stay mindful of time.\n"
@@ -45,6 +47,9 @@ int main()
 	string menuItems[] = { "Easy", "Medium", "Hard", "End program" };
 	int menuChoice = 0;
 
+	//create variables for game instantiation
+	int strength, attDie, defDie, bagCap, moves, stone, wood, ore;
+	
 	do
 	{
 
@@ -53,26 +58,50 @@ int main()
 		menuChoice = menu(menuItems, 4, false);
 		cout << endl;
 
-		if (menuChoice == 1)
+		//set initialization variables
+		if (menuChoice == 1) //easy
 		{
-			shared_ptr<Creature>hero =
-				std::make_shared<Hero>(VILLAGE_ROW, VILLAGE_COL, 2000, 5, 5, 150);
-			Game game(1000, hero, 5, 5, 5);
-			game.gameLogic();
+			strength = 2000;
+			attDie = 5;
+			defDie = 5;
+			bagCap = 150;
+			moves = 1000;
+			stone = 5;
+			wood = 5;
+			ore = 5;
 		}
-		else if (menuChoice == 2)
+		else if (menuChoice == 2) //medium
 		{
-			shared_ptr<Creature>hero =
-				std::make_shared<Hero>(VILLAGE_ROW, VILLAGE_COL, 1000, 4, 4, 75);
-			Game game(500, hero, 10, 10, 10);
-			game.gameLogic();
+			strength = 1000;
+			attDie = 4;
+			defDie = 4;
+			bagCap = 75;
+			moves = 250;
+			stone = 7;
+			wood = 7;
+			ore = 7;
 		}
-		else if (menuChoice == 3)
+		else if (menuChoice == 3) //hard
 		{
+			strength = 1000;
+			attDie = 3;
+			defDie = 3;
+			bagCap = 10;
+			moves = 30;
+			stone = 10;
+			wood = 10;
+			ore = 10;
+		}
+
+		if(menuChoice != 4)
+		{
+			//instantiate Game based on initialization variables
 			shared_ptr<Creature>hero =
-				std::make_shared<Hero>(VILLAGE_ROW, VILLAGE_COL, 500, 3, 3, 50);
-			Game game(12, hero, 15, 15, 15);
+				std::make_shared<Hero>(VILLAGE_ROW, VILLAGE_COL,
+					strength, attDie, defDie, bagCap);
+			Game game(moves, hero, stone, wood, ore);
 			game.gameLogic();
+			
 		}
 
 	} while (menuChoice != 4);

@@ -108,7 +108,7 @@ bool Space::gatherRsc(shared_ptr<Creature>hero)
 	}
 
 	//print out menu of resource choices and prompt user
-	cout << "Choose the resource you'd like to add:"
+	cout << "Choose the resource you'd like to gather:"
 		<< endl;
 	int menuChoice = menuExit(rscMenu, false);
 	cout << endl;
@@ -134,7 +134,7 @@ bool Space::gatherRsc(shared_ptr<Creature>hero)
 		}
 		else //bag lacked capacity
 		{
-			cout << "Your bag is full. Can't add resource." << endl;
+			cout << "Item not added. Bag capacity insufficient." << endl;
 		}
 
 	
@@ -149,7 +149,7 @@ bool Space::gatherRsc(shared_ptr<Creature>hero)
 			}
 
 			//print out menu of resource choices and prompt user
-			cout << "Choose the resource you'd like to add:"
+			cout << "Choose the resource you'd like to gather:"
 				<< endl;
 			menuChoice = menuExit(rscMenu, false);
 			cout << endl;

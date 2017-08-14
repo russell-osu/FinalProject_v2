@@ -10,7 +10,9 @@ public:
 	Map();
 	void updateMapSpc(int row, int col, char spcTyp);
 	void updateMapHero(int row, int col, int prvRow=0, int prvCol=0);
-	void dispMap();
+	void dispMap(int defSides, int numDefDie, int attSides, int numAttDie, 
+		int strength, int stoneWin, int stoneCnt, int woodWin, int woodCnt,
+		int oreWin, int oreCnt);
 	~Map();
 };
 

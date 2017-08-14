@@ -53,6 +53,13 @@ bool Village::buildShelter(shared_ptr<Creature>hero)
 {
 	bool itemAdded = false;
 
+	//if hero's bag is empty, return false
+	if(hero->bagIsEmpty())
+	{
+		cout << "You have no resources to add." << endl << endl;
+		return false;
+	}
+
 	//display current shelter resources
 	dispSheltRsc();
 

@@ -117,7 +117,10 @@ void Map::updateMapHero(int row, int col, int prvRow, int prvCol)
 
 }
 
-void Map::dispMap()
+//display map, map key, and hero stats
+void Map::dispMap(int defSides, int numDefDie, int attSides, int numAttDie,
+	int strength, int stoneWin, int stoneCnt, int woodWin, int woodCnt,
+	int oreWin, int oreCnt)
 {
 	//print map
 	for (int row = 0; row<29; row++)
@@ -138,6 +141,22 @@ void Map::dispMap()
 		case 6: cout << "   H = Hills (collect ore)";
 			break;
 		case 8: cout <<"   *** = Hero location";
+			break;
+		case 12: cout << "   Hero Defense: " << numDefDie << "d" << defSides;
+			break;
+		case 13: cout << "   Hero Attack: " << numAttDie << "d" << attSides;
+			break;
+		case 14: cout << "   Hero Strength: " << strength;
+			break;
+		case 18: 	cout << "   Stone: " << stoneCnt << " of " <<
+					stoneWin << " added to shelter";
+			break;
+		case 19: 	cout << "   Wood: " << woodCnt << " of " <<
+					woodWin << " added to shelter";
+			break;
+		case 20: 	cout << "   Ore: " << oreCnt << " of " <<
+					oreWin << " added to shelter";
+			break;
 		default:
 			break;
 		}

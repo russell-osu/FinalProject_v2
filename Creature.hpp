@@ -58,8 +58,10 @@ public:
 	int getAttRoll();
 	int getAttDieSides();
 	int getDefDieSides();
+	bool bagIsEmpty();
 	string getAttText();
 	string getDefText();
+
 
 	void setRow(int row);
 	int getRow();

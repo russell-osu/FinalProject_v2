@@ -60,9 +60,17 @@ Game::Game(int maxMoves, shared_ptr<Creature>hero,
 //handles primary game logic and play loop
 void Game::gameLogic()
 {
+	//get current resource count from village to display on map
+	int stoneCnt = static_cast<Village*>(village)->getStoneCnt();
+	int woodCnt = static_cast<Village*>(village)->getWoodCnt();
+	int oreCnt = static_cast<Village*>(village)->getOreCnt();
+
+
 	//clear screen, display map and display village msg
 	system(CLEAR_SCREEN);
-	map.dispMap();
+	map.dispMap(hero->getDefDieSides(), hero->getNumDefDie(),
+		hero->getAttDieSides(), hero->getNumAttDie(), hero->getStrength(),
+		stoneWin, stoneCnt, woodWin, woodCnt, oreWin, oreCnt);
 	dispSpcMsg();
 	cout << endl;
 
@@ -106,14 +114,15 @@ void Game::gameLogic()
 		vector<string> menuItems;
 		menuItems.push_back("Move hero");
 		menuItems.push_back("Display map");
-		menuItems.push_back("Check inventory");
+		menuItems.push_back("Check bag");
+		//menuItems.push_back("Check shelter resources");
 
 
 		//*************add other items based on conditions***************
 
 		if (isVillage)//if curr spc is a village
 		{
-			menuItems.push_back("Build shelter");
+			menuItems.push_back("Add resources to shelter");
 		}
 
 		
@@ -132,6 +141,7 @@ void Game::gameLogic()
 				menuItems.push_back("Fight creature");
 			}
 		}
+		menuItems.push_back("Read instructions");
 		menuItems.push_back("End game");
 
 
@@ -167,13 +177,16 @@ void Game::gameLogic()
 
 		bool sufficientMoves = false;
 
+
 		//***MOVE HERO***
 		if (menuChoice == "Move hero" && movesRmn > 0)
 		{
 			sufficientMoves = true; //enough moves left for this action
 			//clear screen and display map
 			system(CLEAR_SCREEN); 
-			map.dispMap();
+			map.dispMap(hero->getDefDieSides(), hero->getNumDefDie(),
+				hero->getAttDieSides(), hero->getNumAttDie(), hero->getStrength(),
+				stoneWin, stoneCnt, woodWin, woodCnt, oreWin, oreCnt);
 
 			//move hero
 			moveHero();
@@ -182,8 +195,8 @@ void Game::gameLogic()
 
 
 
-		//***CHECK INVENTORY***
-		else if (menuChoice == "Check inventory")
+		//***CHECK BAG***
+		else if (menuChoice == "Check bag")
 		{
 			sufficientMoves = true;//enough moves left for this action
 			hero->chkInventory();
@@ -191,13 +204,25 @@ void Game::gameLogic()
 		}
 
 
+		///*********CHECK SHELTER RESOURCES******/
+		//else if(menuChoice == "Check shelter resources")
+		//{
+		//	sufficientMoves = true;//enough moves left for this action
+		//	system(CLEAR_SCREEN); //clear screen
+		//	static_cast<Village*>(village)->dispSheltRsc();
+
+		//	pauseTillEnter();
+		//}
+
 
 		//***DISPLAY MAP***
 		else if (menuChoice == "Display map")
 		{
-			sufficientMoves = true;
+			sufficientMoves = true;//enough moves left for this action
 			system(CLEAR_SCREEN); //clear screen
-			map.dispMap();
+			map.dispMap(hero->getDefDieSides(), hero->getNumDefDie(),
+				hero->getAttDieSides(), hero->getNumAttDie(), hero->getStrength(),
+				stoneWin, stoneCnt, woodWin, woodCnt, oreWin, oreCnt);
 			dispSpcMsg();
 		}
 
@@ -256,8 +281,8 @@ void Game::gameLogic()
 		}
 
 
-		//***BUILD SHELTER***
-		else if (menuChoice == "Build shelter" && movesRmn > 2)
+		//***ADD RESOURCES TO SHELTER***
+		else if (menuChoice == "Add resources to shelter" && movesRmn > 2)
 		{
 			sufficientMoves = true;//enough moves left for this action
 			bool built = static_cast<Village*>(village)->buildShelter(hero);
@@ -279,6 +304,15 @@ void Game::gameLogic()
 				menuChoice = "End game";
 			}
 
+		}
+
+
+		/******READ INSTRUCTIONS******/
+		//Display game instructions
+		if (menuChoice == "Read instructions")
+		{
+			sufficientMoves = true;//enough moves left for this action
+			dispInstructions();
 		}
 
 
@@ -317,7 +351,8 @@ char prmptUsrMv()
 	cout << "Which way would you like to move?" << endl;
 
 	cout << "w) north" << endl << "s) south" << endl << "d) east"
-		<< endl << "a) west" << endl << endl << "x) stay here" << endl << endl;
+		<< endl << "a) west" << endl << endl << "x) Don't move."
+		" Stay in this region." << endl << endl;
 	getline(std::cin, usrIn);
 	cout << endl;
 	//validate usr input
@@ -525,11 +560,19 @@ void Game::moveHero()
 //operations to perform after hero moves to a new space
 void Game::postMoveOp()
 {
+	//increment number of visits to space
 	currSpc->incrementNumVisits();
+
+	//get current resource count from village to display on map
+	int stoneCnt = static_cast<Village*>(village)->getStoneCnt();
+	int woodCnt = static_cast<Village*>(village)->getWoodCnt();
+	int oreCnt = static_cast<Village*>(village)->getOreCnt();
 
 	//clear screen and display map
 	system(CLEAR_SCREEN);
-	map.dispMap();
+	map.dispMap(hero->getDefDieSides(), hero->getNumDefDie(),
+		hero->getAttDieSides(), hero->getNumAttDie(), hero->getStrength(),
+		stoneWin, stoneCnt, woodWin, woodCnt, oreWin, oreCnt);
 
 	//generate new creature if currSpc not village
 
@@ -551,8 +594,26 @@ void Game::dispSpcMsg()
 	//var for curr spc creature
 	shared_ptr<Creature> currCreat = currSpc->getCreat();
 
-	//*****output message (which includes hints about diff lvl)*****
-	cout << "Moves remaining: " << movesRmn << endl << endl;
+	//*****output info about moves, difficulty of region and*****
+	//*****resources available (if not a village)****************
+	cout << "Moves remaining: " << movesRmn << endl;
+	cout << "Region difficulty: " << currSpc->getDiffLvl() << endl;
+	if (currSpc->getSpcTyp() != 'V')
+	{
+		cout << "Resource status: ";
+		if (currSpc->getRscItmVect().empty())
+		{
+			cout << "ALL GATHERED" <<endl<<endl;
+		}
+		else
+		{
+			cout << "RESOURCES PRESENT" << endl << endl;
+		}
+	}
+	else
+	{
+		cout << endl;
+	}
 
 	
 	if (currCreat != nullptr) //if a creature is in the space
@@ -584,17 +645,36 @@ void Game::dispSpcMsg()
 	//if current space is a village
 	if (currSpc->getSpcTyp() == 'V')
 	{
-		cout << "Your village has recently been razed by fire. Gather\n"
-			"the following resources to build a shelter: " << endl << endl;
-
-		//cout << "Stones: " << stoneWin << " needed" << endl;
-		//cout << "Wood: " << woodWin << " needed" << endl;
-		//cout << "Stones: " << oreWin << " needed" << endl << endl;
-
 		static_cast<Village*>(village)->dispSheltRsc();
-
-
 	}
+}
+
+
+//displays game instructions
+void Game::dispInstructions()
+{
+	system(CLEAR_SCREEN);
+
+	cout << "                     INSTRUCTIONS" << endl;
+	cout << "************************************************************"
+		<< endl;
+	cout << "You must travel into the dangerous lands beyond the village\n"
+		"and collect resources for the construction of a temporary\n"
+		"but secure shelter. Visit Plains, to collect stone, Forests,\n"
+		"to collect wood, and Hills, to collect ore. When you have\n"
+		"collected resources, return to the village to add them to the\n"
+		"shelter. Venture out and return as often as needed. The further\n"
+		"a region is from the village, the more resources you'll find, but\n"
+		"the monsters will also be harder." << endl << endl;
+
+	cout << "When the shelter is built, you've won the game! Don't\n"
+		"fall prey to monsters along the way. Also, stay mindful of time.\n"
+		"If you take too long, your village will succumb to the terrors\n"
+		"of the night." << endl << endl;
+
+	cout << "(press <enter> to continue)" << endl;
+	std::cin.ignore(INT_MAX, '\n');
+
 }
 
 

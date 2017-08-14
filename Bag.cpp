@@ -60,7 +60,7 @@ shared_ptr<Item> Bag::rmvItm()
 	//if bag is empty, return nullptr
 	if (bagVect.empty())
 	{
-		cout << "Your bag is empty." << endl << endl;
+		cout << "(bag is empty)" << endl << endl;
 		return nullptr;
 	}
 
@@ -68,7 +68,7 @@ shared_ptr<Item> Bag::rmvItm()
 	
 
 	//print out menu of resource choices and prompt user
-	cout << "(choose an item from the bag)" << endl;
+	cout << "(choose an item from bag)" << endl;
 	menuChoice = menuExit(bagMenu, false);
 
 
