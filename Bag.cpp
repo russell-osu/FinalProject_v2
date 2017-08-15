@@ -113,6 +113,11 @@ shared_ptr<Item> Bag::rmvItm()
 	return itemToRmv;
 }
 
+shared_ptr<Item> Bag::useItem()
+{
+	return nullptr;
+}
+
 
 //removes item by rewriting vector without removed item
 //takes element number of item to remove from vector as a parameter

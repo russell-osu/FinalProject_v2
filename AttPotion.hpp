@@ -4,7 +4,9 @@
 #define MOON_ATTPOTION_HPP
 #include "Consumable.hpp"
 #include <memory>
-#include "Creature.hpp"
+
+////Forward declaration of Creature
+//class Creature;
 
 using std::shared_ptr;
 

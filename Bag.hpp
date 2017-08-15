@@ -22,6 +22,8 @@ public:
 
 	bool addItm(shared_ptr<Item> item, bool dispMsg=false);
 	shared_ptr<Item> rmvItm();
+	shared_ptr<Item> useItem();
+
 	void rmvVectItm(vector<shared_ptr<Item>>&, int itmToRmv);
 	void examItm();
 	void dispContents();
@@ -30,6 +32,7 @@ public:
 	void setCurrWght(int currWght);
 	int getCurrWght();
 	vector<shared_ptr<Item>>& getBagVect();
+	
 
 
 	~Bag();

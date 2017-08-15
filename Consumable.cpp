@@ -7,9 +7,9 @@ Consumable::Consumable()
 	subclass = "consumable";
 }
 
-void Consumable::use()
-{
-}
+//void Consumable::use(shared_ptr<Creature> creat)
+//{
+//}
 
 
 Consumable::~Consumable()

@@ -3,8 +3,13 @@
 #ifndef MOON_ITEM_HPP
 #define MOON_ITEM_HPP
 #include <string>
+#include <memory>
+
 
 using std::string;
+
+//Forward declaration of Creature
+class Creature;
 
 class Item
 {
@@ -24,7 +29,7 @@ public:
 	int getWeight();
 	void setSubclass(string);
 	string getSubclass();
-	virtual void use() = 0;
+	//virtual void use(std::shared_ptr<Creature> creat) = 0;
 
 	virtual ~Item();
 };

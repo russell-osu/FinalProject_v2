@@ -8,6 +8,7 @@
 #include "Forest.hpp"
 #include "Hills.hpp"
 #include "asciiArt.hpp"
+#include "Consumable.hpp"
 
 using std::cout;
 using std::endl;
@@ -159,7 +160,7 @@ void Game::gameLogic()
 
 
 		//**********CHECK BAG**********
-		else if (menuChoice == "Check bag")
+		else if (menuChoice == "Check inventory")
 		{
 			sufficientMoves = true;//enough moves left for this action
 			//clear screen
@@ -168,13 +169,21 @@ void Game::gameLogic()
 			hero->chkInventory();
 
 			Bag* heroBag = hero->getBag();
-			//present option to rmv item from bag if bag is not empty
+			vector<shared_ptr<Item>>& heroBagVect = heroBag->getBagVect();
+
+			//present option to rmv item or use item from bag
 			if (!heroBag->getBagVect().empty())
 			{
-				string menuItems[] = { "yes", "no" };
+				string menuItems[] = { "Remove item", 
+										"Use item",
+										"Exit menu"};
 				cout << "Remove an item from the bag?" << endl;
-				int menuChoice = menu(menuItems, 2, false);
+				int menuChoice = menu(menuItems, 3, false);
 				cout << endl;
+
+				//resolve menu choice
+
+				//if choice is remove
 				//place item in one pf curr space's vectors (rsc or misc)
 				shared_ptr<Item>itmToRmv;
 				if (menuChoice == 1)
@@ -192,6 +201,19 @@ void Game::gameLogic()
 						currSpc->addMiscItm(itmToRmv);
 					}
 				}
+
+				//if choice is to use item
+				if(menuChoice==2)
+				{
+					//prompt user to select item
+					shared_ptr<Item> item = heroBag->useItem();
+
+					//call use on item (it will update hero's data members)
+					std::static_pointer_cast<Consumable>(item)->use(hero);
+
+				}
+
+
 			}
 
 
@@ -362,7 +384,7 @@ void createActionMenu(vector<string>& menuItems, bool isVillage,
 {
 	menuItems.push_back("Move hero");
 	menuItems.push_back("Display map");
-	menuItems.push_back("Check bag");
+	menuItems.push_back("Check inventory");
 
 
 	//*************add other items based on conditions***************
