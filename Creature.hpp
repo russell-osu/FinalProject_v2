@@ -37,7 +37,7 @@ public:
 	void generateAttText(string special = "");
 	void generateDefText(int prelimStrength, string special = "");
 	void chkInventory();
-	bool addToBag(shared_ptr<Item> item);
+	bool addToBag(shared_ptr<Item> item, bool dispMsg=false);
 	shared_ptr<Item> rmvFromBag();
 	//shared_ptr<Item> rmvRscFromBag();
 
