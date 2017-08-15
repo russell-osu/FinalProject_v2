@@ -8,7 +8,6 @@
 #include <memory>
 #include "Bag.hpp"
 
-class Space;
 using std::string;
 using std::stringstream;
 
@@ -37,7 +36,11 @@ public:
 	virtual int defend(string attString);
 	void generateAttText(string special = "");
 	void generateDefText(int prelimStrength, string special = "");
+<<<<<<< HEAD
 	void chkBag();
+=======
+	void chkInventory();
+>>>>>>> parent of ecc67e4... working--about to implement use item
 	bool addToBag(shared_ptr<Item> item, bool dispMsg=false);
 	shared_ptr<Item> rmvFromBag();
 	//bool useBagItm();

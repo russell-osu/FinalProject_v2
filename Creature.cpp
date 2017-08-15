@@ -19,7 +19,6 @@ original state for a new match (for multi-match trials).
 
 #include "Creature.hpp"
 #include "cs162_utilities.hpp"
-#include "Space.hpp"
 
 #include <string>
 #include <iostream>
@@ -140,7 +139,11 @@ void Creature::generateDefText(int prelimStrength, string special)
 }
 
 
+<<<<<<< HEAD
 void Creature::chkBag()
+=======
+void Creature::chkInventory()
+>>>>>>> parent of ecc67e4... working--about to implement use item
 {
 	//display bag capactiy and display contents
 	cout << "Bag capacity: " << bag.getCapacity() << endl;
@@ -148,6 +151,7 @@ void Creature::chkBag()
 	cout << endl;
 	bag.dispContents();
 
+<<<<<<< HEAD
 
 	//Bag* heroBag = hero->getBag();
 	////present option to rmv item from bag if bag is not empty
@@ -186,13 +190,21 @@ void Creature::chkBag()
 	//	}
 	//}
 
+=======
+	////present option to rmv item from bag if bag is not empty
+	//if (!bag.getBagVect().empty())
+	//{
+	//	string menuItems[] = { "yes", "no" };
+	//	cout << "Remove an item from the bag?" << endl;
+	//	int menuChoice = menu(menuItems, 2, false);
+	//	cout << endl;
+	//	if (menuChoice == 1)
+	//	{
+	//		this->rmvFromBag();
+	//	}
+	//}
+>>>>>>> parent of ecc67e4... working--about to implement use item
 }
-
-
-
-
-
-
 
 //tries to add item to bag (returns true if completed and false if not)
 bool Creature::addToBag(shared_ptr<Item> item, bool dispMsg)
