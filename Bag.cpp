@@ -20,17 +20,8 @@ Bag::Bag(int capacity)
 
 
 //tries item to bag (returns true if completed and false if not)
-bool Bag::addItm(shared_ptr<Item>item, bool dispMsg)
+bool Bag::addItm(shared_ptr<Item>item)
 {
-	//if item is nullptr, return false
-	if(item == nullptr)
-	{
-		cout << endl;
-		cout << "..." << endl << endl;
-		pauseUntilEnter();
-		return false;
-	}
-
 	//determine new weight
 	int newWght = item->getWeight() + currWght;
 
@@ -41,13 +32,6 @@ bool Bag::addItm(shared_ptr<Item>item, bool dispMsg)
 		bagVect.push_back(item);
 		//update current weight
 		currWght = newWght;
-		//if alter message should be displayed
-		if (dispMsg)
-		{
-			cout << "Item " << item->getName() << " added to bag." << endl << endl;
-			pauseUntilEnter();
-		}
-
 		return true;
 	}
 

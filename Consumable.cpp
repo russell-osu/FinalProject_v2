@@ -7,10 +7,6 @@ Consumable::Consumable()
 	subclass = "consumable";
 }
 
-void Consumable::use()
-{
-}
-
 
 Consumable::~Consumable()
 {

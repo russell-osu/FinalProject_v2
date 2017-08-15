@@ -48,7 +48,6 @@ public:
 	void addRscItm(shared_ptr<Item>item);
 	void addMiscItm(shared_ptr<Item>item);
 	void genCreature();
-	void genCreatItems();
 	void incrementNumVisits();
 	virtual string describe() = 0;
 	void setRow(int row);

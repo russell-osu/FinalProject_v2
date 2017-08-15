@@ -8,7 +8,7 @@ class Consumable :
 {
 public:
 	Consumable();
-	virtual void use();
+	virtual void use() = 0;
 	virtual ~Consumable();
 };
 

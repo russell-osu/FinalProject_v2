@@ -42,6 +42,7 @@ public:
 	void chkBag();
 =======
 	void chkInventory();
+<<<<<<< HEAD
 >>>>>>> parent of ecc67e4... working--about to implement use item
 =======
 	void chkInventory();
@@ -50,6 +51,9 @@ public:
 	void chkInventory();
 >>>>>>> parent of ecc67e4... working--about to implement use item
 	bool addToBag(shared_ptr<Item> item, bool dispMsg=false);
+=======
+	bool addToBag(shared_ptr<Item> item);
+>>>>>>> parent of b4d7dce... about to change chkInventory() to chkBag()
 	shared_ptr<Item> rmvFromBag();
 	//bool useBagItm();
 
