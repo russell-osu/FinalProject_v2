@@ -202,8 +202,15 @@ void Space::rmvVectItm(vector<shared_ptr<Item>>& vect, int itmToRmv)
 	}
 }
 
+void Space::addRscItm(shared_ptr<Item> item)
+{
+	rscItmVect.push_back(item);
+}
 
-
+void Space::addMiscItm(shared_ptr<Item> item)
+{
+	miscItmVect.push_back(item);
+}
 
 
 //randomly generate creature and set its stats based on space diff lvl
@@ -316,13 +323,14 @@ void Space::setNumVisits(int numVisits)
 {
 	this->numVisits = numVisits;
 }
-
+ 
 int Space::getNumVisits()
 {
 	return numVisits;
 }
 
-vector<shared_ptr<Item>> Space::getRscItmVect()
+//pass by reference
+vector<shared_ptr<Item>>& Space::getRscItmVect()
 {
 	return rscItmVect;
 }
