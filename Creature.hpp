@@ -39,6 +39,7 @@ public:
 	void chkInventory();
 	bool addToBag(shared_ptr<Item> item);
 	shared_ptr<Item> rmvFromBag();
+	//shared_ptr<Item> rmvRscFromBag();
 
 
 	//getters and setters
