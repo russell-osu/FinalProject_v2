@@ -113,10 +113,70 @@ shared_ptr<Item> Bag::rmvItm()
 	return itemToRmv;
 }
 
-shared_ptr<Item> Bag::useItem()
+
+
+//returns item from bag if consumable and removes item from bag
+shared_ptr<Item> Bag::consumeItem()
 {
-	return nullptr;
+	//create bag item menu list
+	vector<string> bagMenu;
+	for (unsigned int i = 0; i < bagVect.size(); i++)
+	{
+		string rsc = bagVect[i]->getName();
+		bagMenu.push_back(rsc);
+	}
+
+
+	//**********remove item from bag***************
+
+	//if bag is empty, return nullptr
+	if (bagVect.empty())
+	{
+		cout << "(bag is empty)" << endl << endl;
+		return nullptr;
+	}
+
+	int menuChoice;
+
+
+	//print out menu of resource choices and prompt user
+	cout << "(choose an item from bag)" << endl;
+	menuChoice = menuExit(bagMenu, false);
+
+
+	//if user exits menu, return nullptr
+	if (menuChoice == 0)
+	{
+		return nullptr;
+	}
+
+
+	//point temp variable to item to add to bag
+	shared_ptr<Item> itemToCnsm = bagVect[menuChoice - 1];
+
+
+	//if item not useable, return nullptr
+	if(itemToCnsm->getSubclass() != "consumable")
+	{
+		cout << "That item can't be used." << endl << endl;
+		return nullptr;
+	}
+
+	//remove the rsc from the bag vector and rewrite vector
+	rmvVectItm(bagVect, menuChoice - 1);
+
+	//reduce bag weight
+	currWght = currWght - itemToCnsm->getWeight();
+
+	//output message upon completion
+	cout << "Item removed from bag: " << itemToCnsm->getName() << endl
+		<< endl;
+
+
+	return itemToCnsm;
 }
+
+
 
 
 //removes item by rewriting vector without removed item

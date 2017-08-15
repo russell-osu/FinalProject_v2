@@ -13,12 +13,13 @@ AttPotion::AttPotion()
 
 void AttPotion::use(shared_ptr<Creature> creat)
 {
+
 	//increase number of att die by 1
 	int numAttDie = creat->getNumAttDie();
 	creat->setNumAttDie(numAttDie + 1);
 
 	cout << "Number of attack dice increased by 1." << endl;
-	pauseUntilEnter();
+	//pauseUntilEnter();
 
 }
 

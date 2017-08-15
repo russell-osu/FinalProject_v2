@@ -203,13 +203,18 @@ void Game::gameLogic()
 				}
 
 				//if choice is to use item
-				if(menuChoice==2)
+				else if(menuChoice==2)
 				{
 					//prompt user to select item
-					shared_ptr<Item> item = heroBag->useItem();
+					shared_ptr<Item> item = heroBag->consumeItem();
 
 					//call use on item (it will update hero's data members)
-					std::static_pointer_cast<Consumable>(item)->use(hero);
+					//only call if item selected is not nullptr
+
+					if (item != nullptr)
+					{
+						std::static_pointer_cast<Consumable>(item)->use(hero);
+					}
 
 				}
 

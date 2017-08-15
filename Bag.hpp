@@ -22,7 +22,7 @@ public:
 
 	bool addItm(shared_ptr<Item> item, bool dispMsg=false);
 	shared_ptr<Item> rmvItm();
-	shared_ptr<Item> useItem();
+	shared_ptr<Item> consumeItem();
 
 	void rmvVectItm(vector<shared_ptr<Item>>&, int itmToRmv);
 	void examItm();
