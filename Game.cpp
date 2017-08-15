@@ -167,7 +167,11 @@ void Game::gameLogic()
 			//check inventory
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 			hero->chkBag();
+=======
+			hero->chkInventory();
+>>>>>>> parent of ecc67e4... working--about to implement use item
 =======
 			hero->chkInventory();
 >>>>>>> parent of ecc67e4... working--about to implement use item
