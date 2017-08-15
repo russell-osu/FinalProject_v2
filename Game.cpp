@@ -165,34 +165,34 @@ void Game::gameLogic()
 			//clear screen
 			system(CLEAR_SCREEN);
 			//check inventory
-			hero->chkBag(currSpc, hero);
+			hero->chkBag();
 
-			//Bag* heroBag = hero->getBag();
-			////present option to rmv item from bag if bag is not empty
-			//if (!heroBag->getBagVect().empty())
-			//{
-			//	string menuItems[] = { "yes", "no" };
-			//	cout << "Remove an item from the bag?" << endl;
-			//	int menuChoice = menu(menuItems, 2, false);
-			//	cout << endl;
-			//	//place item in one pf curr space's vectors (rsc or misc)
-			//	shared_ptr<Item>itmToRmv;
-			//	if (menuChoice == 1)
-			//	{
-			//		itmToRmv = hero->rmvFromBag();
-			//		
-			//		//add item to curr space's rsc vector if rsc
-			//		if(itmToRmv->getSubclass() == "resource")
-			//		{
-			//			currSpc->addRscItm(itmToRmv);
-			//		}
-			//		//add item to curr spc's misc vect if not rsc
-			//		else
-			//		{
-			//			currSpc->addMiscItm(itmToRmv);
-			//		}
-			//	}
-			//}
+			Bag* heroBag = hero->getBag();
+			//present option to rmv item from bag if bag is not empty
+			if (!heroBag->getBagVect().empty())
+			{
+				string menuItems[] = { "yes", "no" };
+				cout << "Remove an item from the bag?" << endl;
+				int menuChoice = menu(menuItems, 2, false);
+				cout << endl;
+				//place item in one pf curr space's vectors (rsc or misc)
+				shared_ptr<Item>itmToRmv;
+				if (menuChoice == 1)
+				{
+					itmToRmv = hero->rmvFromBag();
+					
+					//add item to curr space's rsc vector if rsc
+					if(itmToRmv->getSubclass() == "resource")
+					{
+						currSpc->addRscItm(itmToRmv);
+					}
+					//add item to curr spc's misc vect if not rsc
+					else
+					{
+						currSpc->addMiscItm(itmToRmv);
+					}
+				}
+			}
 
 
 			pauseUntilEnter();

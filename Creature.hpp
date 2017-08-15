@@ -37,10 +37,10 @@ public:
 	virtual int defend(string attString);
 	void generateAttText(string special = "");
 	void generateDefText(int prelimStrength, string special = "");
-	void chkBag(Space* currSpace, shared_ptr<Creature>hero);
+	void chkBag();
 	bool addToBag(shared_ptr<Item> item, bool dispMsg=false);
 	shared_ptr<Item> rmvFromBag();
-	//shared_ptr<Item> rmvRscFromBag();
+	//bool useBagItm();
 
 
 	//getters and setters
