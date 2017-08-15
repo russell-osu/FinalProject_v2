@@ -3,11 +3,15 @@
 #ifndef MOON_STONE_HPP
 #define MOON_STONE_HPP
 #include "Item.hpp"
+#include "Resource.hpp"
+
 class Stone :
-	public Item
+	public Resource
+
 {
 public:
 	Stone();
+	virtual void use();
 	~Stone();
 };
 #endif

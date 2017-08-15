@@ -3,11 +3,14 @@
 #ifndef MOON_ORE_HPP
 #define MOON_ORE_HPP
 #include "Item.hpp"
+#include "Resource.hpp"
+
 class Ore :
-	public Item
+	public Resource
 {
 public:
 	Ore();
+	virtual void use();
 	~Ore();
 };
 

@@ -9,6 +9,10 @@ Wood::Wood()
 	weight = 1;
 }
 
+void Wood::use()
+{
+}
+
 
 Wood::~Wood()
 {

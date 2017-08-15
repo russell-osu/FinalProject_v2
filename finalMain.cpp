@@ -6,6 +6,7 @@
 #include "cs162_utilities.hpp"
 #include "Hero.hpp"
 #include "asciiArt.hpp"
+#include "Ore.hpp"
 
 
 using std::cout;
@@ -18,6 +19,9 @@ int main()
 	setSeed();
 
 	//welcome message and instructions.
+
+	//Ore iron;
+	//cout << iron.getSubclass() << endl << endl;
 
 	//welcome message
 	asciiVillNoShelter();

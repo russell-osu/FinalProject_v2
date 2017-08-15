@@ -134,6 +134,7 @@
     <ClCompile Include="Ore.cpp" />
     <ClCompile Include="Plains.cpp" />
     <ClCompile Include="Item.cpp" />
+    <ClCompile Include="Resource.cpp" />
     <ClCompile Include="Space.cpp" />
     <ClCompile Include="Stone.cpp" />
     <ClCompile Include="Vampire.cpp" />
@@ -160,6 +161,7 @@
     <ClInclude Include="Ore.hpp" />
     <ClInclude Include="Plains.hpp" />
     <ClInclude Include="Item.hpp" />
+    <ClInclude Include="Resource.hpp" />
     <ClInclude Include="Space.hpp" />
     <ClInclude Include="Stone.hpp" />
     <ClInclude Include="Vampire.hpp" />

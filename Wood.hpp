@@ -3,11 +3,14 @@
 #ifndef MOON_WOOD_HPP
 #define MOON_WOOD_HPP
 #include "Item.hpp"
+#include "Resource.hpp"
+
 class Wood :
-	public Item
+	public Resource
 {
 public:
 	Wood();
+	virtual void use();
 	~Wood();
 };
 

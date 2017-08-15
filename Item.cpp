@@ -36,6 +36,16 @@ int Item::getWeight()
 	return weight;
 }
 
+void Item::setSubclass(string subclass)
+{
+	this->subclass = subclass;
+}
+
+string Item::getSubclass()
+{
+	return subclass;
+}
+
 
 Item::~Item()
 {

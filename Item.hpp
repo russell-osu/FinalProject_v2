@@ -9,6 +9,7 @@ using std::string;
 class Item
 {
 protected:
+	string subclass;
 	char type;
 	string name;
 	int weight;
@@ -21,6 +22,10 @@ public:
 	string getName();
 	void setWeight(int weight);
 	int getWeight();
+	void setSubclass(string);
+	string getSubclass();
+	virtual void use() = 0;
+
 	virtual ~Item();
 };
 
