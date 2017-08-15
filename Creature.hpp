@@ -37,7 +37,11 @@ public:
 	void generateAttText(string special = "");
 	void generateDefText(int prelimStrength, string special = "");
 <<<<<<< HEAD
+<<<<<<< HEAD
 	void chkBag();
+=======
+	void chkInventory();
+>>>>>>> parent of ecc67e4... working--about to implement use item
 =======
 	void chkInventory();
 >>>>>>> parent of ecc67e4... working--about to implement use item
