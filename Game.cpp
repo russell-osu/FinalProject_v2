@@ -168,7 +168,11 @@ void Game::gameLogic()
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 			hero->chkBag();
+=======
+			hero->chkInventory();
+>>>>>>> parent of ecc67e4... working--about to implement use item
 =======
 			hero->chkInventory();
 >>>>>>> parent of ecc67e4... working--about to implement use item
@@ -207,7 +211,11 @@ void Game::gameLogic()
 			}
 
 
+<<<<<<< HEAD
 			pauseTillEnter();
+=======
+			pauseUntilEnter();
+>>>>>>> parent of ecc67e4... working--about to implement use item
 			system(CLEAR_SCREEN);//clear screen
 			map.dispMap(hero, village); //display map
 			dispSpcMsg();//display current spaces message
