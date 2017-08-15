@@ -8,6 +8,7 @@
 #include <memory>
 #include "Bag.hpp"
 
+class Space;
 using std::string;
 using std::stringstream;
 
@@ -36,7 +37,7 @@ public:
 	virtual int defend(string attString);
 	void generateAttText(string special = "");
 	void generateDefText(int prelimStrength, string special = "");
-	void chkInventory();
+	void chkBag(Space* currSpace, shared_ptr<Creature>hero);
 	bool addToBag(shared_ptr<Item> item, bool dispMsg=false);
 	shared_ptr<Item> rmvFromBag();
 	//shared_ptr<Item> rmvRscFromBag();

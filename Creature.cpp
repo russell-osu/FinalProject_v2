@@ -19,6 +19,7 @@ original state for a new match (for multi-match trials).
 
 #include "Creature.hpp"
 #include "cs162_utilities.hpp"
+#include "Space.hpp"
 
 #include <string>
 #include <iostream>
@@ -139,7 +140,7 @@ void Creature::generateDefText(int prelimStrength, string special)
 }
 
 
-void Creature::chkInventory()
+void Creature::chkBag(Space* currSpc, shared_ptr<Creature>hero)
 {
 	//display bag capactiy and display contents
 	cout << "Bag capacity: " << bag.getCapacity() << endl;
@@ -147,19 +148,41 @@ void Creature::chkInventory()
 	cout << endl;
 	bag.dispContents();
 
-	////present option to rmv item from bag if bag is not empty
-	//if (!bag.getBagVect().empty())
-	//{
-	//	string menuItems[] = { "yes", "no" };
-	//	cout << "Remove an item from the bag?" << endl;
-	//	int menuChoice = menu(menuItems, 2, false);
-	//	cout << endl;
-	//	if (menuChoice == 1)
-	//	{
-	//		this->rmvFromBag();
-	//	}
-	//}
+
+	Bag* heroBag = hero->getBag();
+	//present option to rmv item from bag if bag is not empty
+	if (!heroBag->getBagVect().empty())
+	{
+		string menuItems[] = { "yes", "no" };
+		cout << "Remove an item from the bag?" << endl;
+		int menuChoice = menu(menuItems, 2, false);
+		cout << endl;
+		//place item in one pf curr space's vectors (rsc or misc)
+		shared_ptr<Item>itmToRmv;
+		if (menuChoice == 1)
+		{
+			itmToRmv = hero->rmvFromBag();
+			
+			//add item to curr space's rsc vector if rsc
+			if(itmToRmv->getSubclass() == "resource")
+			{
+				currSpc->addRscItm(itmToRmv);
+			}
+			//add item to curr spc's misc vect if not rsc
+			else
+			{
+				currSpc->addMiscItm(itmToRmv);
+			}
+		}
+	}
+
 }
+
+
+
+
+
+
 
 //tries to add item to bag (returns true if completed and false if not)
 bool Creature::addToBag(shared_ptr<Item> item, bool dispMsg)
