@@ -21,7 +21,7 @@ public:
 	Bag();
 	Bag(int capacity);
 
-	bool addItm(shared_ptr<Item> item);
+	bool addItm(shared_ptr<Item> item, bool dispMsg=false);
 	shared_ptr<Item> rmvItm();
 	//bool useItm();
 	void rmvVectItm(vector<shared_ptr<Item>>&, int itmToRmv);

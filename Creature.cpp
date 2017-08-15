@@ -226,10 +226,10 @@ void Creature::chkInventory()
 >>>>>>> parent of ecc67e4... working--about to implement use item
 }
 
-//tries item to bag (returns true if completed and false if not)
-bool Creature::addToBag(shared_ptr<Item> item)
+//tries to add item to bag (returns true if completed and false if not)
+bool Creature::addToBag(shared_ptr<Item> item, bool dispMsg)
 {
-	bool addedToBag = bag.addItm(item);
+	bool addedToBag = bag.addItm(item,dispMsg);
 	return addedToBag;
 }
 

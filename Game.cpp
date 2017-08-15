@@ -207,7 +207,7 @@ void Game::gameLogic()
 			}
 
 
-			pauseTillEnter();
+			pauseUntilEnter();
 			system(CLEAR_SCREEN);//clear screen
 			map.dispMap(hero, village); //display map
 			dispSpcMsg();//display current spaces message
@@ -273,8 +273,12 @@ void Game::gameLogic()
 			//if hero wins, set curr spac creature to nullptr
 			if(winner->getName() == "Hero")
 			{
+				pauseUntilEnter();
+				//check creature's bag for items
+				chkCreatBag(currCreat);
+				//set creat to nullptr
 				currSpc->setCreat(nullptr);
-				pauseTillEnter();
+				//clear screen and reset map and message
 				system(CLEAR_SCREEN);
 				map.dispMap(hero, village);
 				dispSpcMsg();
@@ -282,7 +286,7 @@ void Game::gameLogic()
 			else //if hero loses, game is over
 			{
 				menuChoice = "End game";
-				pauseTillEnter();
+				pauseUntilEnter();
 
 				//clear screen and output lose message
 				system(CLEAR_SCREEN);
@@ -308,7 +312,7 @@ void Game::gameLogic()
 			if(built)
 			{
 				cout << "You have fulfilled your mission..." << endl;
-				pauseTillEnter(); //pause
+				pauseUntilEnter(); //pause
 				system(CLEAR_SCREEN);//clear screen
 
 				//output ascii shelter and win message
@@ -349,6 +353,19 @@ void Game::gameLogic()
 	//********************end play loop**************************
 }
 
+
+/**********************CHECK CREATURE'S BAG AFTER VICTORY*****************/
+void Game::chkCreatBag(shared_ptr<Creature> currCreat)
+{
+	system(CLEAR_SCREEN);
+
+	cout << "Checking creatures bag for useful items..." << endl << endl;
+
+	//add item to hero's bag
+	hero->addToBag(currCreat->rmvFromBag(),true);
+	
+	
+}
 
 
 /******************CREATE ACTION MENU************************/

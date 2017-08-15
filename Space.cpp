@@ -11,6 +11,9 @@
 #include "Medusa.hpp"
 #include "HarryPotter.hpp"
 #include "Barbarian.hpp"
+#include "AttPotion.hpp"
+#include "Consumable.hpp"
+#include "Resource.hpp"
 
 using std::cout;
 using std::endl;
@@ -98,7 +101,7 @@ bool Space::gatherRsc(shared_ptr<Creature>hero)
 	if(rscItmVect.empty())
 	{
 		cout << "There are no more resources to gather." << endl;
-		pauseTillEnter();
+		pauseUntilEnter();
 		return rscGathered;
 	}
 
@@ -249,8 +252,27 @@ void Space::genCreature()
 	//set num def Die
 	int numDefDie = creat->getNumDefDie();
 	creat->setNumDefDie(numDefDie*diffLvl);
+
+	//randomly generate items for creatures bag
+	genCreatItems();
 }
 
+
+//randomly generate items for creatures bag
+void Space::genCreatItems()
+{
+	int attPotChnc = getRandIntInRange(1, 2);
+
+	//generate attack potion if condition is met
+	if (attPotChnc == 1)
+	{
+		shared_ptr<Item> potion = std::make_shared<AttPotion>();
+		creat->addToBag(potion);
+	}
+}
+
+
+//increment number of time space has been visited
 void Space::incrementNumVisits()
 {
 	numVisits++;

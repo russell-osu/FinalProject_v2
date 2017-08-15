@@ -141,7 +141,7 @@ bool Village::buildShelter(shared_ptr<Creature>hero)
 		if (noRsc)
 		{
 			cout << "You have no resources to add." << endl << endl;
-			pauseTillEnter();
+			pauseUntilEnter();
 			return false;
 		}
 
