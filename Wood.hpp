@@ -10,7 +10,6 @@ class Wood :
 {
 public:
 	Wood();
-	virtual void use();
 	~Wood();
 };
 

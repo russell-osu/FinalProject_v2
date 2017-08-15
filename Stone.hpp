@@ -11,7 +11,7 @@ class Stone :
 {
 public:
 	Stone();
-	virtual void use();
+	//virtual void use();
 	~Stone();
 };
 #endif

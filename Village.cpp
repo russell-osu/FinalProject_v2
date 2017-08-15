@@ -1,6 +1,7 @@
 #include "Village.hpp"
 #include <iostream>
 #include "defConst.hpp"
+#include "cs162_utilities.hpp"
 
 using std::cout;
 using std::endl;
@@ -53,8 +54,19 @@ bool Village::buildShelter(shared_ptr<Creature>hero)
 {
 	bool itemAdded = false;
 
-	//if hero's bag is empty, return false
-	if(hero->bagIsEmpty())
+	//if hero's bag has no resources, return false
+	bool noRsc = true;
+	Bag* heroBag = hero->getBag();
+	vector<shared_ptr<Item>>& heroBagVect = heroBag->getBagVect();
+	for(unsigned i = 0; i<heroBagVect.size(); i++)
+	{
+		if(heroBagVect[i]->getSubclass()=="resource")
+		{
+			noRsc = false;
+		}
+
+	}
+	if (noRsc)
 	{
 		cout << "You have no resources to add." << endl << endl;
 		return false;
@@ -65,13 +77,27 @@ bool Village::buildShelter(shared_ptr<Creature>hero)
 
 	//promt user to remove item from bag
 	cout << "Add to shelter resource supply:" << endl;
-	shared_ptr<Item> buildItm = hero->rmvFromBag();
+	
+
+	//list items and prompt user to rmv item from bag
+	shared_ptr<Item> buildItm;
+	buildItm = hero->rmvFromBag();
+
+	//if item added is not a resource, alert user, return item
+	//to bag and return false
+	if(buildItm->getSubclass() != "resource")
+	{
+		cout << "Item chosen is not a resource." << endl << endl;
+		heroBag->addItm(buildItm);
+		return false;
+	}
+
+
 	cout << endl;
 
+	//loop through hero's bag vector to remove rsc items
 	while (buildItm != nullptr)
 	{
-		itemAdded = true;
-
 		//add item to shelter rsc vector
 		rscItmVect.push_back(buildItm);
 
@@ -91,22 +117,48 @@ bool Village::buildShelter(shared_ptr<Creature>hero)
 		system(CLEAR_SCREEN);
 		dispSheltRsc();
 
+		//check win conditions and return true if won
+		if (stoneCnt >= stoneWin && woodCnt >= woodWin && oreCnt >= oreWin)
+		{
+			cout << "YOU HAVE COLLECTED ALL THE RESOURCES NEEDED!!" << endl;
+			cout << "(press <enter> to continue)" << endl;
+			std::cin.ignore(INT_MAX, '\n');
+			//enough resources collected to build shelter
+			return true;
+		}
+
+
+		//if hero's bag has no more rsc, return false
+		noRsc = true;
+		for (unsigned i = 0; i<heroBagVect.size(); i++)
+		{
+			if (heroBagVect[i]->getSubclass() == "resource")
+			{
+				noRsc = false;
+			}
+
+		}
+		if (noRsc)
+		{
+			cout << "You have no resources to add." << endl << endl;
+			pauseTillEnter();
+			return false;
+		}
+
 		//prompt user to remove another item from bag
 		cout << "Add to shelter resource supply:" << endl;
 		buildItm = hero->rmvFromBag();
 
+		//if item added is not a resource, alert user, return item
+		//to bag and return false
+		if (buildItm->getSubclass() != "resource" && buildItm != nullptr)
+		{
+			cout << "Item chosen is not a resource." << endl << endl;
+			heroBag->addItm(buildItm);
+			return false;
+		}
 	}
 
-
-	//check win conditions
-	if(stoneCnt >= stoneWin && woodCnt >= woodWin && oreCnt >= oreWin)
-	{	
-		cout << "YOU HAVE COLLECTED ALL THE RESOURCES NEEDED!!" << endl;
-		cout << "(press <enter> to continue)" << endl;
-		std::cin.ignore(INT_MAX, '\n');
-		//enough resources collected to build shelter
-		return true;
-	}
 
 	//not enough resources collected, yet
 	return false;

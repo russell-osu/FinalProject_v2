@@ -121,6 +121,7 @@
     <ClCompile Include="Barbarian.cpp" />
     <ClCompile Include="BlueMen.cpp" />
     <ClCompile Include="Combat.cpp" />
+    <ClCompile Include="Consumable.cpp" />
     <ClCompile Include="Creature.cpp" />
     <ClCompile Include="Die.cpp" />
     <ClCompile Include="finalMain.cpp" />
@@ -148,6 +149,7 @@
     <ClInclude Include="Barbarian.hpp" />
     <ClInclude Include="BlueMen.hpp" />
     <ClInclude Include="Combat.hpp" />
+    <ClInclude Include="Consumable.hpp" />
     <ClInclude Include="Creature.hpp" />
     <ClInclude Include="defConst.hpp" />
     <ClInclude Include="Die.hpp" />

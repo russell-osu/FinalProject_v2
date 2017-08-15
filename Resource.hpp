@@ -8,8 +8,8 @@ class Resource :
 {
 public:
 	Resource();
-	virtual void use() = 0;
-	~Resource();
+	virtual void use();
+	virtual ~Resource();
 };
 
 #endif

@@ -45,6 +45,8 @@ public:
 	void setDifficulty();
 	bool gatherRsc(shared_ptr<Creature>hero);
 	void rmvVectItm(vector<shared_ptr<Item>>&, int itmToRmv);
+	void addRscItm(shared_ptr<Item>item);
+	void addMiscItm(shared_ptr<Item>item);
 	void genCreature();
 	void incrementNumVisits();
 	virtual string describe() = 0;
@@ -62,7 +64,7 @@ public:
 	string getName();
 	void setNumVisits(int numVisits);
 	int getNumVisits();
-	vector<shared_ptr<Item>> getRscItmVect();
+	vector<shared_ptr<Item>>& getRscItmVect();
 
 	//map pointer getters and setters
 	void setNorth(Space* north);

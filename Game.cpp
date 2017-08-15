@@ -158,7 +158,7 @@ void Game::gameLogic()
 
 
 
-		//***CHECK BAG***
+		//**********CHECK BAG**********
 		else if (menuChoice == "Check bag")
 		{
 			sufficientMoves = true;//enough moves left for this action
@@ -166,6 +166,36 @@ void Game::gameLogic()
 			system(CLEAR_SCREEN);
 			//check inventory
 			hero->chkInventory();
+
+			Bag* heroBag = hero->getBag();
+			//present option to rmv item from bag if bag is not empty
+			if (!heroBag->getBagVect().empty())
+			{
+				string menuItems[] = { "yes", "no" };
+				cout << "Remove an item from the bag?" << endl;
+				int menuChoice = menu(menuItems, 2, false);
+				cout << endl;
+				//place item in one pf curr space's vectors (rsc or misc)
+				shared_ptr<Item>itmToRmv;
+				if (menuChoice == 1)
+				{
+					itmToRmv = hero->rmvFromBag();
+					
+					//add item to curr space's rsc vector if rsc
+					if(itmToRmv->getSubclass() == "resource")
+					{
+						currSpc->addRscItm(itmToRmv);
+					}
+					//add item to curr spc's misc vect if not rsc
+					else
+					{
+						currSpc->addMiscItm(itmToRmv);
+					}
+				}
+			}
+
+
+			pauseTillEnter();
 			system(CLEAR_SCREEN);//clear screen
 			map.dispMap(hero, village); //display map
 			dispSpcMsg();//display current spaces message
@@ -366,8 +396,8 @@ char prmptUsrMv()
 	cout << "Which way would you like to move?" << endl;
 
 	cout << "w) north" << endl << "s) south" << endl << "d) east"
-		<< endl << "a) west" << endl << endl << "x) Don't move."
-		" Stay in this region." << endl << endl;
+		<< endl << "a) west" << endl << endl << "x) Open the action"
+		" menu for this area." << endl << endl;
 	getline(std::cin, usrIn);
 	cout << endl;
 	//validate usr input

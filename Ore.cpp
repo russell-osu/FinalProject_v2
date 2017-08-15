@@ -11,9 +11,6 @@ Ore::Ore()
 	
 }
 
-void Ore::use()
-{
-}
 
 
 Ore::~Ore()

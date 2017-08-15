@@ -62,6 +62,7 @@ public:
 	bool bagIsEmpty();
 	string getAttText();
 	string getDefText();
+	Bag* getBag();
 
 
 	void setRow(int row);

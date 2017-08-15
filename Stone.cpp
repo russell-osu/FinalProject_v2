@@ -9,9 +9,7 @@ Stone::Stone()
 	weight = 4;
 }
 
-void Stone::use()
-{
-}
+
 
 
 Stone::~Stone()

@@ -29,7 +29,7 @@ public:
 	int getCapacity();
 	void setCurrWght(int currWght);
 	int getCurrWght();
-	vector<shared_ptr<Item>> getBagVect();
+	vector<shared_ptr<Item>>& getBagVect();
 
 
 	~Bag();

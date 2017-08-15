@@ -66,7 +66,7 @@ shared_ptr<Item> Bag::rmvItm()
 
 	int menuChoice;
 	
-
+	
 	//print out menu of resource choices and prompt user
 	cout << "(choose an item from bag)" << endl;
 	menuChoice = menuExit(bagMenu, false);
@@ -86,12 +86,13 @@ shared_ptr<Item> Bag::rmvItm()
 	//remove the rsc from the bag vector and rewrite vector
 	rmvVectItm(bagVect, menuChoice - 1);
 
+	//reduce bag weight
+	currWght = currWght - itemToRmv->getWeight();
+
 	//output message upon completion
 	cout << "Item removed from bag: " << itemToRmv->getName() << endl
 		<<endl;
 
-	////display contents of bag
-	//dispContents();
 
 	return itemToRmv;
 }
@@ -171,7 +172,8 @@ int Bag::getCurrWght()
 	return currWght;
 }
 
-vector<shared_ptr<Item>> Bag::getBagVect()
+//returns bag vector (pass by reference)
+vector<shared_ptr<Item>>& Bag::getBagVect()
 {
 	return bagVect;
 }

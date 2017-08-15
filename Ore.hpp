@@ -10,7 +10,6 @@ class Ore :
 {
 public:
 	Ore();
-	virtual void use();
 	~Ore();
 };
 

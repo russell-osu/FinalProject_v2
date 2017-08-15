@@ -147,18 +147,18 @@ void Creature::chkInventory()
 	cout << endl;
 	bag.dispContents();
 
-	//present option to rmv item from bag if bag is not empty
-	if (!bag.getBagVect().empty())
-	{
-		string menuItems[] = { "yes", "no" };
-		cout << "Remove an item from the bag?" << endl;
-		int menuChoice = menu(menuItems, 2, false);
-		cout << endl;
-		if (menuChoice == 1)
-		{
-			this->rmvFromBag();
-		}
-	}
+	////present option to rmv item from bag if bag is not empty
+	//if (!bag.getBagVect().empty())
+	//{
+	//	string menuItems[] = { "yes", "no" };
+	//	cout << "Remove an item from the bag?" << endl;
+	//	int menuChoice = menu(menuItems, 2, false);
+	//	cout << endl;
+	//	if (menuChoice == 1)
+	//	{
+	//		this->rmvFromBag();
+	//	}
+	//}
 }
 
 //tries item to bag (returns true if completed and false if not)
@@ -295,6 +295,12 @@ string Creature::getDefText()
 	string strDefText = defText.str();
 	return strDefText;
 }
+
+Bag* Creature::getBag()
+{
+	return &bag;
+}
+
 
 void Creature::setRow(int row)
 {
