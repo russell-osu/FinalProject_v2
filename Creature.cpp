@@ -143,11 +143,7 @@ void Creature::generateDefText(int prelimStrength, string special)
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
-<<<<<<< HEAD
 void Creature::chkBag()
-=======
-void Creature::chkInventory()
->>>>>>> parent of ecc67e4... working--about to implement use item
 =======
 void Creature::chkInventory()
 >>>>>>> parent of ecc67e4... working--about to implement use item
@@ -167,7 +163,6 @@ void Creature::chkInventory()
 	cout << endl;
 	bag.dispContents();
 
-<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -217,8 +212,6 @@ void Creature::chkInventory()
 >>>>>>> parent of ecc67e4... working--about to implement use item
 =======
 >>>>>>> parent of ecc67e4... working--about to implement use item
-=======
->>>>>>> parent of ecc67e4... working--about to implement use item
 	////present option to rmv item from bag if bag is not empty
 	//if (!bag.getBagVect().empty())
 	//{
@@ -234,7 +227,6 @@ void Creature::chkInventory()
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
-<<<<<<< HEAD
 >>>>>>> parent of ecc67e4... working--about to implement use item
 =======
 >>>>>>> parent of ecc67e4... working--about to implement use item
@@ -247,8 +239,6 @@ bool Creature::addToBag(shared_ptr<Item> item)
 {
 	bool addedToBag = bag.addItm(item);
 =======
-=======
->>>>>>> parent of ecc67e4... working--about to implement use item
 }
 
 //tries to add item to bag (returns true if completed and false if not)
