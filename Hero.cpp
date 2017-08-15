@@ -42,7 +42,7 @@ void Hero::refresh()
 	strength = startingStrength;
 }
 
-//void Hero::chkBag()
+//void Hero::chkInventory()
 //{
 //	//display bag capactiy and display contents
 //	cout << "Bag capacity: " << bag.getCapacity() << endl;

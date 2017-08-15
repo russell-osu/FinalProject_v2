@@ -17,7 +17,7 @@ public:
 	Hero(int row, int col, int strength, int numAttDie, int numDefDie,
 		int bagCapacity);
 	virtual void refresh();
-	//void chkBag();
+	//void chkInventory();
 	//bool addToBag(shared_ptr<Item> item);
 	~Hero();
 };
