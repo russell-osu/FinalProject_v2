@@ -66,6 +66,7 @@ bool Village::buildShelter(shared_ptr<Creature>hero)
 	//promt user to remove item from bag
 	cout << "Add to shelter resource supply:" << endl;
 	shared_ptr<Item> buildItm = hero->rmvFromBag();
+	cout << endl;
 
 	while (buildItm != nullptr)
 	{
@@ -86,16 +87,16 @@ bool Village::buildShelter(shared_ptr<Creature>hero)
 			break;
 		}
 
+		//clear screen and display shelter resources
+		system(CLEAR_SCREEN);
+		dispSheltRsc();
+
 		//prompt user to remove another item from bag
 		cout << "Add to shelter resource supply:" << endl;
 		buildItm = hero->rmvFromBag();
 
 	}
 
-	if (itemAdded)
-	{
-		dispSheltRsc();
-	}
 
 	//check win conditions
 	if(stoneCnt >= stoneWin && woodCnt >= woodWin && oreCnt >= oreWin)

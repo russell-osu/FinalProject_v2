@@ -89,6 +89,8 @@ void Space::setDifficulty()
 //gather rsc from rscItmVect, returns true if rsc gathered
 bool Space::gatherRsc(shared_ptr<Creature>hero)
 {
+	system(CLEAR_SCREEN);
+
 	//bool for flagging whether rsc was gathered
 	bool rscGathered = false;
 	
@@ -96,6 +98,7 @@ bool Space::gatherRsc(shared_ptr<Creature>hero)
 	if(rscItmVect.empty())
 	{
 		cout << "There are no more resources to gather." << endl;
+		pauseTillEnter();
 		return rscGathered;
 	}
 

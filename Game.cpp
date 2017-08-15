@@ -14,6 +14,8 @@ using std::endl;
 using std::string;
 
 char prmptUsrMv();
+void createActionMenu(vector<string>& menuItems, bool isVillage, 
+	bool hasCreature, bool hasResources);
 
 
 Game::Game(int maxMoves, shared_ptr<Creature>hero, 
@@ -103,39 +105,9 @@ void Game::gameLogic()
 		}
 
 
-		//***************action menu items*************************
+		//create game action menu
 		vector<string> menuItems;
-		menuItems.push_back("Move hero");
-		menuItems.push_back("Display map");
-		menuItems.push_back("Check bag");
-		//menuItems.push_back("Check shelter resources");
-
-
-		//*************add other items based on conditions***************
-
-		if (isVillage)//if curr spc is a village
-		{
-			menuItems.push_back("Add resources to shelter");
-		}
-
-		
-		else //if it's plains, forest, or hills
-		{
-
-			//if there are resources present, show gather rsc option
-			if (hasResources)
-			{
-				menuItems.push_back("Gather resources");
-			}
-
-			//if a creature is present, show fight creature option
-			if (hasCreature)
-			{
-				menuItems.push_back("Fight creature");
-			}
-		}
-		menuItems.push_back("Read instructions");
-		menuItems.push_back("End game");
+		createActionMenu(menuItems, isVillage, hasCreature, hasResources);
 
 
 		//***********USER CHOICE***************
@@ -158,7 +130,7 @@ void Game::gameLogic()
 				<< endl << endl;;
 		}
 
-		else
+		else //prompt user for menu choice
 		{
 			cout << "What would you like to do?" << endl;
 			menuChoice = menuRtnStr(menuItems, false);
@@ -190,29 +162,24 @@ void Game::gameLogic()
 		else if (menuChoice == "Check bag")
 		{
 			sufficientMoves = true;//enough moves left for this action
+			//clear screen
+			system(CLEAR_SCREEN);
+			//check inventory
 			hero->chkInventory();
-			cout << endl;
+			system(CLEAR_SCREEN);//clear screen
+			map.dispMap(hero, village); //display map
+			dispSpcMsg();//display current spaces message
 		}
 
-
-		///*********CHECK SHELTER RESOURCES******/
-		//else if(menuChoice == "Check shelter resources")
-		//{
-		//	sufficientMoves = true;//enough moves left for this action
-		//	system(CLEAR_SCREEN); //clear screen
-		//	static_cast<Village*>(village)->dispSheltRsc();
-
-		//	pauseTillEnter();
-		//}
 
 
 		//***DISPLAY MAP***
 		else if (menuChoice == "Display map")
 		{
 			sufficientMoves = true;//enough moves left for this action
-			system(CLEAR_SCREEN); //clear screen
-			map.dispMap(hero, village);
-			dispSpcMsg();
+			system(CLEAR_SCREEN);//clear screen
+			map.dispMap(hero, village); //display map
+			dispSpcMsg();//display current spaces message
 		}
 
 
@@ -224,15 +191,25 @@ void Game::gameLogic()
 
 			if (currCreat == nullptr) 
 			{
+				system(CLEAR_SCREEN);//clear screen
+				map.dispMap(hero, village); //display map
+
 				currSpc->gatherRsc(hero);
-				cout << endl;
-				//gathering resources requires three moves
+				
+				system(CLEAR_SCREEN);//clear screen
+				map.dispMap(hero, village); //display map
+				dispSpcMsg();//display current spaces message
+
+				//gathering resources requires two moves
 				updMovesRmn(2);
 			}
 			else //if a creature is around, you'll have to fight it for rscs
 			{
+				system(CLEAR_SCREEN);//clear screen
+				map.dispMap(hero, village); //display map
+				dispSpcMsg();//display current spaces message
 				cout << "If you want to gather resources, you'll have to"
-					" fight the creature, first." << endl;
+					" fight the creature, first." << endl << endl;
 			}
 		}
 
@@ -241,6 +218,8 @@ void Game::gameLogic()
 		else if (menuChoice == "Fight creature" && movesRmn > 2)
 		{
 			sufficientMoves = true;//enough moves left for this action
+			system(CLEAR_SCREEN);//clear screen
+
 			//instantiate combat class
 			Combat combat;
 			//send hero and current spaces creature to combat
@@ -253,12 +232,15 @@ void Game::gameLogic()
 			if(winner->getName() == "Hero")
 			{
 				currSpc->setCreat(nullptr);
+				pauseTillEnter();
+				system(CLEAR_SCREEN);
+				map.dispMap(hero, village);
+				dispSpcMsg();
 			}
 			else //if hero loses, game is over
 			{
 				menuChoice = "End game";
-				cout << "(press <enter> to continue)" << endl;
-				std::cin.ignore(INT_MAX, '\n');
+				pauseTillEnter();
 
 				//clear screen and output lose message
 				system(CLEAR_SCREEN);
@@ -274,6 +256,8 @@ void Game::gameLogic()
 		else if (menuChoice == "Add resources to shelter" && movesRmn > 2)
 		{
 			sufficientMoves = true;//enough moves left for this action
+			system(CLEAR_SCREEN);
+
 			bool built = static_cast<Village*>(village)->buildShelter(hero);
 
 			//building shelter requires 2 moves
@@ -281,12 +265,17 @@ void Game::gameLogic()
 
 			if(built)
 			{
+				cout << "You have fulfilled your mission..." << endl;
+				pauseTillEnter(); //pause
+				system(CLEAR_SCREEN);//clear screen
+
 				//output ascii shelter and win message
 				asciiShelter();
 
-				cout << "You finished the shelter and saved the village!" 
+				cout << "By supplying the necessary resources, "
+					"you saved the village!" 
 					<< endl;
-				cout << "*****************YOU WON!!!********************"
+				cout << "******************YOU WON!!!********************"
 					<< endl << endl;
 
 				//end game
@@ -320,6 +309,43 @@ void Game::gameLogic()
 
 
 
+/******************CREATE ACTION MENU************************/
+void createActionMenu(vector<string>& menuItems, bool isVillage, 
+	bool hasCreature, bool hasResources)
+{
+	menuItems.push_back("Move hero");
+	menuItems.push_back("Display map");
+	menuItems.push_back("Check bag");
+
+
+	//*************add other items based on conditions***************
+
+	if (isVillage)//if curr spc is a village
+	{
+		menuItems.push_back("Add resources to shelter");
+	}
+
+
+	else //if it's plains, forest, or hills
+	{
+
+		//if there are resources present, show gather rsc option
+		if (hasResources)
+		{
+			menuItems.push_back("Gather resources");
+		}
+
+		//if a creature is present, show fight creature option
+		if (hasCreature)
+		{
+			menuItems.push_back("Fight creature");
+		}
+	}
+
+	//add items at end of list
+	menuItems.push_back("Read instructions");
+	menuItems.push_back("End game");
+}
 
 
 /*****************UPDATE REMAINING MOVES*********************/
@@ -512,6 +538,10 @@ void Game::moveHero()
 
 		case 'x': //Don't move
 			offMap = false;
+			//clear screen, display map and display spc msg
+			system(CLEAR_SCREEN);
+			map.dispMap(hero, village);
+			dispSpcMsg();
 		}//end move choice switch
 
 
@@ -627,7 +657,9 @@ void Game::dispSpcMsg()
 	//if current space is a village
 	if (currSpc->getSpcTyp() == 'V')
 	{
-		static_cast<Village*>(village)->dispSheltRsc();
+		//static_cast<Village*>(village)->dispSheltRsc();
+		cout << "You're in the village. If you have any resources, you\n"
+			"could add them to the shelter." << endl << endl;
 	}
 }
 
