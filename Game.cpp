@@ -165,11 +165,7 @@ void Game::gameLogic()
 			//clear screen
 			system(CLEAR_SCREEN);
 			//check inventory
-<<<<<<< HEAD
 			hero->chkBag();
-=======
-			hero->chkInventory();
->>>>>>> parent of ecc67e4... working--about to implement use item
 
 			Bag* heroBag = hero->getBag();
 			//present option to rmv item from bag if bag is not empty
