@@ -117,6 +117,7 @@
   <ItemGroup>
     <ClCompile Include="..\CS_162_git\InputValidation\cs162_utilities.cpp" />
     <ClCompile Include="asciiArt.cpp" />
+    <ClCompile Include="AttPotion.cpp" />
     <ClCompile Include="Bag.cpp" />
     <ClCompile Include="Barbarian.cpp" />
     <ClCompile Include="BlueMen.cpp" />
@@ -145,6 +146,7 @@
   <ItemGroup>
     <ClInclude Include="..\CS_162_git\InputValidation\cs162_utilities.hpp" />
     <ClInclude Include="asciiArt.hpp" />
+    <ClInclude Include="AttPotion.hpp" />
     <ClInclude Include="Bag.hpp" />
     <ClInclude Include="Barbarian.hpp" />
     <ClInclude Include="BlueMen.hpp" />

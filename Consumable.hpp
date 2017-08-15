@@ -2,7 +2,9 @@
 
 #ifndef MOON_CONSUMABLE_HPP
 #define MOON_CONSUMABLE_HPP
-class Consumable
+#include "Item.hpp"
+class Consumable :
+	public Item
 {
 public:
 	Consumable();

@@ -4,6 +4,7 @@
 
 Consumable::Consumable()
 {
+	subclass = "consumable";
 }
 
 
