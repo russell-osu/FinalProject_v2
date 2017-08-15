@@ -39,14 +39,10 @@ public:
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
-<<<<<<< HEAD
 	void chkBag();
 =======
 	void chkInventory();
 <<<<<<< HEAD
->>>>>>> parent of ecc67e4... working--about to implement use item
-=======
-	void chkInventory();
 >>>>>>> parent of ecc67e4... working--about to implement use item
 =======
 	void chkInventory();
