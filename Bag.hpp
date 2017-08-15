@@ -5,7 +5,6 @@
 #include <vector>
 #include <memory>
 #include "Item.hpp"
-#include "Creature.hpp"
 
 using std::vector;
 using std::shared_ptr;
@@ -23,7 +22,6 @@ public:
 
 	bool addItm(shared_ptr<Item> item, bool dispMsg=false);
 	shared_ptr<Item> rmvItm();
-	//bool useItm();
 	void rmvVectItm(vector<shared_ptr<Item>>&, int itmToRmv);
 	void examItm();
 	void dispContents();
@@ -32,7 +30,6 @@ public:
 	void setCurrWght(int currWght);
 	int getCurrWght();
 	vector<shared_ptr<Item>>& getBagVect();
-	
 
 
 	~Bag();

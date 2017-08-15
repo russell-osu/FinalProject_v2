@@ -140,7 +140,7 @@ void Creature::generateDefText(int prelimStrength, string special)
 }
 
 
-void Creature::chkBag()
+void Creature::chkBag(Space* currSpc, shared_ptr<Creature>hero)
 {
 	//display bag capactiy and display contents
 	cout << "Bag capacity: " << bag.getCapacity() << endl;
@@ -149,42 +149,32 @@ void Creature::chkBag()
 	bag.dispContents();
 
 
-	//Bag* heroBag = hero->getBag();
-	////present option to rmv item from bag if bag is not empty
-	//if (!heroBag->getBagVect().empty())
-	//{
-	//	string menuItems[] = { "Remove item", 
-	//							"Use item",
-	//							"Exit menu"};
-	//	cout << "Remove an item from the bag?" << endl;
-	//	int menuChoice = menu(menuItems, 3, false);
-	//	cout << endl;
-
-	//	//if the choice is to remove, place item in 
-	//	//one pf curr space's vectors (rsc or misc)
-	//	shared_ptr<Item>itmToRmv;
-	//	if (menuChoice == 1)
-	//	{
-	//		itmToRmv = hero->rmvFromBag();
-	//		
-	//		//add item to curr space's rsc vector if rsc
-	//		if(itmToRmv->getSubclass() == "resource")
-	//		{
-	//			currSpc->addRscItm(itmToRmv);
-	//		}
-	//		//add item to curr spc's misc vect if not rsc
-	//		else
-	//		{
-	//			currSpc->addMiscItm(itmToRmv);
-	//		}
-	//	}
-
-	//	//if choice is to use item
-	//	else if (menuChoice == 2)
-	//	{
-	//		//hero->useBagItm();
-	//	}
-	//}
+	Bag* heroBag = hero->getBag();
+	//present option to rmv item from bag if bag is not empty
+	if (!heroBag->getBagVect().empty())
+	{
+		string menuItems[] = { "yes", "no" };
+		cout << "Remove an item from the bag?" << endl;
+		int menuChoice = menu(menuItems, 2, false);
+		cout << endl;
+		//place item in one pf curr space's vectors (rsc or misc)
+		shared_ptr<Item>itmToRmv;
+		if (menuChoice == 1)
+		{
+			itmToRmv = hero->rmvFromBag();
+			
+			//add item to curr space's rsc vector if rsc
+			if(itmToRmv->getSubclass() == "resource")
+			{
+				currSpc->addRscItm(itmToRmv);
+			}
+			//add item to curr spc's misc vect if not rsc
+			else
+			{
+				currSpc->addMiscItm(itmToRmv);
+			}
+		}
+	}
 
 }
 
@@ -209,11 +199,6 @@ shared_ptr<Item> Creature::rmvFromBag()
 	return bag.rmvItm();
 }
 
-//bool Creature::useBagItm()
-//{
-//	bool wasItmUsed = bag.useItm();
-//	return wasItmUsed;
-//}
 
 
 void Creature::setNumAttDie(int numAttDie)

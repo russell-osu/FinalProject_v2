@@ -114,13 +114,6 @@ shared_ptr<Item> Bag::rmvItm()
 }
 
 
-////removes item from bag and uses it
-//bool Bag::useItm()
-//{
-//	return false;
-//}
-
-
 //removes item by rewriting vector without removed item
 //takes element number of item to remove from vector as a parameter
 void Bag::rmvVectItm(vector<shared_ptr<Item>>& vect, int itmToRmv)
