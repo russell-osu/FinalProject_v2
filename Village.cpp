@@ -82,6 +82,7 @@ bool Village::buildShelter(shared_ptr<Creature>hero)
 	//list items and prompt user to rmv item from bag
 	shared_ptr<Item> buildItm;
 	buildItm = hero->rmvFromBag();
+	cout << endl;
 
 	//if item added is not a resource, alert user, return item
 	//to bag and return false
@@ -121,7 +122,6 @@ bool Village::buildShelter(shared_ptr<Creature>hero)
 		if (stoneCnt >= stoneWin && woodCnt >= woodWin && oreCnt >= oreWin)
 		{
 			cout << "YOU HAVE COLLECTED ALL THE RESOURCES NEEDED!!" << endl;
-			cout << "(press <enter> to continue)" << endl;
 			pauseUntilEnter();
 			//enough resources collected to build shelter
 			return true;
@@ -148,10 +148,11 @@ bool Village::buildShelter(shared_ptr<Creature>hero)
 		//prompt user to remove another item from bag
 		cout << "Add to shelter resource supply:" << endl;
 		buildItm = hero->rmvFromBag();
+		cout << endl;
 
 		//if item added is not a resource, alert user, return item
 		//to bag and return false
-		if (buildItm->getSubclass() != "resource" && buildItm != nullptr)
+		if (buildItm != nullptr && buildItm->getSubclass() != "resource")
 		{
 			cout << "Item chosen is not a resource." << endl << endl;
 			heroBag->addItm(buildItm);

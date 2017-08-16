@@ -120,7 +120,6 @@ void Game::gameLogic()
 			menuChoice = "End game";
 
 			cout << "You have run out of moves." << endl;
-			cout << "(press <enter> to continue)" << endl;
 			pauseUntilEnter();
 			//clear screen and output lose message
 			system(CLEAR_SCREEN);
@@ -323,7 +322,9 @@ void Game::gameLogic()
 			//building shelter requires 2 moves
 			updMovesRmn(2);
 
-			if(built)
+			/******************CHECKS WIN CONDITION*********************/
+
+			if(built) //checks for win condition
 			{
 				cout << "You have fulfilled your mission..." << endl;
 				pauseUntilEnter(); //pause
@@ -382,12 +383,12 @@ void Game::chkCreatBag(shared_ptr<Creature> currCreat)
 	cout << "Checking creatures bag for useful items..." << endl << endl;
 
 	//prompt user for item to remove
-	shared_ptr<Item> item = currCreat->rmvFromBag();
+	shared_ptr<Item> item;
 	do
 	{
-		hero->addToBag(item, true);
 		item = currCreat->rmvFromBag();
-
+		hero->addToBag(item, true);
+		
 	} while (item != nullptr);
 	
 	
@@ -635,11 +636,7 @@ void Game::moveHero()
 		{
 			cout << "You can't walk off of the edge of the known world!"
 				<< endl << endl;
-			cout << "(press <enter> to continue)" << endl;
 
-			//pause until user presses enter, courtesy of
-			//https://stackoverflow.com/questions/257091/
-			//how-do-i-flush-the-cin-buffer
 			pauseUntilEnter();
 			
 
