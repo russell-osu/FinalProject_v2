@@ -14,6 +14,8 @@
 #include "AttPotion.hpp"
 #include "Consumable.hpp"
 #include "Resource.hpp"
+#include "DefPotion.hpp"
+#include "StrPotion.hpp"
 
 using std::cout;
 using std::endl;
@@ -258,9 +260,10 @@ void Space::genCreature()
 }
 
 
-//randomly generate items for creatures bag
+//randomly generate items for creature's bag
 void Space::genCreatItems()
 {
+	//gen attack potion
 	int attPotChnc = getRandIntInRange(1, 2);
 
 	//generate attack potion if condition is met
@@ -269,6 +272,28 @@ void Space::genCreatItems()
 		shared_ptr<Item> potion = std::make_shared<AttPotion>();
 		creat->addToBag(potion);
 	}
+
+	//gen defense potion
+	int defPotChnc = getRandIntInRange(1, 2);
+
+	//generate defense potion if condition is met
+	if (defPotChnc == 1)
+	{
+		shared_ptr<Item> potion = std::make_shared<DefPotion>();
+		creat->addToBag(potion);
+	}
+
+
+	//gen strength potion
+	int strPotChnc = getRandIntInRange(1, 2);
+
+	//generate strength potion if condition is met
+	if (strPotChnc == 1)
+	{
+		shared_ptr<Item> potion = std::make_shared<StrPotion>();
+		creat->addToBag(potion);
+	}
+
 }
 
 

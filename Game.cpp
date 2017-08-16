@@ -174,10 +174,10 @@ void Game::gameLogic()
 			//present option to rmv item or use item from bag
 			if (!heroBag->getBagVect().empty())
 			{
-				string menuItems[] = { "Remove item", 
+				string menuItems[] = { "Discard item", 
 										"Use item",
 										"Exit menu"};
-				cout << "Remove an item from the bag?" << endl;
+				cout << "Take an item from the bag?" << endl;
 				int menuChoice = menu(menuItems, 3, false);
 				cout << endl;
 
@@ -281,12 +281,15 @@ void Game::gameLogic()
 			//fighting requires four moves
 			updMovesRmn(3);
 
-			//if hero wins, set curr spac creature to nullptr
+			//if hero wins, check creatures bag for items
+			// and set curr spac creature to nullptr
 			if(winner->getName() == "Hero")
 			{
 				pauseUntilEnter();
-				//check creature's bag for items
+
+				//check creature's bag 
 				chkCreatBag(currCreat);
+
 				//set creat to nullptr
 				currSpc->setCreat(nullptr);
 				//clear screen and reset map and message
@@ -370,14 +373,22 @@ void Game::gameLogic()
 
 
 /**********************CHECK CREATURE'S BAG AFTER VICTORY*****************/
+//check creature's bag for items, check once even if empty
+//and keep checking until empty or until user exits
 void Game::chkCreatBag(shared_ptr<Creature> currCreat)
 {
 	system(CLEAR_SCREEN);
 
 	cout << "Checking creatures bag for useful items..." << endl << endl;
 
-	//add item to hero's bag
-	hero->addToBag(currCreat->rmvFromBag(),true);
+	//prompt user for item to remove
+	shared_ptr<Item> item = currCreat->rmvFromBag();
+	do
+	{
+		hero->addToBag(item, true);
+		item = currCreat->rmvFromBag();
+
+	} while (item != nullptr);
 	
 	
 }

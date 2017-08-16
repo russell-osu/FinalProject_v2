@@ -128,6 +128,7 @@
     <ClCompile Include="Combat.cpp" />
     <ClCompile Include="Consumable.cpp" />
     <ClCompile Include="Creature.cpp" />
+    <ClCompile Include="DefPotion.cpp" />
     <ClCompile Include="Die.cpp" />
     <ClCompile Include="finalMain.cpp" />
     <ClCompile Include="Forest.cpp" />
@@ -143,6 +144,7 @@
     <ClCompile Include="Resource.cpp" />
     <ClCompile Include="Space.cpp" />
     <ClCompile Include="Stone.cpp" />
+    <ClCompile Include="StrPotion.cpp" />
     <ClCompile Include="Vampire.cpp" />
     <ClCompile Include="Village.cpp" />
     <ClCompile Include="Wood.cpp" />
@@ -158,6 +160,7 @@
     <ClInclude Include="Consumable.hpp" />
     <ClInclude Include="Creature.hpp" />
     <ClInclude Include="defConst.hpp" />
+    <ClInclude Include="DefPotion.hpp" />
     <ClInclude Include="Die.hpp" />
     <ClInclude Include="Forest.hpp" />
     <ClInclude Include="Game.hpp" />
@@ -172,6 +175,7 @@
     <ClInclude Include="Resource.hpp" />
     <ClInclude Include="Space.hpp" />
     <ClInclude Include="Stone.hpp" />
+    <ClInclude Include="StrPotion.hpp" />
     <ClInclude Include="Vampire.hpp" />
     <ClInclude Include="Village.hpp" />
     <ClInclude Include="Wood.hpp" />
