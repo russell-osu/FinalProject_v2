@@ -121,7 +121,7 @@ void Game::gameLogic()
 
 			cout << "You have run out of moves." << endl;
 			cout << "(press <enter> to continue)" << endl;
-			std::cin.ignore(INT_MAX, '\n');
+			pauseUntilEnter();
 			//clear screen and output lose message
 			system(CLEAR_SCREEN);
 			asciiYouLose();
@@ -169,7 +169,7 @@ void Game::gameLogic()
 			hero->chkInventory();
 
 			Bag* heroBag = hero->getBag();
-			vector<shared_ptr<Item>>& heroBagVect = heroBag->getBagVect();
+			//vector<shared_ptr<Item>>& heroBagVect = heroBag->getBagVect();
 
 			//present option to rmv item or use item from bag
 			if (!heroBag->getBagVect().empty())
@@ -215,12 +215,8 @@ void Game::gameLogic()
 					{
 						std::static_pointer_cast<Consumable>(item)->use(hero);
 					}
-
 				}
-
-
 			}
-
 
 			pauseUntilEnter();
 			system(CLEAR_SCREEN);//clear screen
@@ -352,6 +348,10 @@ void Game::gameLogic()
 		{
 			sufficientMoves = true;//enough moves left for this action
 			dispInstructions();
+			system(CLEAR_SCREEN);//clear screen
+			map.dispMap(hero, village); //display map
+			dispSpcMsg();//display current spaces message
+
 		}
 
 
@@ -629,7 +629,7 @@ void Game::moveHero()
 			//pause until user presses enter, courtesy of
 			//https://stackoverflow.com/questions/257091/
 			//how-do-i-flush-the-cin-buffer
-			std::cin.ignore(INT_MAX,'\n');
+			pauseUntilEnter();
 			
 
 		}
@@ -760,8 +760,7 @@ void Game::dispInstructions()
 		"If you take too long, your village will succumb to the terrors\n"
 		"of the night." << endl << endl;
 
-	cout << "(press <enter> to continue)" << endl;
-	std::cin.ignore(INT_MAX, '\n');
+	pauseUntilEnter();
 
 }
 

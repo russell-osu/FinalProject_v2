@@ -20,10 +20,7 @@ int main()
 
 	//welcome message and instructions.
 
-	//Ore iron;
-	//cout << iron.getSubclass() << endl << endl;
-
-	//welcome message
+	system(CLEAR_SCREEN);
 	asciiVillNoShelter();
 	cout << "                     RESOURCE QUEST!!!" << endl;
 	cout << "************************************************************" 

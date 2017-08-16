@@ -52,7 +52,7 @@ Village::~Village()
 //returns true if shelter is completed
 bool Village::buildShelter(shared_ptr<Creature>hero)
 {
-	bool itemAdded = false;
+	//bool itemAdded = false;
 
 	//if hero's bag has no resources, return false
 	bool noRsc = true;
@@ -122,7 +122,7 @@ bool Village::buildShelter(shared_ptr<Creature>hero)
 		{
 			cout << "YOU HAVE COLLECTED ALL THE RESOURCES NEEDED!!" << endl;
 			cout << "(press <enter> to continue)" << endl;
-			std::cin.ignore(INT_MAX, '\n');
+			pauseUntilEnter();
 			//enough resources collected to build shelter
 			return true;
 		}
