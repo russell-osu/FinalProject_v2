@@ -1,3 +1,13 @@
+/******************************************************************************
+Program: Final Project
+Name: Russell Moon
+Date: 8/12/2017
+Description: This is an fantasy RPG with procedurally generated elements,
+(though the map size is fixed). The player moves around the map, collecting
+resources and fighting monsters with the ultimate goal of building a shelter
+in the Village at the center of the map.
+******************************************************************************/
+
 
 #include <iostream>
 #include <string>

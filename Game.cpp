@@ -1,3 +1,14 @@
+/******************************************************************************
+Class: Game
+Name: Russell Moon
+Date: 8/12/2017
+Description: This class manages the main play logic for Resource Quest. Method
+gameLogic is chiefly responsible for this, but is assisted by moveHero, which
+moves the player, newSpcInit and newSpcConnect which generates new spaces as 
+the player moves into them. It also has methods for displaying output and
+updating moves.
+******************************************************************************/
+
 #include "Game.hpp"
 #include "Village.hpp"
 #include "Hero.hpp"
@@ -18,7 +29,8 @@ char prmptUsrMv();
 void createActionMenu(vector<string>& menuItems, bool isVillage, 
 	bool hasCreature, bool hasResources);
 
-
+//constructor which takes max num of moves, a hero, and the num of stone,
+//wood and ore needed for a win
 Game::Game(int maxMoves, shared_ptr<Creature>hero, 
 	int stone, int wood, int ore)
 {
@@ -190,12 +202,12 @@ void Game::gameLogic()
 					itmToRmv = hero->rmvFromBag();
 					
 					//add item to curr space's rsc vector if rsc
-					if(itmToRmv->getSubclass() == "resource")
+					if(itmToRmv!=nullptr && itmToRmv->getSubclass() == "resource")
 					{
 						currSpc->addRscItm(itmToRmv);
 					}
 					//add item to curr spc's misc vect if not rsc
-					else
+					else if (itmToRmv != nullptr)
 					{
 						currSpc->addMiscItm(itmToRmv);
 					}
@@ -754,7 +766,7 @@ void Game::dispInstructions()
 	cout << "                     INSTRUCTIONS" << endl;
 	cout << "************************************************************"
 		<< endl;
-	cout << "You must travel into the dangerous lands beyond the village\n"
+	cout << "You must travel into the map spaces outside of the village\n"
 		"and collect resources for the construction of a temporary\n"
 		"but secure shelter. Visit Plains, to collect stone, Forests,\n"
 		"to collect wood, and Hills, to collect ore. When you have\n"
@@ -763,10 +775,15 @@ void Game::dispInstructions()
 		"a region is from the village, the more resources you'll find, but\n"
 		"the monsters will also be harder." << endl << endl;
 
-	cout << "When the shelter is built, you've won the game! Don't\n"
-		"fall prey to monsters along the way. Also, stay mindful of time.\n"
-		"If you take too long, your village will succumb to the terrors\n"
-		"of the night." << endl << endl;
+	cout << "When the shelter is built, you've won the game! If you lose\n"
+		"a fight with a monster, the game will end. Also,\n"
+		"if you use up all of your moves, the game will also end."
+		<< endl << endl;
+
+	cout << "If you beat a monster in a fight, you will be able to loot its\n"
+		"bag. Check your own bag to see what you've collected. Once you're\n"
+		"in the Check bag menu, you'll be able to use or discard the items\n"
+		"you've gathered" << endl << endl;
 
 	pauseUntilEnter();
 
@@ -859,8 +876,27 @@ void Game::newSpcConnect(Space* tmpSpc)
 
 }
 
+void Game::setMovesRmn(int movesRmn)
+{
+	this->movesRmn = movesRmn;
+}
 
-																		
+int Game::getMovesRmn()
+{
+	return movesRmn;
+}
+
+void Game::setMaxMoves(int maxMoves)
+{
+	this->maxMoves = maxMoves;
+}
+
+int Game::getMaxMoves()
+{
+	return maxMoves;
+}
+
+
 //deallocates pointers in space array
 Game::~Game()
 {

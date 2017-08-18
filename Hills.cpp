@@ -1,3 +1,10 @@
+/******************************************************************************
+Class: Hills
+Name: Russell Moon
+Date: 8/12/2017
+Description: Hills is a subclass of Space that contains the ore resource.
+******************************************************************************/
+
 #include "Hills.hpp"
 
 
@@ -28,7 +35,7 @@ Hills::Hills(int row, int col)
 }
 
 
-
+//stup for future implementation
 string Hills::describe()
 {
 	return ""; //just for testing

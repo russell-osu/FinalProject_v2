@@ -1,3 +1,10 @@
+/******************************************************************************
+Class: Plains
+Name: Russell Moon
+Date: 8/12/2017
+Description: Plains is a subclass of Space. It provides the stone resource.
+******************************************************************************/
+
 #include "Plains.hpp"
 
 
@@ -27,7 +34,7 @@ Plains::Plains(int row, int col)
 }
 
 
-
+//stub for future implementation
 string Plains::describe()
 {
 	return ""; //just for testing

@@ -59,6 +59,7 @@ void asciiVillNoShelter()
 }
 
 
+//courtesy of ascii text generator at http://patorjk.com/software/taag/
 void asciiYouLose()
 {
 	cout << endl;

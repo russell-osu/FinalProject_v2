@@ -1,3 +1,11 @@
+/******************************************************************************
+Class: Map
+Name: Russell Moon
+Date: 8/12/2017
+Description: Class map displays the game map along with a legend, player stats
+and information relating to the game's win condition.
+******************************************************************************/
+
 #include "Map.hpp"
 #include <iostream>
 #include "defConst.hpp"

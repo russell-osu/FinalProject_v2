@@ -1,3 +1,11 @@
+/******************************************************************************
+Class: Hero
+Name: Russell Moon
+Date: 8/12/2017
+Description: A subclass of Creature which represents the players character
+in the game.
+******************************************************************************/
+
 #include "Hero.hpp"
 #include<iostream>
 
@@ -36,27 +44,13 @@ Hero::Hero(int row, int col, int strength, int numAttDie, int numDefDie,
 	name = "Hero";
 }
 
-
+//returns hero's strength to starting strength
 void Hero::refresh()
 {
 	strength = startingStrength;
 }
 
-//void Hero::chkInventory()
-//{
-//	//display bag capactiy and display contents
-//	cout << "Bag capacity: " << bag.getCapacity() << endl;
-//	cout << "Bag weight: " << bag.getCurrWght() << endl;
-//	cout << endl;
-//	bag.dispContents();
-//}
-//
-////tries item to bag (returns true if completed and false if not)
-//bool Hero::addToBag(shared_ptr<Item> item)
-//{
-//	bool addedToBag = bag.addItm(item);
-//	return addedToBag;
-//}
+
 
 Hero::~Hero()
 {

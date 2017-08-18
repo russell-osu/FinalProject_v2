@@ -1,3 +1,16 @@
+/******************************************************************************
+Class: Space
+Name: Russell Moon
+Date: 8/12/2017
+Description: Abstract class Space models an individual cell on the game map.
+Space can be instantiated as one of four subclasses: Village, Forest, Plain
+or Hill. It has methods for generating the resource items contained by Space.
+It also has methods for procedurally generating monsters that occupy the space
+as well as the items that the monsters carry. Further it has methods for
+setting the difficulty levels for different areas (the difficulty level 
+increases as the player moves farther from the village).
+******************************************************************************/
+
 #include "Space.hpp"
 #include "defConst.hpp"
 #include "cs162_utilities.hpp"

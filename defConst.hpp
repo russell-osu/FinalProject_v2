@@ -17,6 +17,6 @@
 //num ore needed for victory
 #define SHELTER_ORE 10
 
-#define CLEAR_SCREEN "CLS"
+#define CLEAR_SCREEN "clear"
 
 #endif

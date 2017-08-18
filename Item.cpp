@@ -1,11 +1,20 @@
-#include "Item.hpp"
+/******************************************************************************
+Class: Item
+Name: Russell Moon
+Date: 8/12/2017
+Description: Item is an abstract base class which represents items that
+Creatures can gather, hold and use. It has datamembers for describing an
+items name, weight, and subclass/type.
+******************************************************************************/
 
+#include "Item.hpp"
 
 
 Item::Item()
 {
 }
 
+//used only for subclasses of Resource
 void Item::setType(char type)
 {
 	this->type = type;

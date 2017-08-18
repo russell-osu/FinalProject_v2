@@ -1,3 +1,13 @@
+/******************************************************************************
+Class: Bag
+Name: Russell Moon
+Date: 8/12/2017
+Description: This class models a bag carried by a Creature. It has an item
+vector data member and functions for adding, removing and using items from
+that vector. It also has a function for resizing the vector once an item has
+been removed.
+******************************************************************************/
+
 #include "Bag.hpp"
 #include <iostream>
 #include "cs162_utilities.hpp"
@@ -44,7 +54,7 @@ bool Bag::addItm(shared_ptr<Item>item, bool dispMsg)
 		//if alter message should be displayed
 		if (dispMsg)
 		{
-			cout << "Item " << item->getName() << " added to bag." << endl << endl;
+			cout << "Item added to bag: " << item->getName() << endl << endl;
 			pauseUntilEnter();
 		}
 
@@ -86,6 +96,7 @@ shared_ptr<Item> Bag::rmvItm()
 	//print out menu of resource choices and prompt user
 	cout << "(choose an item from bag)" << endl;
 	menuChoice = menuExit(bagMenu, false);
+	cout << endl;
 
 
 	//if user exits menu, return nullptr
@@ -142,6 +153,7 @@ shared_ptr<Item> Bag::consumeItem()
 	//print out menu of resource choices and prompt user
 	cout << "(choose an item from bag)" << endl;
 	menuChoice = menuExit(bagMenu, false);
+	cout << endl;
 
 
 	//if user exits menu, return nullptr

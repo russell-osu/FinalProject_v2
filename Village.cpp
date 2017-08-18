@@ -1,3 +1,14 @@
+/******************************************************************************
+Class: Village
+Name: Russell Moon
+Date: 8/12/2017
+Description: Village is a subclass of Space. It models the area to which the
+player must return to build a shelter and satisfy the game's win condition.
+It has a method that allows the player to add materials to the shelter, 
+checking for the win condition on each addition. When enough materials of 
+each kind has been added to the shelter, the player wins.
+******************************************************************************/
+
 #include "Village.hpp"
 #include <iostream>
 #include "defConst.hpp"

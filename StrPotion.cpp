@@ -1,3 +1,13 @@
+/******************************************************************************
+Class: StrPotion
+Name: Russell Moon
+Date: 8/12/2017
+Description: This class models a strength potion that raises a creatures
+strength when used. It has a use method which takes a pointer
+to creature to alter its stats.
+******************************************************************************/
+
+
 #include "StrPotion.hpp"
 #include <iostream>
 #include "cs162_utilities.hpp"
